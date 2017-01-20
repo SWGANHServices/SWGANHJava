@@ -1,0 +1,401 @@
+2017-01-19 04:05:34 Source:LogServer | Log Server Started | SEV: INFO
+2017-01-19 04:05:34 Source:SWGGui | GUI Constructor:  Construct DatabaseInterface | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Initializing database | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Connected | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Login Integration set to Internal | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Email Accounts Cleaned up: 0 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 1642 schematics | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface.loadStartingLocations | Starting Locations Loaded 16 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_cryoban.iff, schematic index 255 | SEV: CRITICAL
+2017-01-19 04:05:34 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_fragmentation.iff, schematic index 143 | SEV: CRITICAL
+2017-01-19 04:05:34 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_glop.iff, schematic index 564 | SEV: CRITICAL
+2017-01-19 04:05:34 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_imperial_detonator.iff, schematic index 635 | SEV: CRITICAL
+2017-01-19 04:05:34 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_fragmentation_light.iff, schematic index 142 | SEV: CRITICAL
+2017-01-19 04:05:34 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_proton.iff, schematic index 973 | SEV: CRITICAL
+2017-01-19 04:05:34 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_thermal_detonator.iff, schematic index 1191 | SEV: CRITICAL
+2017-01-19 04:05:34 Source:DatabaseInterface | Database Preload Completed. | SEV: INFO
+2017-01-19 04:05:34 Source:SWGGui | Database Interface constructed. | SEV: INFO
+2017-01-19 04:05:34 Source:SWGGui | Creating Login Server... | SEV: INFO
+2017-01-19 04:05:34 Source:LoginServerZoneTransciever | LoginZoneTransciever listening on address 0.0.0.0/0.0.0.0:35000 | SEV: INFO
+2017-01-19 04:05:34 Source:SWGGui | Creating Zone Server... | SEV: INFO
+2017-01-19 04:05:34 Source:SWGGui | GUI Creation complete. | SEV: INFO
+2017-01-19 04:05:34 Source:SWGGui | Using 51414272 bytes of 259588096 VM available.  Free: 208173824 bytes. | SEV: INFO
+2017-01-19 04:05:34 Source:SWGGui | GUI running. | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Zone server initializing... | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Set up planet positional grid. | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Planet positional grid setup complete. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | InitializeStaticObjects | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=-8192.0, y=-5632.0 Object ID:2935513 | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | coords: x[-8464.68], y[-5617.58], planet[terrain/rori.trn] | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Item type: object/static/particle/shared_pt_poi_droid_weld_sparks.iff | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=-5632.0, y=-8192.0 Object ID:2935512 | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | coords: x[-5579.7], y[-11361.1], planet[terrain/rori.trn] | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Item type: object/static/particle/shared_pt_poi_droid_weld_sparks.iff | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281686 | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | coords: x[4900.24], y[-8452.21], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281685 | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | coords: x[4892.56], y[-8461.95], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281670 | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | coords: x[4893.63], y[-8461.58], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281663 | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | coords: x[4894.01], y[-8461.15], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-19 04:05:34 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | End InitializeStaticObjects | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Player Structures Loaded: 0 | SEV: INFO
+2017-01-19 04:05:34 Source:StructureUpdateThread | Structure Update thread Started | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Server Terminals Loaded: 2112 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Travel Destinations Retrieved:60 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Shuttles Loaded: 60 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Lair Templates Retrieved: 462 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Retrieved 650250 Heightmap Entries | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Corellia | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 0 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 27 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Dantooine | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 1 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 21 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Dathomir | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 2 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 24 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Endor | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 3 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 29 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Lok | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 4 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 30 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Naboo | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 5 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 39 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Rori | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 6 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 33 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Talus | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 7 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 39 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Tatooine | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 8 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 37 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Yavin IV | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Add dynamic spawn -- planet ID 9 | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 37 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Tanaab | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 0 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Umbra | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 0 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loading dynamic lair spawn list for Tutorial | SEV: INFO
+2017-01-19 04:05:34 Source:DatabaseInterface | Loaded 0 lair spawns. | SEV: INFO
+2017-01-19 04:05:34 Source:ScriptManager | 3 script files loaded. | SEV: INFO
+2017-01-19 04:05:34 Source:ScriptManager | 3 script files compiled. | SEV: INFO
+2017-01-19 04:05:34 Source:ScriptManager | Loaded 3 system scripts from 3 constant entries. | SEV: INFO
+2017-01-19 04:05:34 Source:ScriptManager | Loaded 0 item scripts from 15425 item_template entries. | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Zone server on-line. | SEV: INFO
+2017-01-19 04:05:34 Source:ZoneServer() | Listening on address 0.0.0.0/0.0.0.0:44463 | SEV: INFO

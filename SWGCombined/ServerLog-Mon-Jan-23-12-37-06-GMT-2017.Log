@@ -1,0 +1,52 @@
+2017-01-23 12:37:16 Source:LogServer | Log Server Started | SEV: INFO
+2017-01-23 12:37:16 Source:SWGGui | GUI Constructor:  Construct DatabaseInterface | SEV: INFO
+2017-01-23 12:37:16 Source:DatabaseInterface | Initializing database | SEV: INFO
+2017-01-23 12:37:16 Source:DatabaseInterface | Connected | SEV: INFO
+2017-01-23 12:37:16 Source:DatabaseInterface | Login Integration set to Internal | SEV: INFO
+2017-01-23 12:37:16 Source:DatabaseInterface | Email Accounts Cleaned up: 0 | SEV: INFO
+2017-01-23 12:37:26 Source:DatabaseInterface | Loaded 1642 schematics | SEV: INFO
+2017-01-23 12:38:06 Source:DatabaseInterface.loadStartingLocations | Starting Locations Loaded 16 | SEV: INFO
+2017-01-23 12:38:06 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_cryoban.iff, schematic index 255 | SEV: CRITICAL
+2017-01-23 12:38:06 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_fragmentation.iff, schematic index 143 | SEV: CRITICAL
+2017-01-23 12:38:06 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_glop.iff, schematic index 564 | SEV: CRITICAL
+2017-01-23 12:38:06 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_imperial_detonator.iff, schematic index 635 | SEV: CRITICAL
+2017-01-23 12:38:06 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_fragmentation_light.iff, schematic index 142 | SEV: CRITICAL
+2017-01-23 12:38:06 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_proton.iff, schematic index 973 | SEV: CRITICAL
+2017-01-23 12:38:06 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_thermal_detonator.iff, schematic index 1191 | SEV: CRITICAL
+2017-01-23 12:38:06 Source:DatabaseInterface | Database Preload Completed. | SEV: INFO
+2017-01-23 12:38:06 Source:SWGGui | Database Interface constructed. | SEV: INFO
+2017-01-23 12:38:06 Source:SWGGui | Creating Login Server... | SEV: INFO
+2017-01-23 12:38:06 Source:LoginServerZoneTransciever | LoginZoneTransciever listening on address 0.0.0.0/0.0.0.0:35000 | SEV: INFO
+2017-01-23 12:38:06 Source:SWGGui | Creating Zone Server... | SEV: INFO
+2017-01-23 12:38:06 Source:SWGGui | GUI Creation complete. | SEV: INFO
+2017-01-23 12:38:06 Source:SWGGui | Using 56744496 bytes of 257425408 VM available.  Free: 200680912 bytes. | SEV: INFO
+2017-01-23 12:38:06 Source:SWGGui | GUI running. | SEV: INFO
+2017-01-23 12:38:06 Source:ZoneServer() | Zone server initializing... | SEV: INFO
+2017-01-23 12:38:06 Source:ZoneServer() | Set up planet positional grid. | SEV: INFO
+2017-01-23 12:38:06 Source:ZoneServer() | Planet positional grid setup complete. | SEV: INFO
+2017-01-23 12:38:06 Source:DatabaseInterface | InitializeStaticObjects | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=-8192.0, y=-5632.0 Object ID:2935513 | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | coords: x[-8464.68], y[-5617.58], planet[terrain/rori.trn] | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Item type: object/static/particle/shared_pt_poi_droid_weld_sparks.iff | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=-5632.0, y=-8192.0 Object ID:2935512 | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | coords: x[-5579.7], y[-11361.1], planet[terrain/rori.trn] | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Item type: object/static/particle/shared_pt_poi_droid_weld_sparks.iff | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281686 | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | coords: x[4900.24], y[-8452.21], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281685 | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | coords: x[4892.56], y[-8461.95], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281670 | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | coords: x[4893.63], y[-8461.58], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Add object to coffeetree failure:  Object is NOT contained by element x=4768.0, y=-8192.0 Object ID:1281663 | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | coords: x[4894.01], y[-8461.15], planet[terrain/tatooine.trn] | SEV: INFO
+2017-01-23 12:38:36 Source:GridElement | Item type: object/static/structure/tatooine/shared_beam_tatooine_overhead_style_02.iff | SEV: INFO
+2017-01-23 12:38:36 Source:DatabaseInterface | End InitializeStaticObjects | SEV: INFO
+2017-01-23 12:38:36 Source:ZoneServer() | Player Structures Loaded: 0 | SEV: INFO
+2017-01-23 12:38:36 Source:StructureUpdateThread | Structure Update thread Started | SEV: INFO
+2017-01-23 12:38:46 Source:DatabaseInterface | Server Terminals Loaded: 2111 | SEV: INFO
+2017-01-23 12:38:46 Source:ZoneServer() | Travel Destinations Retrieved:60 | SEV: INFO
+2017-01-23 12:38:46 Source:ZoneServer() | Shuttles Loaded: 60 | SEV: INFO
+2017-01-23 12:38:46 Source:ZoneServer() | Lair Templates Retrieved: 462 | SEV: INFO

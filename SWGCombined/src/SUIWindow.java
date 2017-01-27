@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 import java.io.ByteArrayOutputStream;
 
@@ -38,7 +39,7 @@ public class SUIWindow {
 	private boolean bWindowHasInputFields = false;
 	private byte iWindowType;
 
-	private ArrayList<byte[]> PacketComponents;
+	private List<byte[]> PacketComponents;
 
 	private int iNumberOfUpdates = 0;
 
@@ -184,7 +185,7 @@ public class SUIWindow {
 	 */
 	public byte[] SUIScriptListBox(ZoneClient client, String WindowTypeString,
 			String DataListTitle, String DataListPrompt, String sList[],
-			ArrayList<SOEObject> ObjectList, long ObjectID, long PlayerID) {
+			List<SOEObject> ObjectList, long ObjectID, long PlayerID) {
 		sParams = sList;
 		sWindowTitle = DataListTitle;
 		try {
@@ -856,7 +857,7 @@ public class SUIWindow {
 	}
 
 	private boolean addDataListItems(String sList[],
-			ArrayList<SOEObject> oObjectList, ZoneClient c) {
+			List<SOEObject> oObjectList, ZoneClient c) {
 
 		try {
 			SOEOutputStream ComponentWindowDataListItems = new SOEOutputStream(

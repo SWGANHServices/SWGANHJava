@@ -8,9 +8,9 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
-
+import java.util.List;
 import java.util.ArrayList;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 /**
@@ -27,11 +27,11 @@ public class LoginServer implements Runnable{
 	protected final static int MAX_PACKET_SIZE = 496;
 	protected final static int MAX_PACKET_SIZE_BEFORE_COMPRESSION_NEEDED = 149;
 	private Hashtable<SocketAddress, LoginClient> activeClientHash;
-	private ArrayList<LoginClient> activeClientList;
+	private List<LoginClient> activeClientList;
 	private boolean bAutoAccountRegistration = true; // To be read from the config file.
 	private ConcurrentLinkedQueue<DatagramPacket> packetQueue;
-	private ArrayList<Player> clientCharacterList;
-	private ArrayList<AccountData> clientAccountList;
+	private List<Player> clientCharacterList;
+	private List<AccountData> clientAccountList;
 	///public final static String SynchronizationObject = "";
 	protected final static String sLoginServerString = "LoginServer:29411";
 	private final static int socketTimeout = 10;
@@ -96,8 +96,8 @@ public class LoginServer implements Runnable{
     	System.out.println("LoginServer start");
 		activeClientHash = new Hashtable<SocketAddress, LoginClient>();
 		activeClientList = new ArrayList<LoginClient>();
-		//clientCharacterList = new ArrayList<Player>();
-		//packetsBeingParsed = new ArrayList<SOEInputStream>();
+		//clientCharacterList = new Vector<Player>();
+		//packetsBeingParsed = new Vector<SOEInputStream>();
 		packetQueue = new ConcurrentLinkedQueue<DatagramPacket>();
 		// Temporary until we get the config file program written
 		myThread = new Thread(this);
@@ -112,8 +112,8 @@ public class LoginServer implements Runnable{
 		dataSocket.close();
 	}
 	
-	public ArrayList<byte[]> outgoingPackets;
-	//public ArrayList<byte[]> incomingPackets;
+	public List<byte[]> outgoingPackets;
+	//public Vector<byte[]> incomingPackets;
 
 	private long lLastUpdateTimeMS;
 	private long lCurrentUpdateTimeMS;
@@ -454,10 +454,10 @@ public class LoginServer implements Runnable{
 	/**
 	 * Generate and get a list of Players which belong to a given user account.
 	 * @param accountID -- The Account ID.
-	 * @return A ArrayList containing all Players belonging to the Account ID.
+	 * @return A Vector containing all Players belonging to the Account ID.
 	 */
-	protected ArrayList<Player> getCharacterListForAccount(long accountID) {
-		ArrayList<Player> list = new ArrayList<Player>();
+	protected List<Player> getCharacterListForAccount(long accountID) {
+		List<Player> list = new ArrayList<Player>();
 		for (int i = 0; i < clientCharacterList.size(); i++) {
 			Player character = clientCharacterList.get(i);
 			if ((character != null) && (character.getAccountID() == accountID) && !character.isDeleted()) {
@@ -467,8 +467,8 @@ public class LoginServer implements Runnable{
 		return list;
 	}
 
-	protected ArrayList<Player> getCharacterListForServer(int serverID) {
-		ArrayList<Player> toReturn = new ArrayList<Player>();
+	protected List<Player> getCharacterListForServer(int serverID) {
+		List<Player> toReturn = new ArrayList<Player>();
 		for (int i = 0; i < clientCharacterList.size(); i++) {
 			Player player = clientCharacterList.get(i);
 			if (player.getServerID() == serverID) {
@@ -478,15 +478,15 @@ public class LoginServer implements Runnable{
 		return toReturn;
 	}
 	
-	protected Hashtable<Long, Player> getCharacterListForServer(ZoneServer server) {
+	protected ConcurrentHashMap<Long, Player> getCharacterListForServer(ZoneServer server) {
 		int iServerID = server.getServerID();
-		Hashtable<Long, Player> map = new Hashtable<Long, Player>();
+		ConcurrentHashMap<Long, Player> map = new ConcurrentHashMap<Long, Player>();
 		for (int j = 0; j < clientCharacterList.size(); j++) {
 			Player player = clientCharacterList.get(j);
 			if (player != null && (player.getServerID() == iServerID)) {
                 player.fixPlayerCluster(server.getClusterName());
                 player.setOnlineStatus(false);
-				ArrayList<TangibleItem> vAllPlayerItems = player.getInventoryItems();
+				List<TangibleItem> vAllPlayerItems = player.getInventoryItems();
 
 				for (int i = 0; i < vAllPlayerItems.size(); i++) {
 					TangibleItem item = vAllPlayerItems.get(i);
@@ -504,12 +504,12 @@ public class LoginServer implements Runnable{
 					}*/
 
 				}
-				ArrayList<Waypoint> vPlayerWaypoints = player.getPlayData().getWaypoints();
+				List<Waypoint> vPlayerWaypoints = player.getPlayData().getWaypoints();
 				for (int i = 0; i < vPlayerWaypoints.size(); i++) {
 					Waypoint w = vPlayerWaypoints.get(i);
 					server.addObjectToAllObjects(w, false,false);
 				}
-				ArrayList<IntangibleObject> vAllDatapadObjects = player.getDatapad().getIntangibleObjects();
+				List<IntangibleObject> vAllDatapadObjects = player.getDatapad().getIntangibleObjects();
 				for (int i = 0; i < vAllDatapadObjects.size(); i++) {
 					server.addObjectToAllObjects(vAllDatapadObjects.get(i), false,false);
 				}
@@ -522,7 +522,7 @@ public class LoginServer implements Runnable{
 				server.addObjectToAllObjects(player.getInventory(), false,false);				
 				map.put(player.getID(), player);
                 TangibleItem DataPad = player.getDatapad();
-                ArrayList<IntangibleObject> vItnos = DataPad.getIntangibleObjects();
+                List<IntangibleObject> vItnos = DataPad.getIntangibleObjects();
                 for(int i = 0; i < vItnos.size(); i++)
                 {
                     IntangibleObject itno = vItnos.get(i);

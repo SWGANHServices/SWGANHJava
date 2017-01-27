@@ -1,6 +1,6 @@
-import java.util.ArrayList;
-import java.io.Serializable;
 import java.util.List;
+import java.io.Serializable;
+import java.util.ArrayList;
 
 /**
  * The SWGEmail class contains all the information about an in-game email sent between 2 people.
@@ -12,7 +12,7 @@ public class SWGEmail implements Serializable{
 	private transient int objectID = 0; //we dont want to save the id we get it from the db and set it there
 	private long recipientID = 0;
 	private long originatorID = 0;
-	private ArrayList<Waypoint> vWaypointAttachmentList = null;
+	private List<Waypoint> vWaypointAttachmentList = null;
 	private String sMessageHeader = null;
 	private String sMessageBody = null;
 	private boolean bRead  = false;
@@ -45,7 +45,7 @@ public class SWGEmail implements Serializable{
 	}
 	
 	/**
-	 * Constructs a new Email message with the given ID, the given creator ID, the given receiver ID, the given subject (header), the given message body, a ArrayList of attachments (may be null), and the given creation time..
+	 * Constructs a new Email message with the given ID, the given creator ID, the given receiver ID, the given subject (header), the given message body, a Vector of attachments (may be null), and the given creation time..
 	 * @param objectID -- The id of this email message.
 	 * @param sender -- The object ID of the player who created this message.
 	 * @param receiver -- The object ID of the player who received this message.
@@ -54,7 +54,7 @@ public class SWGEmail implements Serializable{
 	 * @param attachments -- The list of Waypoints which may be attached to this message.
 	 * @param creationTime -- The time at which this message was received.
 	 */
-	public SWGEmail(int objectID, long sender, long receiver, String header, String body, ArrayList<Waypoint> attachments,boolean readFlag) {
+	public SWGEmail(int objectID, long sender, long receiver, String header, String body, List<Waypoint> attachments,boolean readFlag) {
 		try{
             this.objectID = objectID;
 			originatorID = sender;
@@ -72,10 +72,6 @@ public class SWGEmail implements Serializable{
         bDeleteEmail = false;
         bSent = false;
 	}
-
-    SWGEmail(int i, long SERVER_STRUCTURE_MANAGER_OBJECT_ID, long structureOwnerID, String structure_Damaged, String Message, List<Waypoint> WL, boolean b) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 	
 	/**
 	 * Gets the Email Object ID
@@ -137,7 +133,7 @@ public class SWGEmail implements Serializable{
 	 * Gets the list of attachments for this email.
 	 * @return The email attachments.
 	 */
-	public ArrayList<Waypoint> getAttachments() {
+	public List<Waypoint> getAttachments() {
 		return vWaypointAttachmentList;
 	}
 	
@@ -205,7 +201,7 @@ public class SWGEmail implements Serializable{
         
         /**
          * Sets the recipient ID for this email object. 
-         * This is normally used to set the id for us in the vSentEmails ArrayList.
+         * This is normally used to set the id for us in the vSentEmails Vector.
          * @param R
          */
         protected void setRecipientID(long R){
@@ -214,7 +210,7 @@ public class SWGEmail implements Serializable{
         
         /**
          * Used to retrieve the Recipient ID for this Email Object.
-         * This is normally used to get the id for us in the vSentEmails ArrayList.
+         * This is normally used to get the id for us in the vSentEmails Vector.
          * @return long recipientID
          */
         protected long getRecipientID(){

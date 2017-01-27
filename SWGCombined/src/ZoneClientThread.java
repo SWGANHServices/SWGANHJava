@@ -6,12 +6,12 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Collection;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
-
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
 import javax.script.ScriptException;
 
 public class ZoneClientThread implements Runnable {
@@ -45,7 +45,7 @@ public class ZoneClientThread implements Runnable {
 		server.removeClient(client);
 		if (player != null) {
 			server.getGUI().getDB().updatePlayer(player, false, false);
-			ArrayList<PlayerFriends> vPlayerFriends = player.getPlayData().getFriendsList();
+			List<PlayerFriends> vPlayerFriends = player.getPlayData().getFriendsList();
 			for (int i = 0; i < vPlayerFriends.size(); i++) {
 				Player friend = server.getPlayer(vPlayerFriends.get(i).getName());
 				ZoneClient friendClient = friend.getClient();
@@ -666,7 +666,7 @@ public class ZoneClientThread implements Runnable {
 
 
 			// Temp code.
-			ArrayList<SOEObject> vObjectsNearPlayer = server.getWorldObjectsAroundObject(player); // Does this include the player?
+			List<SOEObject> vObjectsNearPlayer = server.getWorldObjectsAroundObject(player); // Does this include the player?
 
 			// SceneReady -- spawn everything around the Player to the Player, not including himself.
 			spawnObjectsNearPlayer(vObjectsNearPlayer);
@@ -1151,7 +1151,7 @@ public class ZoneClientThread implements Runnable {
 			System.out.println("Player Spawned, Spawning to Near Players");
 			spawnPlayerToNearPlayers();
 			System.out.println("Player Spawned to Near Players");
-			//ArrayList<SOEObject> vObjectsNearPlayer = server.getObjectsAroundPlayer(player); // Does this include the player?
+			//Vector<SOEObject> vObjectsNearPlayer = server.getObjectsAroundPlayer(player); // Does this include the player?
 			//spawnObjectsNearPlayer(vObjectsNearPlayer, player, true);
 			server.addObjectToAllObjects(player, true,false);
 		} catch (Exception e) {
@@ -1160,7 +1160,7 @@ public class ZoneClientThread implements Runnable {
 		}
 	}
 
-	private void spawnObjectsNearPlayer(ArrayList<SOEObject> objects) throws IOException {
+	private void spawnObjectsNearPlayer(List<SOEObject> objects) throws IOException {
 
 		for (int i = 0; i < objects.size(); i++) {
 			SOEObject o = objects.get(i);
@@ -1396,13 +1396,13 @@ public class ZoneClientThread implements Runnable {
 				player.setHam(server.getStartingHam(iRaceIndex, sProfession));
 	
 				player.setBiography(sBiography);
-				/*ArrayList<SkillMods> vStarterSkillMods = server.getSkillModsFromSkillIndex(iProfessionIndex + 1);
-				ArrayList<SkillMods> vBaseLanguageSkillMods = server.getSkillModsFromSkillIndex(Constants.SKILLS_LANGUAGE);
-				ArrayList<SkillMods> vBaseSpeciesSkillMods = server.getSkillModsFromSkillIndex(Constants.SKILLS_SPECIES);
-				ArrayList<SkillMods> vRaceLanguageBaseSkillMods = null;
-				ArrayList<SkillMods> vRaceLanguageSpeakSkillMods = null;
-				ArrayList<SkillMods> vRaceLanguageComprehendSkillMods = null;
-				ArrayList<SkillMods> vRaceSpeciesSkillMods = null;*/
+				/*Vector<SkillMods> vStarterSkillMods = server.getSkillModsFromSkillIndex(iProfessionIndex + 1);
+				Vector<SkillMods> vBaseLanguageSkillMods = server.getSkillModsFromSkillIndex(Constants.SKILLS_LANGUAGE);
+				Vector<SkillMods> vBaseSpeciesSkillMods = server.getSkillModsFromSkillIndex(Constants.SKILLS_SPECIES);
+				Vector<SkillMods> vRaceLanguageBaseSkillMods = null;
+				Vector<SkillMods> vRaceLanguageSpeakSkillMods = null;
+				Vector<SkillMods> vRaceLanguageComprehendSkillMods = null;
+				Vector<SkillMods> vRaceSpeciesSkillMods = null;*/
 				player.setSkill(Constants.SKILLS_LANGUAGE, true, false);
 				player.setSkill(Constants.SKILLS_SPECIES, true, false);
 				switch (iRaceIndex) {
@@ -1562,7 +1562,7 @@ public class ZoneClientThread implements Runnable {
 				player.setSharedCRC(PacketUtils.SWGCrc(sCharacterSharedRace));
 	
 				//System.out.println("Sending Emails To New Player: " + player.getID());
-				//ArrayList<Waypoint> WL = new ArrayList<Waypoint>();
+				//Vector<Waypoint> WL = new Vector<Waypoint>();
 				//SWGEmail welcomeemail = new SWGEmail(-1, 0, player.getID(), Constants.newbie_mail_welcome_subject, Constants.newbie_mail_welcome_body,null,false);
 				//server.queueEmailNewClientMessage(welcomeemail);
 				//SWGEmail startloc = new SWGEmail(-1, 0, player.getID(), "Starting Location", "This is Your Starting Location Waypoint.",player.getWaypoints(),false);
@@ -1669,7 +1669,7 @@ public class ZoneClientThread implements Runnable {
 	private void handleChatSendToRoom(SOEInputStream dIn) throws IOException {
 		String sMessage = dIn.readUTF16();
 		int roomID = dIn.readInt();
-		ArrayList<Player> vObjectsInRange = server.getPlayersAroundObject(player, false);
+		List<Player> vObjectsInRange = server.getPlayersAroundObject(player, false);
 		for (int i = 0; i < vObjectsInRange.size(); i++ ) {
 			Player o = vObjectsInRange.get(i);
 			ZoneClient client = o.getClient();
@@ -1735,10 +1735,10 @@ public class ZoneClientThread implements Runnable {
 			}
 		}*/
 		
-		ArrayList<Player> vConnectedPlayers = client.getServer().getAllOnlinePlayers();
+		List<Player> vConnectedPlayers = client.getServer().getAllOnlinePlayers();
 		for (int i = 0; i < vConnectedPlayers.size(); i++) {
 			Player tarPlayer = vConnectedPlayers.get(i);
-			ArrayList<PlayerFriends> tarPlayerFriends = tarPlayer.getFriendsList();
+			List<PlayerFriends> tarPlayerFriends = tarPlayer.getFriendsList();
 			ZoneClient tarClient = tarPlayer.getClient();
 			if (tarClient != null) {
 				for (int j = 0; j < tarPlayerFriends.size(); j++) {
@@ -2124,7 +2124,7 @@ public class ZoneClientThread implements Runnable {
 		}
 		/*long lItemActuator = */dIn.readLong();
 		int iButtonCount = dIn.readInt();
-		ArrayList<RadialMenuItem> vReceivedRadials = new ArrayList<RadialMenuItem>();
+		List<RadialMenuItem> vReceivedRadials = new ArrayList<RadialMenuItem>();
 		for(int i = 0; i< iButtonCount; i++)
 		{
 			byte ButtonNumber = dIn.readByte();
@@ -2333,7 +2333,7 @@ public class ZoneClientThread implements Runnable {
 
 		//Player ID 1466630561 lMisionIDAccepted:126419686 lTerminalID:1722570 byte:3 Mission Bag ID:2638852487
 		TangibleItem playerMissionBag = player.getMissionBag();
-		ArrayList<MissionObject> vMLRL = playerMissionBag.getMissionObjectRefreshList();
+		List<MissionObject> vMLRL = playerMissionBag.getMissionObjectRefreshList();
 		boolean bFound = false;
 		for(int i = 0; i < vMLRL.size() && !bFound; i++)
 		{
@@ -3311,10 +3311,9 @@ public class ZoneClientThread implements Runnable {
 						{
 							String sRealBuffer[] = sRealMessage.split(" ");
 							String sDelimiter = sRealBuffer[1];
-							ArrayList<SpawnedResourceData> vSRD = server.getResourceManager().getResourcesByPlanetID(i);
+							List<SpawnedResourceData> vSRD = server.getResourceManager().getResourcesByPlanetID(i);
 							System.out.println("-----------Resources for " + Constants.PlanetNames[i] + "---------------------");
-							//Enumeration<SpawnedResourceData> rdEnum = vSRD.elements();
-                                                        Iterator<SpawnedResourceData> rdEnum = vSRD.iterator();
+							Iterator<SpawnedResourceData> rdEnum = vSRD.iterator();
 							while(rdEnum.hasNext())
 							{
 								SpawnedResourceData rd = rdEnum.next();
@@ -3499,7 +3498,7 @@ public class ZoneClientThread implements Runnable {
 						player.increaseSkillModValue(mod, iValue, true);
 					} else if(sRealMessage.toLowerCase().startsWith("@viewmyskillmods")) {
 
-						ArrayList<SkillMods> vMSM = player.getSkillModsList();
+						List<SkillMods> vMSM = player.getSkillModsList();
 						String [] sSKM = new String[vMSM.size()];
 						for(int i = 0; i < sSKM.length;i++)
 						{
@@ -3581,7 +3580,7 @@ public class ZoneClientThread implements Runnable {
 							{
 								sResourceName = sResourceName.substring(0,sResourceName.length() - 1);
 							}
-							ArrayList<SpawnedResourceData> vR = new ArrayList<SpawnedResourceData>();
+							List<SpawnedResourceData> vR = new ArrayList<SpawnedResourceData>();
 							for(int i = 0; i < Constants.PlanetNames.length - 1; i++)
 							{
 								vR.addAll(server.getResourceManager().getResourcesByPlanetID(i));
@@ -3759,8 +3758,8 @@ public class ZoneClientThread implements Runnable {
 						W.setWindowType(Constants.SUI_SELECT_DEED);
 						W.setOriginatingObject(player);
 
-						ArrayList<DeedTemplate> vDT = DatabaseInterface.getAllDeedTemplates();
-						//ArrayList<SOEObject> oL = new ArrayList<SOEObject>();
+						List<DeedTemplate> vDT = DatabaseInterface.getAllDeedTemplates();
+						//Vector<SOEObject> oL = new Vector<SOEObject>();
 						String [] sList = new String [vDT.size()];
 
 						for(int i = 0; i < vDT.size(); i++) {
@@ -4079,7 +4078,7 @@ public class ZoneClientThread implements Runnable {
 						String WindowTypeString = "handleSUI";
 						String WindowTitle = "Shards of the Force Tester Punch List";
 						String WindowPromptContent = "";
-						ArrayList<String> vTPL = server.getTesterPunchList();
+						List<String> vTPL = server.getTesterPunchList();
 
 						if(vTPL.size() >= 1) {
 							for(int i = 0; i < vTPL.size(); i++) {
@@ -4202,11 +4201,10 @@ public class ZoneClientThread implements Runnable {
 						if(targetObject != null) {
 							
 							//Get a list of players.
-							//Enumeration<Player> list = server.getPlayersAroundObject(targetObject, false).elements();
 							Iterator<Player> list = server.getPlayersAroundObject(targetObject, false).iterator();
-                                                        
+							
 							//Print out a list of the players.
-							while(list.hasNext()) {
+							while(list.equals(list)) {
 								
 								//Get the current player.
 								Player currentPlayer = list.next();
@@ -4268,7 +4266,7 @@ public class ZoneClientThread implements Runnable {
 					String WindowTypeString = "handleSUI";
 					String WindowTitle = "Shards of the Force Tester Punch List";
 					String WindowPromptContent = "";
-					ArrayList<String> vTPL = server.getTesterPunchList();
+					List<String> vTPL = server.getTesterPunchList();
 
 					if(vTPL.size() >= 1) {
 						for(int i = 0; i < vTPL.size(); i++) {
@@ -4317,7 +4315,7 @@ public class ZoneClientThread implements Runnable {
 				}
 			}
 			//System.out.println("Howl modifier = " + howlModifier);
-			ArrayList<Player> vObjectsInRange = server.getPlayersAroundObject(player, false, messageRange); // This is everyone who can see the original message that the Player spoke.
+			List<Player> vObjectsInRange = server.getPlayersAroundObject(player, false, messageRange); // This is everyone who can see the original message that the Player spoke.
 			
 			Player recipient = null;
 			for (int i = 0; i < vObjectsInRange.size(); i++) {
@@ -4371,7 +4369,7 @@ public class ZoneClientThread implements Runnable {
 		{
 			player.setFlourishID(flourishID);
 			player.setPerformedAnimation("skill_action_" + flourishID);
-			ArrayList<Player> vObjectsInRange = server.getPlayersAroundObject(player, true); // TODO:  False, or true?
+			List<Player> vObjectsInRange = server.getPlayersAroundObject(player, true); // TODO:  False, or true?
 			for (int i = 0; i < vObjectsInRange.size(); i++) {
 				Player recipient = vObjectsInRange.get(i);
 				if(player.isDancing())
@@ -4715,7 +4713,7 @@ public class ZoneClientThread implements Runnable {
 			if(iEffectCRC != Constants.ventriloquism || iEffectCRC != Constants.distract)
 			{
 				player.updateCurrentHam(Constants.HAM_INDEX_ACTION, (-100));
-				ArrayList<Player> vPL = server.getPlayersAroundObject(player, true);
+				List<Player> vPL = server.getPlayersAroundObject(player, true);
 				for(int i = 0; i < vPL.size(); i++)
 				{
 					Player p = vPL.get(i);
@@ -4731,7 +4729,7 @@ public class ZoneClientThread implements Runnable {
 					if(oEffectTarget!=null && (oEffectTarget instanceof Player))
 					{
 						Player pt = (Player)oEffectTarget;
-						ArrayList<Player> vPL = server.getPlayersAroundObject(player, true);
+						List<Player> vPL = server.getPlayersAroundObject(player, true);
 						for(int i = 0; i < vPL.size(); i++)
 						{
 							Player p = vPL.get(i);
@@ -4896,7 +4894,7 @@ public class ZoneClientThread implements Runnable {
 		//boolean bTyped = ((Integer.parseInt(sParameters[3])) > 0);
 		//if (bTyped) {
 		client.insertPacket(PacketFactory.buildObjectControllerMessage_PlayerEmote(player, target, player));
-		ArrayList<Player> vObjectsInRange = server.getPlayersAroundObject(player, false);
+		List<Player> vObjectsInRange = server.getPlayersAroundObject(player, false);
 		for (int i = 0; i < vObjectsInRange.size(); i++) {
 			Player recipient = vObjectsInRange.get(i);
 			recipient.getClient().insertPacket(PacketFactory.buildObjectControllerMessage_PlayerEmote(player, target, recipient));
@@ -5085,7 +5083,7 @@ public class ZoneClientThread implements Runnable {
 		//first to check is if this ticket is purchaseable from this terminal.
 		// int TerminalID = client.getPlayer().getLastUsedTravelTerminal().getTerminalID();
 
-		//ArrayList<TravelDestination> vTd = client.getServer().getAllTravelDestinations();
+		//Vector<TravelDestination> vTd = client.getServer().getAllTravelDestinations();
 
 		for(int i = 0; i < sParameters.length; i++)
 		{
@@ -5421,7 +5419,7 @@ public class ZoneClientThread implements Runnable {
 		SOEObject containerToClose = server.getObjectFromAllObjects(targetID);
 		if (containerToClose instanceof TangibleItem) {
 			TangibleItem tangibleContainer = (TangibleItem)containerToClose;
-			ArrayList<TangibleItem> vLinkedItems = tangibleContainer.getLinkedObjects();
+			List<TangibleItem> vLinkedItems = tangibleContainer.getLinkedObjects();
 			if (!vLinkedItems.isEmpty()) {
 				for (int i = 0; i < vLinkedItems.size(); i++) {
 					player.despawnItem(vLinkedItems.get(i));
@@ -5475,7 +5473,7 @@ public class ZoneClientThread implements Runnable {
 						{
 							h.deactivateInstallation();
 						}
-						ArrayList<SpawnedResourceData> vResourcesAvailable = h.getResourcesAvailable();
+						List<SpawnedResourceData> vResourcesAvailable = h.getResourcesAvailable();
 						//System.out.println(vResourcesAvailable.size() + " Resources Available for this Harvester.");
 						player.setSynchronizedListenObject(s);
 						client.insertPacket(PacketFactory.buildBaselineHINO7(h, vResourcesAvailable));
@@ -5620,7 +5618,7 @@ public class ZoneClientThread implements Runnable {
 		case 8922: {
 			// Clothing and armor crafting
 			boolean bFoundStation = false;
-			ArrayList<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
+			List<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
 			vNearbyObjects.addAll(server.getStaticObjectsAroundObject(player, 6));
 			SOEObject o = null;
 			for (int i = 0; i < vNearbyObjects.size() && !bFoundStation; i++) {
@@ -5653,7 +5651,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(player.getPlayData().setCraftingStage(Constants.CRAFTING_STAGE_SELECT_DRAFT_SCHEMATIC));
 
 			BitSet schematics = player.getPlayData().getSchematics();
-			ArrayList<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
+			List<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
 			int schematicComplexityLimit = 0;
 			for (int i = schematics.nextSetBit(0); i >= 0; i = schematics.nextSetBit(i+1)) {
 				CraftingSchematic schem = DatabaseInterface.getSchematicByIndex(i);
@@ -5678,7 +5676,7 @@ public class ZoneClientThread implements Runnable {
 		case 8925: {
 			// Food or spice crafting
 			boolean bFoundStation = false;
-			ArrayList<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
+			List<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
 			vNearbyObjects.addAll(server.getStaticObjectsAroundObject(player, 6));
 			SOEObject o = null;
 			for (int i = 0; i < vNearbyObjects.size() && !bFoundStation; i++) {
@@ -5710,7 +5708,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(player.getPlayData().setCraftingStage(Constants.CRAFTING_STAGE_SELECT_DRAFT_SCHEMATIC));
 
 			BitSet schematics = player.getPlayData().getSchematics();
-			ArrayList<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
+			List<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
 			int schematicComplexityLimit = 0;
 			for (int i = schematics.nextSetBit(0); i >= 0; i = schematics.nextSetBit(i+1)) {
 				CraftingSchematic schem = DatabaseInterface.getSchematicByIndex(i);
@@ -5740,7 +5738,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(player.setNumExperimentationPoints(-1));
 			client.insertPacket(player.getPlayData().setCraftingStage(Constants.CRAFTING_STAGE_SELECT_DRAFT_SCHEMATIC));
 			BitSet schematics = player.getPlayData().getSchematics();
-			ArrayList<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
+			List<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
 			for (int i = schematics.nextSetBit(0); i >= 0; i = schematics.nextSetBit(i+1)) {
 				CraftingSchematic schem = DatabaseInterface.getSchematicByIndex(i);
 				if (schem.getComplexity() < 20) {
@@ -5754,7 +5752,7 @@ public class ZoneClientThread implements Runnable {
 		case 8927: {
 			// Jedi tool
 			boolean bFoundStation = false;
-			ArrayList<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
+			List<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
 			vNearbyObjects.addAll(server.getStaticObjectsAroundObject(player, 6));
 			SOEObject o = null;
 			for (int i = 0; i < vNearbyObjects.size() && !bFoundStation; i++) {
@@ -5786,7 +5784,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(player.getPlayData().setCraftingStage(Constants.CRAFTING_STAGE_SELECT_DRAFT_SCHEMATIC));
 
 			BitSet schematics = player.getPlayData().getSchematics();
-			ArrayList<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
+			List<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
 			int schematicComplexityLimit = 0;
 			for (int i = schematics.nextSetBit(0); i >= 0; i = schematics.nextSetBit(i+1)) {
 				CraftingSchematic schem = DatabaseInterface.getSchematicByIndex(i);
@@ -5811,7 +5809,7 @@ public class ZoneClientThread implements Runnable {
 		case 8934: {
 			// Space tool -- ships, missiles, blasters, etc.
 			boolean bFoundStation = false;
-			ArrayList<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
+			List<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
 			vNearbyObjects.addAll(server.getStaticObjectsAroundObject(player, 6));
 			SOEObject o = null;
 			for (int i = 0; i < vNearbyObjects.size() && !bFoundStation; i++) {
@@ -5843,7 +5841,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(player.getPlayData().setCraftingStage(Constants.CRAFTING_STAGE_SELECT_DRAFT_SCHEMATIC));
 
 			BitSet schematics = player.getPlayData().getSchematics();
-			ArrayList<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
+			List<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
 			int schematicComplexityLimit = 0;
 			for (int i = schematics.nextSetBit(0); i >= 0; i = schematics.nextSetBit(i+1)) {
 				CraftingSchematic schem = DatabaseInterface.getSchematicByIndex(i);
@@ -5866,7 +5864,7 @@ public class ZoneClientThread implements Runnable {
 		case 8937: {
 			// Structures and furniture
 			boolean bFoundStation = false;
-			ArrayList<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
+			List<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
 			vNearbyObjects.addAll(server.getStaticObjectsAroundObject(player, 6));
 			SOEObject o = null;
 			for (int i = 0; i < vNearbyObjects.size() && !bFoundStation; i++) {
@@ -5898,7 +5896,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(player.getPlayData().setCraftingStage(Constants.CRAFTING_STAGE_SELECT_DRAFT_SCHEMATIC));
 
 			BitSet schematics = player.getPlayData().getSchematics();
-			ArrayList<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
+			List<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
 			int schematicComplexityLimit = 0;
 			for (int i = schematics.nextSetBit(0); i >= 0; i = schematics.nextSetBit(i+1)) {
 				CraftingSchematic schem = DatabaseInterface.getSchematicByIndex(i);
@@ -5922,7 +5920,7 @@ public class ZoneClientThread implements Runnable {
 		case 8940: {
 			// Weapon, Droid, General Item -- You are identical to General, except you can handle more advanced schematics.
 			boolean bFoundStation = false;
-			ArrayList<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
+			List<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(player, 6.0f);
 			vNearbyObjects.addAll(server.getStaticObjectsAroundObject(player, 6));
 			SOEObject o = null;
 			for (int i = 0; i < vNearbyObjects.size() && !bFoundStation; i++) {
@@ -5954,7 +5952,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(player.getPlayData().setCraftingStage(Constants.CRAFTING_STAGE_SELECT_DRAFT_SCHEMATIC));
 
 			BitSet schematics = player.getPlayData().getSchematics();
-			ArrayList<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
+			List<CraftingSchematic> vSchematicsToDisplay = new ArrayList<CraftingSchematic>();
 			int schematicComplexityLimit = 0;
 			for (int i = schematics.nextSetBit(0); i >= 0; i = schematics.nextSetBit(i+1)) {
 				CraftingSchematic schem = DatabaseInterface.getSchematicByIndex(i);
@@ -6040,7 +6038,7 @@ public class ZoneClientThread implements Runnable {
 
 		if(sParameters[0].isEmpty())
 		{
-			ArrayList<String> vKnownMusic = player.getKnownMusic();
+			List<String> vKnownMusic = player.getKnownMusic();
 			String [] sDanceList = new String [vKnownMusic.size()];
 			for(int i = 0; i < vKnownMusic.size();i++)
 			{
@@ -6053,7 +6051,7 @@ public class ZoneClientThread implements Runnable {
 			long PlayerID = 0;
 			SUIWindow w = new SUIWindow(player);
 			w.setWindowType(Constants.SUI_START_MUSIC_NO_PARAMS);
-			//SUIScriptListBox(ZoneClient client, String WindowTypeString, String DataListTitle, String DataListPrompt, String sList[], ArrayList<SOEObject> ObjectList,long ObjectID, long PlayerID){
+			//SUIScriptListBox(ZoneClient client, String WindowTypeString, String DataListTitle, String DataListPrompt, String sList[], Vector<SOEObject> ObjectList,long ObjectID, long PlayerID){
 			client.insertPacket(w.SUIScriptListBox(client, WindowTypeString, DataListTitle, DataListPrompt, sDanceList, null, ObjectID, PlayerID));
 		}
 		else
@@ -6123,7 +6121,7 @@ public class ZoneClientThread implements Runnable {
 				));
 			
 		
-				ArrayList<Player> vPL = player.getPlayersListening();
+				List<Player> vPL = player.getPlayersListening();
 				for(int i = 0; i < vPL.size(); i ++)
 				{
 					Player p = vPL.get(i);
@@ -6181,7 +6179,7 @@ public class ZoneClientThread implements Runnable {
 		{
 			//actually from here we send a sui box containing the dances the player knows
 			//client.insertPacket(PacketFactory.buildDeltasMessage(Constants.BASELINES_CREO, (byte)6, (short)1, (short)0x03, player, "dance_1", false), Constants.PACKET_RANGE_CHAT_RANGE);
-			ArrayList<String> vKnownDances = player.getKnownDances();
+			List<String> vKnownDances = player.getKnownDances();
 			String [] sDanceList = new String [vKnownDances.size()];
 			for(int i = 0; i < vKnownDances.size();i++)
 			{
@@ -6194,7 +6192,7 @@ public class ZoneClientThread implements Runnable {
 			long PlayerID = 0;
 			SUIWindow w = new SUIWindow(player);
 			w.setWindowType(Constants.SUI_START_DANCE_NO_PARAMS);
-			//SUIScriptListBox(ZoneClient client, String WindowTypeString, String DataListTitle, String DataListPrompt, String sList[], ArrayList<SOEObject> ObjectList,long ObjectID, long PlayerID){
+			//SUIScriptListBox(ZoneClient client, String WindowTypeString, String DataListTitle, String DataListPrompt, String sList[], Vector<SOEObject> ObjectList,long ObjectID, long PlayerID){
 			client.insertPacket(w.SUIScriptListBox(client, WindowTypeString, DataListTitle, DataListPrompt, sDanceList, null, ObjectID, PlayerID));
 
 		}
@@ -6267,7 +6265,7 @@ public class ZoneClientThread implements Runnable {
 					0, 0.0f, false
 			));
 
-			ArrayList<Player> vWL = player.getPlayersWatching();
+			List<Player> vWL = player.getPlayersWatching();
 			for(int i =0; i < vWL.size(); i++)
 			{
 				Player p = vWL.get(i);
@@ -6565,7 +6563,7 @@ public class ZoneClientThread implements Runnable {
 			boolean bPlayerHasFriend = false;
 			boolean bFriendHasPlayerAsFriend = false;
 
-			ArrayList<PlayerFriends> vPlayerFriends = player.getFriendsList();
+			List<PlayerFriends> vPlayerFriends = player.getFriendsList();
 			System.out.println("Player friend list size: " + vPlayerFriends.size());
 			for (int i = 0; i < vPlayerFriends.size() && !bPlayerHasFriend; i++) { 
 				PlayerFriends friendName = vPlayerFriends.get(i);
@@ -6576,7 +6574,7 @@ public class ZoneClientThread implements Runnable {
 			}
 			if (bPlayerHasFriend) {
 				System.out.println("Player has friend");
-				ArrayList<PlayerFriends> vFriendPlayerFriends = friend.getFriendsList();
+				List<PlayerFriends> vFriendPlayerFriends = friend.getFriendsList();
 				for (int i = 0; i < vFriendPlayerFriends.size() && !bFriendHasPlayerAsFriend; i++) {
 					PlayerFriends name = vFriendPlayerFriends.get(i);
 					if (name.getName().equalsIgnoreCase(sParamaters[0])) {
@@ -6639,7 +6637,7 @@ public class ZoneClientThread implements Runnable {
 		{
 			Weapon theWeapon = (Weapon)object;
 			if (actionToTake == 4) {
-				ArrayList<Player> vPL = server.getPlayersAroundObject(player, false);
+				List<Player> vPL = server.getPlayersAroundObject(player, false);
 				for(int i =0; i < vPL.size();i++)
 				{
 					Player p = vPL.get(i);
@@ -6803,7 +6801,7 @@ public class ZoneClientThread implements Runnable {
 					if(iT.getRaceRestrictions()[0] != -1)
 					{
 						int [] r = iT.getRaceRestrictions();
-						ArrayList<Integer> vRest = new ArrayList<Integer>();
+						List<Integer> vRest = new ArrayList<Integer>();
 						for(int i = 0; i < r.length; i++)
 						{
 							vRest.add(r[i]);
@@ -6826,7 +6824,7 @@ public class ZoneClientThread implements Runnable {
 					{
 						iT.setEquipped(dC, 4);
 						client.insertPacket(PacketFactory.buildUpdateContainmentMessage(iTT, dC, 4),Constants.PACKET_RANGE_CHAT_RANGE);
-						ArrayList<Player> vPL = server.getPlayersAroundObject(player, false);
+						List<Player> vPL = server.getPlayersAroundObject(player, false);
 						for(int i = 0; i < vPL.size(); i++)
 						{
 							Player p = vPL.get(i);
@@ -6922,7 +6920,7 @@ public class ZoneClientThread implements Runnable {
 							player.getInventory().removeLinkedObject(iT);
 							iT.setEquipped(dC, -1);
 							client.insertPacket(PacketFactory.buildUpdateContainmentMessage(iTT, dC, -1),Constants.PACKET_RANGE_CHAT_RANGE);
-							ArrayList<Player> vPL = server.getPlayersAroundObject(player, false);
+							List<Player> vPL = server.getPlayersAroundObject(player, false);
 							for(int i = 0; i < vPL.size(); i++)
 							{
 								Player p = vPL.get(i);
@@ -6953,7 +6951,7 @@ public class ZoneClientThread implements Runnable {
 					{
 						iT.setEquipped(dC, 4);//equip, this should not happen here tho but Just in case
 						client.insertPacket(PacketFactory.buildUpdateContainmentMessage(iTT, dC, 4),Constants.PACKET_RANGE_CHAT_RANGE);
-						ArrayList<Player> vPL = server.getPlayersAroundObject(player, false);
+						List<Player> vPL = server.getPlayersAroundObject(player, false);
 						for(int i = 0; i < vPL.size(); i++)
 						{
 							Player p = vPL.get(i);
@@ -6990,7 +6988,7 @@ public class ZoneClientThread implements Runnable {
 					{
 						iT.setEquipped(dC, 4);//equip, this should not happen here tho but Just in case
 						client.insertPacket(PacketFactory.buildUpdateContainmentMessage(iTT, dC, 4),Constants.PACKET_RANGE_CHAT_RANGE);
-						ArrayList<Player> vPL = server.getPlayersAroundObject(player, false);
+						List<Player> vPL = server.getPlayersAroundObject(player, false);
 						for(int i = 0; i < vPL.size(); i++)
 						{
 							Player p = vPL.get(i);
@@ -7013,7 +7011,7 @@ public class ZoneClientThread implements Runnable {
 					if(iT.getRaceRestrictions()[0] != -1)
 					{
 						int [] r = iT.getRaceRestrictions();
-						ArrayList<Integer> vRest = new ArrayList<Integer>();
+						List<Integer> vRest = new ArrayList<Integer>();
 						for(int i = 0; i < r.length; i++)
 						{
 							vRest.add(r[i]);
@@ -7036,7 +7034,7 @@ public class ZoneClientThread implements Runnable {
 					{
 						iT.setEquipped(dC, 4);
 						client.insertPacket(PacketFactory.buildUpdateContainmentMessage(iTT, dC, 4),Constants.PACKET_RANGE_CHAT_RANGE);
-						ArrayList<Player> vPL = server.getPlayersAroundObject(player, false);
+						List<Player> vPL = server.getPlayersAroundObject(player, false);
 						for(int i = 0; i < vPL.size(); i++)
 						{
 							Player p = vPL.get(i);
@@ -7103,7 +7101,7 @@ public class ZoneClientThread implements Runnable {
 				t.setEquipped(c, -1);
 				client.insertPacket(PacketFactory.buildUpdateContainmentMessage(t, c, -1));
 
-				ArrayList<Player> vPL = client.getServer().getPlayersAroundObject(player, true);
+				List<Player> vPL = client.getServer().getPlayersAroundObject(player, true);
 				for(int i = 0; i < vPL.size();i++)
 				{
 					Player p = vPL.get(i);
@@ -7127,7 +7125,7 @@ public class ZoneClientThread implements Runnable {
 
 
 	private void spawnPlayerToNearPlayers() {
-		ArrayList<Player> vPlayersInRange = server.getPlayersAroundObject(player, false);
+		List<Player> vPlayersInRange = server.getPlayersAroundObject(player, false);
 		for (int i = 0; i < vPlayersInRange.size(); i++) {
 			try{
 				Player recipient = vPlayersInRange.get(i);
@@ -7156,7 +7154,7 @@ public class ZoneClientThread implements Runnable {
 			// Cross-server friend add request.
 			String serverName = friendParameters[0];
 			String playerName = friendParameters[1];
-			ArrayList<DatabaseServerInfoContainer> vAllServers = DatabaseInterface.getZoneServers(bIsDeveloper);
+			List<DatabaseServerInfoContainer> vAllServers = DatabaseInterface.getZoneServers(bIsDeveloper);
 			boolean bFoundServer = false;
 			int iServerID = 0;
 			for (int i = 0; i < vAllServers.size() && !bFoundServer; i++) {
@@ -7267,7 +7265,7 @@ public class ZoneClientThread implements Runnable {
 	private void handleRemoveFriendRequest(long targetID, String[] ceq){
 		String FriendToRemove = ceq[0];
 		try {
-			ArrayList<PlayerFriends> itr = client.getPlayer().getFriendsList();
+			List<PlayerFriends> itr = client.getPlayer().getFriendsList();
 			if (!itr.isEmpty()) {
 				for (int i = 0; i < itr.size(); i++) {
 					PlayerFriends F = itr.get(i);
@@ -7496,7 +7494,7 @@ public class ZoneClientThread implements Runnable {
 			int AttachmentSize;
 			AttachmentSize = dIn.readInt();//this is the total size of all attachments in this email
 			int AttachmentCount = AttachmentSize / 42;
-			ArrayList<Waypoint> WL = new ArrayList<Waypoint>();
+			List<Waypoint> WL = new ArrayList<Waypoint>();
 			//System.out.println("Attachment Size:" + AttachmentSize);
 
 			if(AttachmentSize >= 1)
@@ -7543,7 +7541,7 @@ public class ZoneClientThread implements Runnable {
 			String Recipient;
 			Recipient = dIn.readUTF();
 			//System.out.println("Received Recipient String: " + Recipient);
-			//SWGEmail(int objectID, long sender, long receiver, String header, String body, ArrayList<Waypoint> attachments, long creationTime,boolean readFlag)
+			//SWGEmail(int objectID, long sender, long receiver, String header, String body, Vector<Waypoint> attachments, long creationTime,boolean readFlag)
 			//New email when sent by a player has to be set to id -1 so we know we need to assign a new id when inserted into the server.
 			// System.out.println("Email Message Debug:");
 			// System.out.println("Recipient: " + Recipient);
@@ -7561,6 +7559,7 @@ public class ZoneClientThread implements Runnable {
 			SWGEmail E = new SWGEmail(-1,senderID,recipID,Subject,Message,WL,false);
 			E.setTransactionRequester(client);
 			client.getServer().queueEmailNewClientMessage(E);
+			return;
 		}
 		catch (IOException e) {
 			System.out.println("IOException in ClientSendEmailRequest: " + e.toString());
@@ -7634,7 +7633,7 @@ public class ZoneClientThread implements Runnable {
 		System.out.println("handleSetMoodInternal:  Mood " + sNewMood + ", ID " + moodID);
 		player.setMoodID(moodID);
 		player.setMoodString(sNewMood);
-		ArrayList<Player> vPlayersInRange = server.getPlayersAroundObject(player, true);
+		List<Player> vPlayersInRange = server.getPlayersAroundObject(player, true);
 		for (int i = 0; i < vPlayersInRange.size(); i++) {
 			ZoneClient theClient = vPlayersInRange.get(i).getClient();
 			theClient.insertPacket(PacketFactory.buildDeltasMessage(Constants.BASELINES_CREO, (byte)6,  (short)1, (short)4, player, sNewMood, false));
@@ -7695,7 +7694,7 @@ public class ZoneClientThread implements Runnable {
 			//remove any pets from the world
 			if(player.getCalledPets().size() >= 1)
 			{
-				ArrayList<CreaturePet> vCP = player.getCalledPets();
+				List<CreaturePet> vCP = player.getCalledPets();
 				for(int i = 0; i < vCP.size(); i++)
 				{
 					CreaturePet pet = vCP.get(i);
@@ -7705,7 +7704,7 @@ public class ZoneClientThread implements Runnable {
 				}
 			}
 			//inform everyone who has us in their friends list were off line
-			Hashtable<SocketAddress,ZoneClient> vAllPlayers = client.getServer().getAllClients();
+			ConcurrentHashMap<SocketAddress,ZoneClient> vAllPlayers = client.getServer().getAllClients();
 			Enumeration<ZoneClient> vAllClients = vAllPlayers.elements();
 			while(vAllClients.hasMoreElements())
 			{
@@ -7718,7 +7717,7 @@ public class ZoneClientThread implements Runnable {
 				}
 			}
 
-			ArrayList<Player> vNearbyPlayers = server.getPlayersAroundObject(player, false);
+			List<Player> vNearbyPlayers = server.getPlayersAroundObject(player, false);
 			for (int i = 0; i < vNearbyPlayers.size(); i++) {
 				Player thePlayer = vNearbyPlayers.get(i);
 				ZoneClient client = vNearbyPlayers.get(i).getClient();
@@ -7834,8 +7833,8 @@ public class ZoneClientThread implements Runnable {
 			sPlanet = dIn.readUTF();
 			dIn.close();
 			dIn = null;
-			ArrayList<MapLocationData> vStaticLocations = server.getStaticMapLocations(sPlanet);
-			ArrayList<MapLocationData> vPlayerMadeLocations = server.getPlayerMapLocations(sPlanet);
+			List<MapLocationData> vStaticLocations = server.getStaticMapLocations(sPlanet);
+			List<MapLocationData> vPlayerMadeLocations = server.getPlayerMapLocations(sPlanet);
 			client.insertPacket(PacketFactory.buildGetMapLocationsResponseMessage(sPlanet, vStaticLocations, vPlayerMadeLocations));
 		} catch (IOException e) {
 			System.out.println("Error handling MapLocationRequestMessage -- returning blank list.");
@@ -8074,8 +8073,8 @@ public class ZoneClientThread implements Runnable {
 									W2.setWindowType(Constants.SUI_FROG_SELECT_WEAPON);
 									W2.setOriginatingObject(o);
 									W2.setOriginatingObject(player);
-									ArrayList<String> vDT = DatabaseInterface.getWeaponSet();
-									//ArrayList<SOEObject> oL = new ArrayList<SOEObject>();
+									List<String> vDT = DatabaseInterface.getWeaponSet();
+									//Vector<SOEObject> oL = new Vector<SOEObject>();
 									String [] sList = new String [vDT.size()];
 									for(int i = 0; i < vDT.size(); i++)
 									{
@@ -8099,8 +8098,8 @@ public class ZoneClientThread implements Runnable {
 									W2.setWindowType(Constants.SUI_FROG_SELECT_DEED);
 									W2.setOriginatingObject(o);
 									W2.setOriginatingObject(player);
-									ArrayList<DeedTemplate> vDT = DatabaseInterface.getBlueFrogDeedTemplates();
-									//ArrayList<SOEObject> oL = new ArrayList<SOEObject>();
+									List<DeedTemplate> vDT = DatabaseInterface.getBlueFrogDeedTemplates();
+									//Vector<SOEObject> oL = new Vector<SOEObject>();
 									String [] sList = new String [vDT.size()];
 									for(int i = 0; i < vDT.size(); i++)
 									{
@@ -8123,8 +8122,8 @@ public class ZoneClientThread implements Runnable {
 									W2.setWindowType(Constants.SUI_FROG_SELECT_WEARABLES_CAT);
 									W2.setOriginatingObject(o);
 									W2.setOriginatingObject(player);
-									ArrayList<String> vDT = DatabaseInterface.getWearablesSets();
-									//ArrayList<SOEObject> oL = new ArrayList<SOEObject>();
+									List<String> vDT = DatabaseInterface.getWearablesSets();
+									//Vector<SOEObject> oL = new Vector<SOEObject>();
 									String [] sList = new String [vDT.size()];
 									for(int i = 0; i < vDT.size(); i++)
 									{
@@ -8147,8 +8146,8 @@ public class ZoneClientThread implements Runnable {
 									W2.setWindowType(Constants.SUI_FROG_SELECT_ARMOR);
 									W2.setOriginatingObject(o);
 									W2.setOriginatingObject(player);
-									ArrayList<String> vDT = DatabaseInterface.getArmorSet();
-									//ArrayList<SOEObject> oL = new ArrayList<SOEObject>();
+									List<String> vDT = DatabaseInterface.getArmorSet();
+									//Vector<SOEObject> oL = new Vector<SOEObject>();
 									String [] sList = new String [vDT.size()];
 									for(int i = 0; i < vDT.size(); i++)
 									{
@@ -8239,8 +8238,8 @@ public class ZoneClientThread implements Runnable {
 									W2.setWindowType(Constants.SUI_FROG_SELECT_TOOLS_CAT);
 									W2.setOriginatingObject(o);
 									W2.setOriginatingObject(player);
-									ArrayList<String> vDT = DatabaseInterface.getTools();
-									//ArrayList<SOEObject> oL = new ArrayList<SOEObject>();
+									List<String> vDT = DatabaseInterface.getTools();
+									//Vector<SOEObject> oL = new Vector<SOEObject>();
 									String [] sList = new String [vDT.size()];
 									for(int i = 0; i < vDT.size(); i++)
 									{
@@ -9188,8 +9187,8 @@ public class ZoneClientThread implements Runnable {
 						W2.setWindowType(Constants.SUI_FROG_SELECT_TOOL);
 						W2.setOriginatingObject(player);
 						String sCategoryString = DatabaseInterface.getTools().get(iCategorySelected);
-						ArrayList<ItemTemplate> vDT = DatabaseInterface.getItemTemplateToolsGroup(iCategorySelected);
-						//ArrayList<SOEObject> oL = new Vector<SOEObject>();
+						List<ItemTemplate> vDT = DatabaseInterface.getItemTemplateToolsGroup(iCategorySelected);
+						//Vector<SOEObject> oL = new Vector<SOEObject>();
 						String [] sList = new String [vDT.size()];
 						for(int i = 0; i < vDT.size(); i++)
 						{
@@ -9209,7 +9208,7 @@ public class ZoneClientThread implements Runnable {
 						W2.setWindowType(Constants.SUI_FROG_SELECT_WEARABLE);
 						W2.setOriginatingObject(player);
 						String sCategoryString = DatabaseInterface.getWearablesSets().get(iCategorySelected);
-						ArrayList<ItemTemplate> vDT = DatabaseInterface.getItemTemplateWearableGroup(iCategorySelected);
+						List<ItemTemplate> vDT = DatabaseInterface.getItemTemplateWearableGroup(iCategorySelected);
 						//Vector<SOEObject> oL = new Vector<SOEObject>();
 						String [] sList = new String [vDT.size()];
 						for(int i = 0; i < vDT.size(); i++)
@@ -9230,7 +9229,7 @@ public class ZoneClientThread implements Runnable {
 						if(iItemSelected != -1)
 						{
 							String [] sCategory = suiWindowTitleString.split(",");
-							ArrayList<String> vCat = DatabaseInterface.getWearablesSets();
+							List<String> vCat = DatabaseInterface.getWearablesSets();
 							int iCategory = -1;
 							for(int i = 0; i < vCat.size();i++)
 							{
@@ -9242,7 +9241,7 @@ public class ZoneClientThread implements Runnable {
 							if(iCategory != -1)
 							{
 								//System.out.println("Category ID:" + iCategory + " " + vCat.get(iCategory));
-								ArrayList<ItemTemplate> vDT = DatabaseInterface.getItemTemplateWearableGroup(iCategory);
+								List<ItemTemplate> vDT = DatabaseInterface.getItemTemplateWearableGroup(iCategory);
 								ItemTemplate T = vDT.get(iItemSelected);
 								// System.out.println("Template ID Selected: " + T.getTemplateID() + " IFF: " + T.getIFFFileName());
 								TangibleItem I = new TangibleItem();
@@ -9271,7 +9270,7 @@ public class ZoneClientThread implements Runnable {
 						if(iItemSelected != -1)
 						{
 							String [] sCategory = suiWindowTitleString.split(",");
-							ArrayList<String> vCat = DatabaseInterface.getTools();
+							List<String> vCat = DatabaseInterface.getTools();
 							int iCategory = -1;
 							for(int i = 0; i < vCat.size();i++)
 							{
@@ -9283,7 +9282,7 @@ public class ZoneClientThread implements Runnable {
 							if(iCategory != -1)
 							{
 								//System.out.println("Category ID:" + iCategory + " " + vCat.get(iCategory));
-								ArrayList<ItemTemplate> vDT = DatabaseInterface.getItemTemplateToolsGroup(iCategory);
+								List<ItemTemplate> vDT = DatabaseInterface.getItemTemplateToolsGroup(iCategory);
 								ItemTemplate T = vDT.get(iItemSelected);
 								int templateID = T.getTemplateID();
 								TangibleItem I = null;
@@ -9328,7 +9327,7 @@ public class ZoneClientThread implements Runnable {
 					case Constants.SUI_FROG_SELECT_ARMOR: {
 						int iCategorySelected = Integer.parseInt(sSelectionIDString);
 						//String sCategoryString = DatabaseInterface.getArmorSet().get(iCategorySelected);
-						ArrayList<ItemTemplate> vDT = DatabaseInterface.getItemTemplateArmorGroup(iCategorySelected);
+						List<ItemTemplate> vDT = DatabaseInterface.getItemTemplateArmorGroup(iCategorySelected);
 						for(int i = 0; i < vDT.size();i++)
 						{
 							ItemTemplate T = vDT.get(i);
@@ -9352,7 +9351,7 @@ public class ZoneClientThread implements Runnable {
 					case Constants.SUI_FROG_SELECT_DEED:
 					case Constants.SUI_SELECT_DEED: {
 						int iDeedSelected = Integer.parseInt(sSelectionIDString);
-						ArrayList<DeedTemplate> vDT = DatabaseInterface.getBlueFrogDeedTemplates();
+						List<DeedTemplate> vDT = DatabaseInterface.getBlueFrogDeedTemplates();
 						DeedTemplate t = vDT.get(iDeedSelected);
 						if(t!=null)
 						{
@@ -9586,7 +9585,7 @@ public class ZoneClientThread implements Runnable {
 					case Constants.SUI_SELECT_LOCATION_TO_CLONE: {
 						// They've selected a cloning facility;
 						System.out.print("Cloning the player");
-						ArrayList<MapLocationData> cloneMapLocations = player.getLastSeenCloneLocations();
+						List<MapLocationData> cloneMapLocations = player.getLastSeenCloneLocations();
 						MapLocationData theLocation = cloneMapLocations.get(Integer.parseInt(sReceivedStrings[0]));
 						TravelDestination T = new TravelDestination("Cloning", theLocation.getPlanetID(), 0, false,theLocation.getCurrentX(),theLocation.getCurrentY(),0.0f);
 						System.out.println(" at " + Constants.PlanetNames[theLocation.getPlanetID()] + ", X["+theLocation.getCurrentX() + "], Y["+theLocation.getCurrentY()+"]");
@@ -9842,8 +9841,8 @@ public class ZoneClientThread implements Runnable {
 						int iToDeduct  = Integer.parseInt(sReceivedStrings[1]);
 						Structure s = (Structure)window.getOriginatingObject();
 	
-						ArrayList<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
-						ArrayList<TangibleItem> vInventoryItems = player.getInventoryItems();
+						List<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
+						List<TangibleItem> vInventoryItems = player.getInventoryItems();
 						for(int i =0; i < vInventoryItems.size();i++)
 						{
 							TangibleItem o = vInventoryItems.get(i);
@@ -10092,7 +10091,7 @@ public class ZoneClientThread implements Runnable {
 					}
 					case Constants.SUI_FACTORY_UPDATE_INSTALLED_SCHEMATIC: {
 						Factory factory = (Factory)window.getOriginatingObject();
-						ArrayList<ManufacturingSchematic> vSchematics = player.getSchematicsForFactory(factory.getFactoryType());
+						List<ManufacturingSchematic> vSchematics = player.getSchematicsForFactory(factory.getFactoryType());
 						int iSelection = Integer.parseInt(sSelectionIDString);
 						ManufacturingSchematic currentSchematic = factory.getCurrentSchematic();
 						
@@ -10121,7 +10120,7 @@ public class ZoneClientThread implements Runnable {
                                         case Constants.SUI_FROG_SELECT_WEAPON: {
 						int iCategorySelected = Integer.parseInt(sSelectionIDString);
 						//String sCategoryString = DatabaseInterface.getArmorSet().get(iCategorySelected);
-						ArrayList<ItemTemplate> vDT = DatabaseInterface.getItemTemplateWeaponGroup(iCategorySelected);
+						List<ItemTemplate> vDT = DatabaseInterface.getItemTemplateWeaponGroup(iCategorySelected);
 						for(int i = 0; i < vDT.size();i++)
 						{
 							ItemTemplate T = vDT.get(i);
@@ -10531,7 +10530,7 @@ public class ZoneClientThread implements Runnable {
 			if(StructureName!=null && !StructureName.isEmpty())
 			{
 				//means we got a name and were gonna find the structure by name
-				Hashtable <Long,Structure> vPS = player.getAllPlayerStructures();
+				ConcurrentHashMap <Long,Structure> vPS = player.getAllPlayerStructures();
 				Enumeration <Structure> sEnum = vPS.elements();
 				long sID = 0;
 				while(sEnum.hasMoreElements())
@@ -12204,7 +12203,7 @@ public class ZoneClientThread implements Runnable {
 		 *  00 * */
 		try{
 			Harvester harvester = (Harvester)server.getObjectFromAllObjects(targetID);                
-			ArrayList<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();  
+			List<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();  
 			if (vResourcesAvailable == null || vResourcesAvailable.isEmpty()) {
 				harvester.initializeAvailableResources();
 				vResourcesAvailable = harvester.getResourcesAvailable();
@@ -12335,7 +12334,7 @@ public class ZoneClientThread implements Runnable {
 			{
 				// Deactivate the installation.
 				harvester.deactivateInstallation();
-				ArrayList<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();
+				List<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();
 				client.insertPacket(PacketFactory.buildBaselineHINO7(harvester, vResourcesAvailable));
 				client.insertPacket(PacketFactory.buildDeltasMessageHINO7(harvester, vResourcesAvailable));
 			}
@@ -13007,7 +13006,7 @@ public class ZoneClientThread implements Runnable {
 			}
 			else
 			{
-				ArrayList<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();
+				List<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();
 
 				client.insertPacket(PacketFactory.buildBaselineHINO7(harvester, vResourcesAvailable));
 				client.insertPacket(PacketFactory.buildDeltasMessageHINO7(harvester, vResourcesAvailable));
@@ -13205,7 +13204,7 @@ public class ZoneClientThread implements Runnable {
 				if(s.usesPower() && s.isAdmin(player.getID()))
 				{
 					int iPowerOnHand = 0;
-					ArrayList<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
+					List<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
 					for(int i =0; i < client.getPlayer().getInventoryItems().size();i++)
 					{
 						TangibleItem t = client.getPlayer().getInventoryItems().get(i);
@@ -13415,7 +13414,7 @@ public class ZoneClientThread implements Runnable {
 			
 			vResources.clear();
 			//harvester.resetHarvesterResourceUpdateCounter();
-			ArrayList<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();
+			List<SpawnedResourceData> vResourcesAvailable = harvester.getResourcesAvailable();
 
 			client.insertPacket(PacketFactory.buildBaselineHINO7(harvester, vResourcesAvailable));
 			client.insertPacket(PacketFactory.buildDeltasMessageHINO7(harvester, vResourcesAvailable));
@@ -13429,7 +13428,7 @@ public class ZoneClientThread implements Runnable {
 		// targetID == 0
 		// Schematic to deal with is the player's saved last schematic list, crafting schematic at index sParams[0]
 		int schematicIndex = Integer.parseInt(sParams[0]);
-		ArrayList<CraftingSchematic> vSentSchematics = player.getLastSentCraftingSchematicList();
+		List<CraftingSchematic> vSentSchematics = player.getLastSentCraftingSchematicList();
 		try {
 			CraftingSchematic schematic = vSentSchematics.get(schematicIndex);
 			ManufacturingSchematic manuSchematic = schematic.createManufacturingSchematic();
@@ -13794,7 +13793,7 @@ public class ZoneClientThread implements Runnable {
 					System.out.println("Got previous quantity inserted: " + quantityToAdd);
 					SpawnedResourceData resourceData = server.getResourceManager().getResourceByID(vSlotIngredientIDs[i]);
 					if (resourceData != null) {
-						ArrayList<TangibleItem> vInventoryItems = player.getInventoryItems();
+						List<TangibleItem> vInventoryItems = player.getInventoryItems();
 						boolean bFound = false;
 						for (int j = 0; j < vInventoryItems.size() && !bFound; j++) {
 							TangibleItem item = vInventoryItems.get(j);
@@ -13966,7 +13965,7 @@ public class ZoneClientThread implements Runnable {
 			// vIDs 8, 9, 0A,
 			ManufacturingSchematic schematic = player.getCurrentManufacturingSchematic();
 			schematic.setCanRecoverInstalledItems(false);
-			ArrayList<ManufacturingSchematicAttribute> vAttribs = new ArrayList<ManufacturingSchematicAttribute>();
+			List<ManufacturingSchematicAttribute> vAttribs = new ArrayList<ManufacturingSchematicAttribute>();
 			ManufacturingSchematicAttribute complexityAttribute = new ManufacturingSchematicAttribute();
 			CraftingSchematic cSchematic = schematic.getCraftingSchematic();
 			// Add attributes to the Tangible item at this stage, based on what type of thing we are crafting.
@@ -14757,7 +14756,7 @@ public class ZoneClientThread implements Runnable {
 		int iTotalDamage = iDamageToApply;
 
 		// If the damage to apply was 0 or less, we must have missed or been blocked somehow.
-		ArrayList<Integer> vCRCs = specialAttack.getAnimationCRC();
+		List<Integer> vCRCs = specialAttack.getAnimationCRC();
 		int iCRCToSend = 0;
 		if (vCRCs != null) {
 			if (!vCRCs.isEmpty()) {
@@ -14845,7 +14844,7 @@ public class ZoneClientThread implements Runnable {
 			player.updateCurrentHam(6, -iTotalMindCost);
 		}
 
-		ArrayList<Player> vPlayersInRange = server.getPlayersAroundObject(player, true);
+		List<Player> vPlayersInRange = server.getPlayersAroundObject(player, true);
 		for (int i = 0; i < vPlayersInRange.size(); i++) {
 			Player thePlayer = vPlayersInRange.get(i);
 			thePlayer.getClient().insertPacket(PacketFactory.buildCombatTextSpam(player, thePlayer, targetObject, "cbt_spam", specialAttack.getCombatSTFSpamArr()[iHitState], iTotalDamage));
@@ -15082,7 +15081,7 @@ public class ZoneClientThread implements Runnable {
 		// When the user declares peace, we need to dequeue all of the queued commands that have a combat action attached to them.  We also need to check all of the Players and NPCs defending against the player,
 		// to ensure that none of them have a pending attack on "me".
 		// If nobody does, we can remove the STATE_COMBAT from "me".  Otherwise, he needs to remain in combat.
-		ArrayList<SOEObject> vAllNearObjects = server.getCreaturesAroundPlayer(player);
+		List<SOEObject> vAllNearObjects = server.getCreaturesAroundPlayer(player);
 		for (int i = 0; i < vAllNearObjects.size(); i++) {
 			SOEObject o = vAllNearObjects.get(i);
 			if (o instanceof NPC) {

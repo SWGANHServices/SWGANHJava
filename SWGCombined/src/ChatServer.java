@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class ChatServer implements Runnable{
-	private ArrayList<Chatroom> vRoomsInServer;
+	private List<Chatroom> vRoomsInServer;
 	private int serverID;
 	private ZoneServer zServer;
 	private Thread myThread;
@@ -33,7 +34,7 @@ public class ChatServer implements Runnable{
 	 * Get a list of rooms on this ChatServer.
 	 * @return The list of ChatRooms currently created on this ChatServer.
 	 */
-	public ArrayList<Chatroom> getRooms() {
+	public List<Chatroom> getRooms() {
 		return vRoomsInServer;
 	}
 	
@@ -41,6 +42,7 @@ public class ChatServer implements Runnable{
 	 * The run function of this ChatServer's thread.  Loops through each room and updates it's status.
 	 * If any chat messages are pending to be sent, it sends them to all the connected players.
 	 */
+        @Override
 	public void run() {
 		
 		while (myThread != null) {
@@ -49,9 +51,9 @@ public class ChatServer implements Runnable{
 					Thread.yield();
 					wait(100);
 				}
-			} catch (Exception e) {
+			} catch (InterruptedException e) {
 				System.out.println("Error in ChatRoom thread: " + e.toString());
-				e.printStackTrace();
+				
 			}
 		}
 	}

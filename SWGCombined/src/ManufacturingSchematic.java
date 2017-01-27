@@ -1,6 +1,8 @@
 import java.io.IOException;
 import java.util.Arrays;
+import java.util.List;
 import java.util.ArrayList;
+
 
 public class ManufacturingSchematic extends IntangibleObject {
 	public final static long serialVersionUID = 1l;
@@ -27,7 +29,7 @@ public class ManufacturingSchematic extends IntangibleObject {
 	
 	
 	// MSCO3 vID 5
-	private ArrayList<ManufacturingSchematicAttribute> vSchematicAttributes;
+	private List<ManufacturingSchematicAttribute> vSchematicAttributes;
 	private int iSchematicAttributeUpdateCount = 0;
 	private boolean bCanRecoverInstalledItems = true;
 	
@@ -108,7 +110,7 @@ public class ManufacturingSchematic extends IntangibleObject {
 		return null;
 	}
 	
-	protected byte[] addSchematicAttribute(ArrayList<ManufacturingSchematicAttribute> vAttribs, boolean bUpdateZone) throws IOException {
+	protected byte[] addSchematicAttribute(List<ManufacturingSchematicAttribute> vAttribs, boolean bUpdateZone) throws IOException {
 		vSchematicAttributes.addAll(vAttribs);
 		if (bUpdateZone) {
 			return PacketFactory.buildDeltasMSCO3SchematicAttribute(this, vAttribs.size(), Constants.DELTA_CREATING_ITEM);
@@ -116,7 +118,7 @@ public class ManufacturingSchematic extends IntangibleObject {
 		return null;
 	}
 	
-	protected ArrayList<ManufacturingSchematicAttribute> getSchematicAttributes(){
+	protected List<ManufacturingSchematicAttribute> getSchematicAttributes(){
 		return vSchematicAttributes;
 	}
 	
@@ -552,7 +554,7 @@ public class ManufacturingSchematic extends IntangibleObject {
 
 	protected void setCraftingSchematic(CraftingSchematic schem) {
 		cSchematic = schem;
-		ArrayList<CraftingSchematicComponent> vComponentList = schem.getComponents();
+		List<CraftingSchematicComponent> vComponentList = schem.getComponents();
 		CraftingSchematicComponent[] vComponentArray = null;
 		if (vComponentList != null) {
 			vComponentArray = new CraftingSchematicComponent[vComponentList.size()];
@@ -738,11 +740,11 @@ public class ManufacturingSchematic extends IntangibleObject {
 	
 	protected int setExperimentalValues(ZoneClient client) {
 		// For each experiemental value, find the weight it has by percentage.
-		ArrayList<Integer> requisiteSkills = cSchematic.getRequiredSkillID();
+		List<Integer> requisiteSkills = cSchematic.getRequiredSkillID();
 		boolean bHasAnyRequiredSkill = false;
 		Player player = client.getPlayer(); 
 		Skills theSkill = null;
-		ArrayList<SkillMods> allSkillModsThisSkill = null;
+		List<SkillMods> allSkillModsThisSkill = null;
 		if (requisiteSkills.isEmpty()) {
 			// No required skill
 			System.out.println("No skill required to craft this object: " + itemBeingCrafted.getIFFFileName());

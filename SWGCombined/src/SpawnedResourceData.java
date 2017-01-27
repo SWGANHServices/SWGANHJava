@@ -1,6 +1,5 @@
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Vector;
 
 /**
  * The Spawned Resource Data class holds information on resources that are currently available from the world.
@@ -72,20 +71,20 @@ public class SpawnedResourceData implements Serializable{
 	private String stfFileName;
 	private int iResourceType;
 	
-	private List<ResourceSpawnCoordinateData> spawnCoordinates;
+	private Vector<ResourceSpawnCoordinateData> spawnCoordinates;
 	private int resourceContainerTemplateID;
 	private int drawColor;
-	private List<Attribute> vResourceAttributes;
+	private Vector<Attribute> vResourceAttributes;
 	/**
 	 * Construct a new, empty, spawned resource.
 	 */
 	public SpawnedResourceData() {
 		iPlanetIDs = new int[8];
-		spawnCoordinates = new ArrayList<ResourceSpawnCoordinateData>();
+		spawnCoordinates = new Vector<ResourceSpawnCoordinateData>();
 		for (int i = 0; i < iPlanetIDs.length; i++) {
 			iPlanetIDs[i] = -1;
 		}
-		vResourceAttributes = new ArrayList<Attribute>();
+		vResourceAttributes = new Vector<Attribute>();
 	}
 	
 	/**
@@ -119,7 +118,7 @@ public class SpawnedResourceData implements Serializable{
 		vResourceAttributes.add(a);
 	}
 	
-	protected List<Attribute> getAttributes() {
+	protected Vector<Attribute> getAttributes() {
 		return vResourceAttributes;
 	}
 	/**
@@ -532,8 +531,8 @@ public class SpawnedResourceData implements Serializable{
 		return iResourceType;
 	}
 	
-	protected ArrayList<Float> getDensitiesForSurveyToolUsage(float posX, float posY, float surveyRadius, float distanceIncrement, int numPoints) {
-		ArrayList<Float> vDensitiesAndLocationsToReturn = new ArrayList<Float>();
+	protected Vector<Float> getDensitiesForSurveyToolUsage(float posX, float posY, float surveyRadius, float distanceIncrement, int numPoints) {
+		Vector<Float> vDensitiesAndLocationsToReturn = new Vector<Float>();
 		
 		float leftX = posX - (surveyRadius / 2);
 		//float rightX = posX + (surveyRadius / 2);
@@ -566,7 +565,7 @@ public class SpawnedResourceData implements Serializable{
 	protected float getBestDensityAtLocation(float posX, float posY) {
 		float toReturn = 0;
 		for (int i = 0; i < spawnCoordinates.size(); i++) {
-			ResourceSpawnCoordinateData coords = spawnCoordinates.get(i);
+			ResourceSpawnCoordinateData coords = spawnCoordinates.elementAt(i);
 			int spawnPosX = (int)coords.getSpawnX();
 			int spawnPosY = (int)coords.getSpawnY();
 			int spawnRadius = (int)coords.getSpawnRadius();
@@ -610,17 +609,17 @@ public class SpawnedResourceData implements Serializable{
 	}
 	
 	protected float getDrawX(int index) {
-		ResourceSpawnCoordinateData data = spawnCoordinates.get(index);
+		ResourceSpawnCoordinateData data = spawnCoordinates.elementAt(index);
 		return data.getSpawnX() - (data.getSpawnRadius()/ 2);
 	}
 	
 	protected float getDrawY(int index) {
-		ResourceSpawnCoordinateData data = spawnCoordinates.get(index);
+		ResourceSpawnCoordinateData data = spawnCoordinates.elementAt(index);
 		return data.getSpawnY() - (data.getSpawnRadius()/ 2);
 	}
 	
-	protected ArrayList<ResourceSpawnCoordinateData> getCoordinates() {
-		return (ArrayList<ResourceSpawnCoordinateData>) spawnCoordinates;
+	protected Vector<ResourceSpawnCoordinateData> getCoordinates() {
+		return spawnCoordinates;
 	}
 	protected void addCoordinates(ResourceSpawnCoordinateData coordinates) {
 		spawnCoordinates.add(coordinates);
@@ -631,7 +630,7 @@ public class SpawnedResourceData implements Serializable{
 		float wayX = 0;
 		float wayY = 0;
 		for (int i = 0; i < spawnCoordinates.size(); i++) {
-			ResourceSpawnCoordinateData coords = spawnCoordinates.get(i);
+			ResourceSpawnCoordinateData coords = spawnCoordinates.elementAt(i);
 			int spawnPosX = (int)coords.getSpawnX();
 			int spawnPosY = (int)coords.getSpawnY();
 			float distanceX = (x - spawnPosX);

@@ -3,9 +3,10 @@ import java.util.Arrays;
 import java.util.BitSet;
 import java.util.Iterator;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
 
 /**
@@ -72,10 +73,10 @@ public class Player extends SOEObject {
 			.toKK(HAM_MIGRATION_TIME_MINIMUM_MS);
 	private final static long HAM_MIGRATION_TIME_MAXIMUM_KK_MS = PacketUtils
 			.toKK(HAM_MIGRATION_TIME_MAXIMUM_MS);
-	private long lState; // ArrayLists
-	private ArrayList<TangibleItem> vInventoryItemsList;
-	private ArrayList<SkillMods> vSkillModsList; // This one has to be there.
-	private ArrayList<PlayerFactions> vFactionList; // This one kinda has to be
+	private long lState; // Vectors
+	private List<TangibleItem> vInventoryItemsList;
+	private List<SkillMods> vSkillModsList; // This one has to be there.
+	private List<PlayerFactions> vFactionList; // This one kinda has to be
 													// here... need the faction
 													// AND the faction amount.
 	// Strings
@@ -106,9 +107,9 @@ public class Player extends SOEObject {
 	private PlayerItem thePlayer;
 	// Server related
 	private int iRebelFactionPoints = 0; // These could be part of the
-											// PlayerFactions ArrayList...
+											// PlayerFactions vector...
 	private int iImperialFactionPoints = 0;
-	private Hashtable<Long, Structure> vPlayerStructures;
+	private ConcurrentHashMap<Long, Structure> vPlayerStructures;
 	private boolean bIsDeleted;
 	private long lTotalPlayerOnlineTime;
 	private long lPlayerCreationDate;
@@ -184,24 +185,24 @@ public class Player extends SOEObject {
 	private transient LinkedList<CommandQueueItem> vCommandQueue;
 	private transient String sLastSuiWindowType;
 	private transient Hashtable<Integer, SOEObject> SUIListWindowObjectList;
-	private transient Hashtable<Integer, SUIWindow> PendingSUIWindowList;
+	private transient ConcurrentHashMap<Integer, SUIWindow> PendingSUIWindowList;
 	private transient String[] sLastConversationMenu;
-	private transient ArrayList<DialogOption> vLastConversationMenuOptions;
-	private transient ArrayList<TradeObject> vTradeRequests;
-	private transient ArrayList<Long> vIncomingTradeRequest;
+	private transient List<DialogOption> vLastConversationMenuOptions;
+	private transient List<TradeObject> vTradeRequests;
+	private transient List<Long> vIncomingTradeRequest;
 	private transient TradeObject currentTradeObject;
 	private transient Player teachingStudent = null;
 	private transient Player teacher;
 	private transient Skills skillOfferedByTeacher = null;
 	private transient SOEObject synchronizedObject = null;
-	private transient ArrayList<CraftingSchematic> vLastCreatedCraftingSchematicList = null;
+	private transient List<CraftingSchematic> vLastCreatedCraftingSchematicList = null;
 	private transient Camp currentCampObject;
-	private transient ArrayList<CreaturePet> vCalledPets;
-	private transient ArrayList<CreaturePet> vFriendPets;
+	private transient List<CreaturePet> vCalledPets;
+	private transient List<CreaturePet> vFriendPets;
 	private transient Waypoint lastForageArea;
 	private transient ManufacturingSchematic currentManufacturingSchematic;
-	private transient ArrayList<Player> vPlayersListening;
-	private transient ArrayList<Player> vPlayersWatching;
+	private transient List<Player> vPlayersListening;
+	private transient List<Player> vPlayersWatching;
 	private transient Player playerBeingListened;
 	private transient Player playerBeingWatched;
 	private transient boolean isDancing;
@@ -235,13 +236,13 @@ public class Player extends SOEObject {
 
 	private transient long[] lStateTimer;
 
-	private transient ArrayList<Long> vDefenderList; // This can be a ArrayList<Long>
-	private transient ArrayList<Long> vAllSpawnedObjectIDs;
-	private transient ArrayList<SOEObject> vDelayedSpawnObjects; // This is an
+	private transient List<Long> vDefenderList; // This can be a Vector<Long>
+	private transient List<Long> vAllSpawnedObjectIDs;
+	private transient List<SOEObject> vDelayedSpawnObjects; // This is an
 																// extremely bad
 																// way of doing
 																// this.
-	private transient ArrayList<Long> lNextDelayedSpawn;
+	private transient List<Long> lNextDelayedSpawn;
 	private transient TangibleItem lastUsedSurveyTool = null;
 	private transient ZoneServer server;
 	private transient ZoneClient client;
@@ -306,7 +307,7 @@ public class Player extends SOEObject {
 		iFirePotency = new int[iNumberOfHams];
 		lStateTimer = new long[Constants.NUM_STATES];
 		lState = 0;
-		// ArrayLists
+		// Vectors
 		vAllSpawnedObjectIDs = new ArrayList<Long>();
 		vInventoryItemsList = new ArrayList<TangibleItem>();
 		// vCommandQueue = new LinkedList<CommandQueueItem>();
@@ -341,12 +342,12 @@ public class Player extends SOEObject {
 		fHouseCoordinates = new float[3];
 		LastSUIBox = 0;
 		SUIListWindowObjectList = new Hashtable<Integer, SOEObject>();
-		PendingSUIWindowList = new Hashtable<Integer, SUIWindow>();
+		PendingSUIWindowList = new ConcurrentHashMap<Integer, SUIWindow>();
 		sLastConversationMenu = new String[7];
 		vLastConversationMenuOptions = new ArrayList<DialogOption>();
 		lNextDelayedSpawn = new ArrayList<Long>();
 		/*
-		 * vMissionBag = new ArrayList<MissionObject>(); for(int i = 0; i < 15;
+		 * vMissionBag = new Vector<MissionObject>(); for(int i = 0; i < 15;
 		 * i++) { MissionObject m = new MissionObject();
 		 * m.setID(client.getServer().getNextObjectID());
 		 * m.setSMissionSTFString(""); m.setSMissionTag1("");
@@ -804,7 +805,7 @@ public class Player extends SOEObject {
 	private final static long lUpdateIntervalMS = 300000;
 	private long lDatabaseUpdateTimeMS = 0;
 
-	private transient ArrayList<POI> vPOIsThisPlanet;
+	private transient List<POI> vPOIsThisPlanet;
 	private final static int DISTANCE_TO_TRIGGER_GRANT_POI = 20;
 
 	private long lHamUpdateTimerMS = 0; // TODO: This value must be fiddled /
@@ -813,9 +814,9 @@ public class Player extends SOEObject {
 										// when we're fighting.
 	private final static long MAX_TIME_MS_BETWEEN_HAM_UPDATE = 1000;
 	private final static long TIME_DIVIDER_ON_REGENERATION_RATE_MS = 100000;
-	private transient ArrayList<MapLocationData> vLastSeenCloneLocations = null;
+	private transient List<MapLocationData> vLastSeenCloneLocations = null;
 
-	protected ArrayList<MapLocationData> getLastSeenCloneLocations() {
+	protected List<MapLocationData> getLastSeenCloneLocations() {
 		return vLastSeenCloneLocations;
 	}
 
@@ -1099,7 +1100,7 @@ public class Player extends SOEObject {
 						- lDeltaTimeMS);
 			}
 			// update players intangibles.
-			ArrayList<IntangibleObject> vI = tDatapad.getIntangibleObjects();
+			List<IntangibleObject> vI = tDatapad.getIntangibleObjects();
 			for (int i = 0; i < vI.size(); i++) {
 				IntangibleObject iUpd = vI.get(i);
 				iUpd.update(lDeltaTimeMS);
@@ -1131,7 +1132,7 @@ public class Player extends SOEObject {
 				for (int i = 0; i < lNextDelayedSpawn.size(); i++) {
 					// had to do this cause 1 its not going to be done often
 					// 2 it was the only way to look at the value and not update
-					// it inside the ArrayList.
+					// it inside the vector.
 					if (lNextDelayedSpawn.get(i) <= System.currentTimeMillis()) {
 						// do this
 						lNextDelayedSpawn.remove(i);
@@ -1217,7 +1218,7 @@ public class Player extends SOEObject {
 					}
 					server.removeFromTree(this);
 
-					ArrayList<PlayerFriends> vPlayerFriends = thePlayer
+					List<PlayerFriends> vPlayerFriends = thePlayer
 							.getFriendsList();
 					for (int i = 0; i < vPlayerFriends.size(); i++) {
 						Player friend = server.getPlayer(vPlayerFriends
@@ -1335,7 +1336,7 @@ public class Player extends SOEObject {
 						 * break; } case 7: { anim = "clap"; break; } case 9: {
 						 * anim = "kiss"; break; } }
 						 * 
-						 * ArrayList<Player> vPL =
+						 * Vector<Player> vPL =
 						 * server.getPlayersAroundObject(this, true); for(int i
 						 * = 0; i < vPL.size(); i++) { Player p = vPL.get(i);
 						 * p.getClient
@@ -1467,7 +1468,7 @@ public class Player extends SOEObject {
 						Group g = (Group) server.getObjectFromAllObjects(this
 								.getGroupID());
 						int iGroupModifier = 0;
-						ArrayList<SOEObject> vGM = g.getGroupMembers();
+						List<SOEObject> vGM = g.getGroupMembers();
 						for (int i = 0; i < vGM.size(); i++) {
 							SOEObject o = vGM.get(i);
 							if (o instanceof Player && !o.equals(this)) {
@@ -1628,7 +1629,7 @@ public class Player extends SOEObject {
 						Group g = (Group) server.getObjectFromAllObjects(this
 								.getGroupID());
 						int iGroupModifier = 0;
-						ArrayList<SOEObject> vGM = g.getGroupMembers();
+						List<SOEObject> vGM = g.getGroupMembers();
 						for (int i = 0; i < vGM.size(); i++) {
 							SOEObject o = vGM.get(i);
 							if (o instanceof Player && !o.equals(this)) {
@@ -1703,8 +1704,8 @@ public class Player extends SOEObject {
 					String WindowTypeString = "handlePlayerRevive";
 					String DataListTitle = "@base_player:revive_title";
 					String DataListPrompt = "@base_player:clone_prompt_header";
-					ArrayList<String> vCloneNames = new ArrayList<String>();
-					ArrayList<MapLocationData> vCloneData = new ArrayList<MapLocationData>();
+					List<String> vCloneNames = new ArrayList<String>();
+					List<MapLocationData> vCloneData = new ArrayList<MapLocationData>();
 					// TODO: Now, check to see if the Player has a specific
 					// Player City cloning center they are bound to, on this
 					// planet. For that, players must be able to bind to a
@@ -1719,7 +1720,7 @@ public class Player extends SOEObject {
 
 					// Now, go through all static cloners and check them as
 					// well.
-					ArrayList<MapLocationData> vStaticLocationsThisPlanet = server
+					List<MapLocationData> vStaticLocationsThisPlanet = server
 							.getStaticMapLocations(Constants.PlanetNames[getPlanetID()]);
 					for (int i = 0; i < vStaticLocationsThisPlanet.size(); i++) {
 						MapLocationData staticPoint = vStaticLocationsThisPlanet
@@ -2030,7 +2031,7 @@ public class Player extends SOEObject {
 		setOrientationS(newS);
 		setOrientationW(newW);
 		setVelocity(fVelocity);
-		ArrayList<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
+		List<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
 		for (int i = 0; i < vDatapadItems.size(); i++) {
 			IntangibleObject o = vDatapadItems.get(i);
 			NPC theCalledObject = o.getAssociatedCreature();
@@ -2105,7 +2106,7 @@ public class Player extends SOEObject {
 			}
 			this.setCellID(0);
 			// Get every object on the Player, set them to an appropriate value.
-			ArrayList<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
+			List<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
 			for (int i = 0; i < vDatapadItems.size(); i++) {
 				IntangibleObject o = vDatapadItems.get(i);
 				NPC theCalledObject = o.getAssociatedCreature();
@@ -2138,7 +2139,7 @@ public class Player extends SOEObject {
 
 		// These 3 vectors need to be reworked. They are already taken care of
 		// by the positional grid.
-		ArrayList<SOEObject> vObjectsBeforeMovement = server
+		List<SOEObject> vObjectsBeforeMovement = server
 				.getWorldObjectsAroundObject(this);
 
 		setCellID(cellID);
@@ -2208,9 +2209,9 @@ public class Player extends SOEObject {
 			return;
 		}
 
-		ArrayList<SOEObject> vObjectsAfterMovement = server
+		List<SOEObject> vObjectsAfterMovement = server
 				.getWorldObjectsAroundObject(this);
-		ArrayList<SOEObject> vStillSpawned = new ArrayList<SOEObject>();
+		List<SOEObject> vStillSpawned = new ArrayList<SOEObject>();
 		for (int i = 0; i < vObjectsBeforeMovement.size(); i++) {
 			SOEObject p = vObjectsBeforeMovement.get(i);
 			if (!vObjectsAfterMovement.contains(p)) {
@@ -2300,7 +2301,7 @@ public class Player extends SOEObject {
 		setOrientationS(newS);
 		setOrientationW(newW);
 		setVelocity(fVelocity);
-		ArrayList<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
+		List<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
 		for (int i = 0; i < vDatapadItems.size(); i++) {
 			IntangibleObject o = vDatapadItems.get(i);
 			NPC theCalledObject = o.getAssociatedCreature();
@@ -2383,11 +2384,11 @@ public class Player extends SOEObject {
 		}
 
 		// server.getWorldObjectsAroundObject(this);
-		ArrayList<SOEObject> vObjectsBeforeMovement = server
+		List<SOEObject> vObjectsBeforeMovement = server
 				.getWorldObjectsAroundObject(this);
 		c.addCellObject(this);
 		if (oldCellID == 0) {
-			ArrayList<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
+			List<IntangibleObject> vDatapadItems = tDatapad.getIntangibleObjects();
 			for (int i = 0; i < vDatapadItems.size(); i++) {
 				IntangibleObject o = vDatapadItems.get(i);
 				NPC theCalledObject = o.getAssociatedCreature();
@@ -2465,9 +2466,9 @@ public class Player extends SOEObject {
 			return;
 		}
 
-		ArrayList<SOEObject> vObjectsAfterMovement = server
+		List<SOEObject> vObjectsAfterMovement = server
 				.getWorldObjectsAroundObject(this);
-		ArrayList<SOEObject> vStillSpawned = new ArrayList<SOEObject>();
+		List<SOEObject> vStillSpawned = new ArrayList<SOEObject>();
 
 		for (int i = 0; i < vObjectsBeforeMovement.size(); i++) {
 			SOEObject p = vObjectsBeforeMovement.get(i);
@@ -2786,7 +2787,7 @@ public class Player extends SOEObject {
 	 * 
 	 * @return The friends list.
 	 */
-	public ArrayList<PlayerFriends> getFriendsList() {
+	public List<PlayerFriends> getFriendsList() {
 		return thePlayer.getFriendsList();
 	}
 
@@ -2795,7 +2796,7 @@ public class Player extends SOEObject {
 	 * 
 	 * @return The ignore list.
 	 */
-	public ArrayList<PlayerFriends> getIgnoreList() {
+	public List<PlayerFriends> getIgnoreList() {
 		return thePlayer.getIgnoreList();
 	}
 
@@ -3374,7 +3375,7 @@ public class Player extends SOEObject {
 	 * 
 	 * @return The skill mods list.
 	 */
-	public ArrayList<SkillMods> getSkillModsList() {
+	public List<SkillMods> getSkillModsList() {
 		return vSkillModsList;
 	}
 
@@ -3490,7 +3491,7 @@ public class Player extends SOEObject {
 	 * @param mods
 	 *            -- The list of skill mods to add.
 	 */
-	public void addSkillMods(ArrayList<SkillMods> mods) {
+	public void addSkillMods(List<SkillMods> mods) {
 		vSkillModsList.addAll(mods);
 	}
 
@@ -3671,7 +3672,7 @@ public class Player extends SOEObject {
 	 * 
 	 * @return The Inventory list.
 	 */
-	public ArrayList<TangibleItem> getInventoryItems() {
+	public List<TangibleItem> getInventoryItems() {
 		return vInventoryItemsList;
 	}
 
@@ -3718,7 +3719,7 @@ public class Player extends SOEObject {
 	 * 
 	 * @return The defender list.
 	 */
-	public ArrayList<Long> getDefenderList() {
+	public List<Long> getDefenderList() {
 		return vDefenderList;
 	}
 
@@ -4038,7 +4039,7 @@ public class Player extends SOEObject {
 			// System.out.println("Spawn the MissionBag Item.");
 			spawnItem(tMissionBag);
 			server.addObjectToAllObjects(tMissionBag, false, false);
-			ArrayList<MissionObject> vML = tMissionBag.getVMissionList();
+			List<MissionObject> vML = tMissionBag.getVMissionList();
 			for (int i = 0; i < vML.size(); i++) {
 				MissionObject m = vML.get(i);
 				// tMissionBag.addIntangibleObject(m);
@@ -4078,7 +4079,7 @@ public class Player extends SOEObject {
 					if (e.getLinkedObjects().size() >= 1) {
 						// System.out.println("Spawning Container With Items in it: "
 						// + e.getIFFFileName());
-						ArrayList<TangibleItem> vContainedItems = e
+						List<TangibleItem> vContainedItems = e
 								.getLinkedObjects();
 						for (int c = 0; c < vContainedItems.size(); c++) {
 							TangibleItem contained = vContainedItems.get(c);
@@ -4098,7 +4099,7 @@ public class Player extends SOEObject {
 
 			// This doesn't necessarially have to happen until/unless the Player
 			// opens their bank.
-			ArrayList<TangibleItem> vBankItems = tBank.getLinkedObjects();
+			List<TangibleItem> vBankItems = tBank.getLinkedObjects();
 			for (int i = 0; i < vBankItems.size(); i++) {
 				TangibleItem t = vBankItems.get(i);
 				// System.out.println("Spawn Bank Item.");
@@ -4107,7 +4108,7 @@ public class Player extends SOEObject {
 				if (t.getLinkedObjects().size() >= 1) {
 					// System.out.println("Spawning Container In Bank With Items in it: "
 					// + t.getIFFFileName());
-					ArrayList<TangibleItem> vContainedItems = t.getLinkedObjects();
+					List<TangibleItem> vContainedItems = t.getLinkedObjects();
 					for (int c = 0; c < vContainedItems.size(); c++) {
 						TangibleItem contained = vContainedItems.get(c);
 						// System.out.println("Spawning Item in Container: " +
@@ -4121,7 +4122,7 @@ public class Player extends SOEObject {
 					}
 				}
 			}
-			ArrayList<IntangibleObject> datapadItems = tDatapad
+			List<IntangibleObject> datapadItems = tDatapad
 					.getIntangibleObjects();
 			for (int i = 0; i < datapadItems.size(); i++) {
 				IntangibleObject itno = datapadItems.get(i);
@@ -4244,7 +4245,7 @@ public class Player extends SOEObject {
 			if (lCompareID == itemID) {
 				bFound = true;
 				client.insertPacket(PacketFactory.buildSceneDestroyObject(i));
-				vAllSpawnedObjectIDs.get(I);
+				vAllSpawnedObjectIDs.remove(I);
 				return;
 			}
 		}
@@ -4270,7 +4271,7 @@ public class Player extends SOEObject {
 	 */
 	protected void spawnItem(SOEObject i) throws IOException {
 		if (vAllSpawnedObjectIDs == null) {
-			// System.out.println("Player::spawnItem -- ArrayList of IDs is null.  Instantiating...");
+			// System.out.println("Player::spawnItem -- vector of IDs is null.  Instantiating...");
 			vAllSpawnedObjectIDs = new ArrayList<Long>();
 		}
 		
@@ -4559,7 +4560,7 @@ public class Player extends SOEObject {
 						TangibleItem structureBase = s.getStructureBase();
 						Terminal structureSign = s.getStructureSign();
 						Terminal adminTerminal = s.getAdminTerminal();
-						ArrayList<Terminal> vElevatorTerminal = s.getVElevatorTerminals();
+						List<Terminal> vElevatorTerminal = s.getVElevatorTerminals();
 						spawnItem(structureBase);
 						spawnItem(guildTerminal);
 						spawnItem(structureSign);
@@ -4599,7 +4600,7 @@ public class Player extends SOEObject {
 									.currentTimeMillis() + (1000 * 10)));
 						}
 						if (s.getVElevatorTerminals().size() >= 1) {
-							ArrayList<Terminal> vE = s.getVElevatorTerminals();
+							Vector<Terminal> vE = s.getVElevatorTerminals();
 							for (int e = 0; e < vE.size(); e++) {
 								Terminal eT = vE.get(e);
 								eT
@@ -4980,7 +4981,7 @@ public class Player extends SOEObject {
 	 * @param v
 	 *            -- THe items to add to Inventory.
 	 */
-	protected void addInventoryItem(ArrayList<TangibleItem> v) {
+	protected void addInventoryItem(List<TangibleItem> v) {
 		vInventoryItemsList.addAll(v);
 	}
 
@@ -4989,8 +4990,8 @@ public class Player extends SOEObject {
 	 * 
 	 * @return The list of equipped items.
 	 */
-	protected ArrayList<TangibleItem> getEquippedItems() {
-		ArrayList<TangibleItem> toReturn = new ArrayList<TangibleItem>();
+	protected List<TangibleItem> getEquippedItems() {
+		List<TangibleItem> toReturn = new ArrayList<TangibleItem>();
 		for (int i = 0; i < vInventoryItemsList.size(); i++) {
 			TangibleItem t = vInventoryItemsList.get(i);
 			if (t.getContainerID() == getID()) {
@@ -5067,7 +5068,7 @@ public class Player extends SOEObject {
 	 */
 	protected int getFreeLots() {
 		if (vPlayerStructures == null) {
-			vPlayerStructures = new Hashtable<Long, Structure>();
+			vPlayerStructures = new ConcurrentHashMap<Long, Structure>();
 		}
 		iUsedLots = 0;
 		Enumeration<Structure> sEnum = vPlayerStructures.elements();
@@ -5164,7 +5165,7 @@ public class Player extends SOEObject {
 	 * 
 	 * @return The list of waypoints.
 	 */
-	protected ArrayList<Waypoint> getWaypoints() {
+	protected List<Waypoint> getWaypoints() {
 		return thePlayer.getWaypoints();
 	}
 
@@ -5191,7 +5192,7 @@ public class Player extends SOEObject {
 	 * @param vFriendsList
 	 *            -- The friends list.
 	 */
-	public void setFriendsList(ArrayList<PlayerFriends> vFriendsList) {
+	public void setFriendsList(List<PlayerFriends> vFriendsList) {
 		thePlayer.setFriendsList(vFriendsList);
 	}
 
@@ -5430,7 +5431,7 @@ public class Player extends SOEObject {
 		addFactionToFactionList(sFactionName, newValue);
 	}
 
-	protected ArrayList<PlayerFactions> getFactionList() {
+	protected List<PlayerFactions> getFactionList() {
 		return vFactionList;
 	}
 
@@ -5612,7 +5613,7 @@ public class Player extends SOEObject {
 
 	protected void clearSpawnedItems() {
 		if (vAllSpawnedObjectIDs != null) {
-			vAllSpawnedObjectIDs.clear();
+			vAllSpawnedObjectIDs.remove(moodID);
 		}
 	}
 
@@ -5854,7 +5855,7 @@ public class Player extends SOEObject {
 		// here is where we make the player warp
 		// this.isWarping = true;
 		try {
-			ArrayList<Player> vPL = server.getPlayersAroundObject(this, false);
+			List<Player> vPL = server.getPlayersAroundObject(this, false);
 			for (int i = 0; i < vPL.size(); i++) {
 				Player p = vPL.get(i);
 				p.despawnItem(this);
@@ -5938,7 +5939,7 @@ public class Player extends SOEObject {
 	protected void addPendingSUIWindow(SUIWindow W) {
 		// System.out.println("Add pending SUI window, ID " + W.getWindowID());
 		if (PendingSUIWindowList == null) {
-			PendingSUIWindowList = new Hashtable<Integer, SUIWindow>();
+			PendingSUIWindowList = new ConcurrentHashMap<Integer, SUIWindow>();
 		}
 		if (W != null) {
 			// System.out.println("Adding SUIWindow ID" + W.getWindowID());
@@ -5997,7 +5998,7 @@ public class Player extends SOEObject {
 		vLastConversationMenuOptions.clear();
 	}
 
-	protected void setLastConversationMenuOptions(ArrayList<DialogOption> L) {
+	protected void setLastConversationMenuOptions(List<DialogOption> L) {
 		if (vLastConversationMenuOptions == null) {
 			vLastConversationMenuOptions = new ArrayList<DialogOption>();
 		}
@@ -6005,7 +6006,7 @@ public class Player extends SOEObject {
 		vLastConversationMenuOptions = L;
 	}
 
-	protected ArrayList<DialogOption> getLastConversationMenuOptions() {
+	protected List<DialogOption> getLastConversationMenuOptions() {
 		return vLastConversationMenuOptions;
 	}
 
@@ -6158,7 +6159,7 @@ public class Player extends SOEObject {
 
 	protected boolean addPlayerStructure(Structure s) {
 		if (vPlayerStructures == null) {
-			vPlayerStructures = new Hashtable<Long, Structure>();
+			vPlayerStructures = new ConcurrentHashMap<Long, Structure>();
 		}
 		if (!vPlayerStructures.containsKey(s.getID())) {
 			vPlayerStructures.put(s.getID(), s);
@@ -6168,7 +6169,7 @@ public class Player extends SOEObject {
 
 	protected void removePlayerStructure(Structure s) {
 		if (vPlayerStructures == null) {
-			vPlayerStructures = new Hashtable<Long, Structure>();
+			vPlayerStructures = new ConcurrentHashMap<Long, Structure>();
 		}
 		if (vPlayerStructures.containsKey(s.getID())) {
 			vPlayerStructures.remove(s.getID());
@@ -6176,9 +6177,9 @@ public class Player extends SOEObject {
 
 	}
 
-	protected Hashtable<Long, Structure> getAllPlayerStructures() {
+	protected ConcurrentHashMap<Long, Structure> getAllPlayerStructures() {
 		if (vPlayerStructures == null) {
-			vPlayerStructures = new Hashtable<Long, Structure>();
+			vPlayerStructures = new ConcurrentHashMap<Long, Structure>();
 		}
 		return vPlayerStructures;
 	}
@@ -6526,11 +6527,11 @@ public class Player extends SOEObject {
 	}
 
 	public void setLastSentCraftingSchematicList(
-			ArrayList<CraftingSchematic> vLastCreatedCraftingSchematicList) {
+			List<CraftingSchematic> vLastCreatedCraftingSchematicList) {
 		this.vLastCreatedCraftingSchematicList = vLastCreatedCraftingSchematicList;
 	}
 
-	public ArrayList<CraftingSchematic> getLastSentCraftingSchematicList() {
+	public List<CraftingSchematic> getLastSentCraftingSchematicList() {
 		return vLastCreatedCraftingSchematicList;
 	}
 
@@ -6577,7 +6578,7 @@ public class Player extends SOEObject {
 		return currentManufacturingSchematic;
 	}
 
-	protected ArrayList<CreaturePet> getCalledPets() {
+	protected List<CreaturePet> getCalledPets() {
 		if (vCalledPets == null) {
 			vCalledPets = new ArrayList<CreaturePet>();
 		}
@@ -6602,7 +6603,7 @@ public class Player extends SOEObject {
 		}
 	}
 
-	protected ArrayList<CreaturePet> getFriendPets() {
+	protected List<CreaturePet> getFriendPets() {
 		if (vFriendPets == null) {
 			vFriendPets = new ArrayList<CreaturePet>();
 		}
@@ -7007,14 +7008,14 @@ public class Player extends SOEObject {
 		}
 	}
 
-	protected ArrayList<Player> getPlayersListening() {
+	protected List<Player> getPlayersListening() {
 		if (vPlayersListening == null) {
 			vPlayersListening = new ArrayList<Player>();
 		}
 		return vPlayersListening;
 	}
 
-	protected ArrayList<Player> getPlayersWatching() {
+	protected List<Player> getPlayersWatching() {
 		if (vPlayersWatching == null) {
 			vPlayersWatching = new ArrayList<Player>();
 		}
@@ -7055,8 +7056,8 @@ public class Player extends SOEObject {
 		this.lEffectTick = lEffectTick;
 	}
 
-	protected ArrayList<String> getKnownDances() {
-		ArrayList<String> vKnownDances = new ArrayList<String>();
+	protected List<String> getKnownDances() {
+		List<String> vKnownDances = new ArrayList<String>();
 		for (int i = 0; i < Constants.DANCE_STRINGS.length; i++) {
 			if (this.hasSkill(Constants.DANCE_SKILL_REQUIREMENTS[i])) {
 				vKnownDances.add(Constants.DANCE_STRINGS[i][0]);
@@ -7065,8 +7066,8 @@ public class Player extends SOEObject {
 		return vKnownDances;
 	}
 
-	protected ArrayList<String> getKnownMusic() {
-		ArrayList<String> vKnownMusic = new ArrayList<String>();
+	protected List<String> getKnownMusic() {
+		List<String> vKnownMusic = new ArrayList<String>();
 		for (int i = 0; i < Constants.MUSIC_STRINGS.length; i++) {
 			if (this.hasSkill(Constants.MUSIC_SKILL_REQUIREMENTS[i])) {
 				vKnownMusic.add(Constants.MUSIC_STRINGS[i][0]);
@@ -7604,11 +7605,11 @@ public class Player extends SOEObject {
 		return bIsSampling;
 	}
 
-	protected ArrayList<ManufacturingSchematic> getSchematicsForFactory(
+	protected List<ManufacturingSchematic> getSchematicsForFactory(
 			byte iFactoryType) {
-		ArrayList<IntangibleObject> vAllDatapadIntangibles = tDatapad
+		List<IntangibleObject> vAllDatapadIntangibles = tDatapad
 				.getIntangibleObjects();
-		ArrayList<ManufacturingSchematic> vDatapadSchematics = new ArrayList<ManufacturingSchematic>();
+		List<ManufacturingSchematic> vDatapadSchematics = new ArrayList<ManufacturingSchematic>();
 		int mask = 0;
 		switch (iFactoryType) {
 		case Constants.FACTORY_TYPE_CLOTHING: {

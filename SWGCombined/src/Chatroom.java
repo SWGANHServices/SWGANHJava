@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -9,8 +10,8 @@ public class Chatroom {
 	private String sRoomName;
 	private String sCreatorName;
 	private String sRoomDescription;
-	private ArrayList<String> vModerators;
-	private ArrayList<String> vPlayersInRoom;
+	private List<String> vModerators;
+	private List<String> vPlayersInRoom;
 	private ChatServer vMyServer;
 	/**
 	 * Constructs a ChatRoom on the given ChatServer, with a given name, creator, and description. 
@@ -54,7 +55,7 @@ public class Chatroom {
 	 * Get the list of the names of the Moderators for this ChatRoom
 	 * @return The Moderator name list.
 	 */
-	public ArrayList<String> getModeratorList() {
+	public List<String> getModeratorList() {
 		return vModerators;
 	}
 	
@@ -62,7 +63,7 @@ public class Chatroom {
 	 * Get the list of the names of the Players in this ChatRoom.
 	 * @return The Player name list.
 	 */
-	public ArrayList<String> getPlayersInRoom() {
+	public List<String> getPlayersInRoom() {
 		return vPlayersInRoom;
 	}
 	

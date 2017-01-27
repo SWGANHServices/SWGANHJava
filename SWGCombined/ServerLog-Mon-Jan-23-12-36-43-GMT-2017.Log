@@ -1,6 +1,0 @@
-2017-01-23 12:36:53 Source:LogServer | Log Server Started | SEV: INFO
-2017-01-23 12:36:53 Source:SWGGui | GUI Constructor:  Construct DatabaseInterface | SEV: INFO
-2017-01-23 12:36:53 Source:DatabaseInterface | Initializing database | SEV: INFO
-2017-01-23 12:36:53 Source:DatabaseInterface | Connected | SEV: INFO
-2017-01-23 12:36:53 Source:DatabaseInterface | Login Integration set to Internal | SEV: INFO
-2017-01-23 12:36:53 Source:DatabaseInterface | Email Accounts Cleaned up: 0 | SEV: INFO

@@ -1,5 +1,5 @@
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -42,14 +42,14 @@ public final class CreaturePet extends NPC{
     private Player master;
     private transient byte trainCommandID;
     private transient boolean isInTrainingMode;
-    private transient ArrayList<Waypoint> vPatrolPoints;
+    private transient List<Waypoint> vPatrolPoints;
     private int eatLevel;
     private long lPetStomachTick;
     private boolean bCanGrow;
     private boolean bFullGrown;
     private float growthLevel;
     private long lGrowthTick;
-    private ArrayList<Byte> vTrainedCommands;
+    private List<Byte> vTrainedCommands;
     private IntangibleObject datapadControlIcon;
     private transient SOEObject objectToFollow;
     private transient boolean isOnPatrol;
@@ -1000,7 +1000,7 @@ public final class CreaturePet extends NPC{
 
     private void sendPacketToRange(byte [] packet){
         try{
-            ArrayList<Player> vPL = master.getServer().getPlayersAroundNPC(this);
+            List<Player> vPL = master.getServer().getPlayersAroundNPC(this);
             for(int i = 0; i < vPL.size(); i++)
             {
                 Player p = vPL.get(i);
@@ -1013,7 +1013,7 @@ public final class CreaturePet extends NPC{
 
     private void petSpeak(String spoken){
          try{
-            ArrayList<Player> vPL = master.getServer().getPlayersAroundNPC(this);
+            List<Player> vPL = master.getServer().getPlayersAroundNPC(this);
             for(int i = 0; i < vPL.size(); i++)
             {
                 Player p = vPL.get(i);
@@ -1048,7 +1048,7 @@ public final class CreaturePet extends NPC{
         this.bFullGrown = bFullGrown;
     }
 
-    public ArrayList<Byte> getVTrainedCommands() {
+    public List<Byte> getVTrainedCommands() {
         if(vTrainedCommands == null)
         {
             vTrainedCommands = new ArrayList<Byte>();

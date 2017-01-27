@@ -3,8 +3,9 @@
  * and open the template in the editor.
  */
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.ArrayList;
+import java.util.Arrays;
 /**
  * This is the Armor Class for Handling Armor Objects
  * @author Tomas Cruz
@@ -17,7 +18,7 @@ public class Armor extends TangibleItem {
     private int [] iActionEnc;
     private int [] iMindEnc;
     
-    private ArrayList<Integer> vEffectiveness;
+    private List<Integer> vEffectiveness;
     private Hashtable<Integer,Integer> vSpecialEffectiveness;
     
     public Armor(){
@@ -81,11 +82,11 @@ public class Armor extends TangibleItem {
         this.iMindEnc = iMindEnc;
     }
 
-    public ArrayList<Integer> getVEffectiveness() {
+    public List<Integer> getVEffectiveness() {
         return vEffectiveness;
     }
 
-    public void setVEffectiveness(ArrayList<Integer> vEffectiveness) {
+    public void setVEffectiveness(List<Integer> vEffectiveness) {
         this.vEffectiveness = vEffectiveness;
     }
     

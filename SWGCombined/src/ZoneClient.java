@@ -7,8 +7,8 @@ import java.net.SocketAddress;
 import java.util.Arrays;
 import java.util.Hashtable;
 import java.util.LinkedList;
+import java.util.List;
 import java.util.ArrayList;
-//import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The ZoneClient class contains all of the information about an active session to the ZoneServer.
@@ -493,13 +493,13 @@ public class ZoneClient implements Serializable{
 	    	if (player == null || packet == null) {
 	    		return;
 	    	}
-            ArrayList<ZoneClient> vSendList = new ArrayList<ZoneClient>();
+            List<ZoneClient> vSendList = new ArrayList<ZoneClient>();
             switch(range)
             {
                 case 0x01: // PACKET_RANGE_GROUP = 0x01;
                 {                        
                     Group g = (Group)myServer.getObjectFromAllObjects(player.getGroupID());
-                    ArrayList<Player> vGroupPlayers = g.getPlayerObjectsInGroup();
+                    List<Player> vGroupPlayers = g.getPlayerObjectsInGroup();
                     for (int i = 0; i < vGroupPlayers.size(); i++) {
                     	ZoneClient tarClient = vGroupPlayers.get(i).getClient();
                     	if (tarClient != null) {
@@ -514,7 +514,7 @@ public class ZoneClient implements Serializable{
                 case 0x02: // PACKET_RANGE_GROUP_EXCLUDE_SENDER = 0x02;
                 {
                     Group g = (Group)myServer.getObjectFromAllObjects(thePlayer.getGroupID());
-                    ArrayList<Player> vGroupPlayers = g.getPlayerObjectsInGroup();
+                    List<Player> vGroupPlayers = g.getPlayerObjectsInGroup();
                     for (int i = 0; i < vGroupPlayers.size(); i++) {
                     	Player tarPlayer = vGroupPlayers.get(i);
                     	if (thePlayer == null) {
@@ -533,7 +533,7 @@ public class ZoneClient implements Serializable{
                 }
                 case 0x03: // PACKET_RANGE_CHAT_RANGE = 0x03;
                 {
-                    ArrayList<Player> vPL = myServer.getPlayersAroundObject(thePlayer, true);
+                    List<Player> vPL = myServer.getPlayersAroundObject(thePlayer, true);
                     for(int i = 0 ; i < vPL.size(); i++)
                     {
                         Player T = vPL.get(i);
@@ -552,7 +552,7 @@ public class ZoneClient implements Serializable{
                 }
                 case 0x04: //  PACKET_RANGE_CHAT_RANGE_EXCLUDE_SENDER = 0x04;
                 {
-                    ArrayList<Player> vPL = this.getServer().getPlayersAroundObject(thePlayer, false);
+                    List<Player> vPL = this.getServer().getPlayersAroundObject(thePlayer, false);
                     for(int i = 0 ; i < vPL.size(); i++)
                     {
                         Player T = vPL.get(i);
@@ -581,7 +581,7 @@ public class ZoneClient implements Serializable{
                 }
                 case 0x05: //  PACKET_RANGE_PLANET = 0x05;
                 {
-                	ArrayList<Player> vAllPlayers = null;
+                	List<Player> vAllPlayers = null;
                 	if (thePlayer != null) {
                 		vAllPlayers = myServer.getAllPlayersOnPlanet(thePlayer.getPlanetID());
                 	} else {
@@ -599,7 +599,7 @@ public class ZoneClient implements Serializable{
                 }
                 case 0x06: //  PACKET_RANGE_PLANET_EXCLUDE_SENDER = 0x06;
                 {
-                	ArrayList<Player> vAllPlayers = null;
+                	List<Player> vAllPlayers = null;
                 	if (thePlayer != null) {
                 		vAllPlayers = myServer.getAllPlayersOnPlanet(thePlayer.getPlanetID());
                 		vAllPlayers.remove(thePlayer);
@@ -621,7 +621,7 @@ public class ZoneClient implements Serializable{
                 {
                     for(int i = 0; i < Constants.PlanetNames.length; i++)
                     {
-                    	ArrayList<Player> vAllPlayers = myServer.getAllPlayersOnPlanet(i);
+                    	List<Player> vAllPlayers = myServer.getAllPlayersOnPlanet(i);
                         for (int j = 0; j < vAllPlayers.size(); j++) {
                         	ZoneClient tarClient = vAllPlayers.get(i).getClient();
                         	if (tarClient != null) {
@@ -637,7 +637,7 @@ public class ZoneClient implements Serializable{
                 {
                     for(int i = 0; i < Constants.PlanetNames.length; i++)
                     {
-                    	ArrayList<Player> vAllPlayers = myServer.getAllPlayersOnPlanet(i);
+                    	List<Player> vAllPlayers = myServer.getAllPlayersOnPlanet(i);
                         for (int j = 0; j < vAllPlayers.size(); j++) {
                         	Player tarPlayer = vAllPlayers.get(i);
                         	ZoneClient tarClient = tarPlayer.getClient();
@@ -737,7 +737,7 @@ public class ZoneClient implements Serializable{
 	 * Inserts a batch of packets into the outgoing packet queue.
 	 * @param packets -- The packets.
 	 */
-	public void insertAllPackets(ArrayList<byte[]> packets) {
+	public void insertAllPackets(List<byte[]> packets) {
 		for (int i = 0; i < packets.size(); i++) {
 			insertPacket(packets.get(i));
 		}

@@ -1,4 +1,5 @@
 import java.io.Serializable;
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -12,17 +13,17 @@ public class CraftingSchematic implements Serializable {
 	private int iCRC;
 	private int index;
 	private int iSchematicType;
-	private ArrayList<Integer> iRequiredSkillID; // Need to support 2 (or more) skills here -- if the player gains ANY skill, they can have this schematic.
+	private List<Integer> iRequiredSkillID; // Need to support 2 (or more) skills here -- if the player gains ANY skill, they can have this schematic.
 	private int iExperienceGainedFromCrafting;
 	private int iExperienceTypeToGrant;
 	private int iComplexity;
 	private int iToolTabBitmask;
-	private ArrayList<CraftingSchematicComponent> vComponents;
+	private List<CraftingSchematicComponent> vComponents;
 	private int iCraftedItemType;
 	private CraftingExperimentationAttribute[] vAttributes;
 	private String sCraftedItemIFFFilename;
 	private TangibleItem itemToCraft;
-	private ArrayList<TangibleItem>[] vFactoryItemsUsedToCraftCrate;
+	private List<TangibleItem>[] vFactoryItemsUsedToCraftCrate;
 	
 	
 	/**
@@ -55,7 +56,7 @@ public class CraftingSchematic implements Serializable {
 		return iSchematicType;
 	}
 	
-	public ArrayList<Integer> getRequiredSkillID() {
+	public List<Integer> getRequiredSkillID() {
 		return iRequiredSkillID;
 	}
 
@@ -95,7 +96,7 @@ public class CraftingSchematic implements Serializable {
 		vComponents.add(comp);
 	}
 	
-	protected ArrayList<CraftingSchematicComponent> getComponents() {
+	protected List<CraftingSchematicComponent> getComponents() {
 		return vComponents;
 	}
 	protected void setComplexity(int i) {

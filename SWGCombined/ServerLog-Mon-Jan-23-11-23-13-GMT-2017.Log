@@ -1,0 +1,27 @@
+2017-01-23 11:23:23 Source:LogServer | Log Server Started | SEV: INFO
+2017-01-23 11:23:23 Source:SWGGui | GUI Constructor:  Construct DatabaseInterface | SEV: INFO
+2017-01-23 11:23:23 Source:DatabaseInterface | Initializing database | SEV: INFO
+2017-01-23 11:23:23 Source:DatabaseInterface | Connected | SEV: INFO
+2017-01-23 11:23:23 Source:DatabaseInterface | Login Integration set to Internal | SEV: INFO
+2017-01-23 11:23:23 Source:DatabaseInterface | Email Accounts Cleaned up: 0 | SEV: INFO
+2017-01-23 11:23:43 Source:DatabaseInterface | Loaded 1642 schematics | SEV: INFO
+2017-01-23 11:24:13 Source:DatabaseInterface.loadStartingLocations | Starting Locations Loaded 16 | SEV: INFO
+2017-01-23 11:24:13 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_cryoban.iff, schematic index 255 | SEV: CRITICAL
+2017-01-23 11:24:13 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_fragmentation.iff, schematic index 143 | SEV: CRITICAL
+2017-01-23 11:24:13 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_glop.iff, schematic index 564 | SEV: CRITICAL
+2017-01-23 11:24:13 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_imperial_detonator.iff, schematic index 635 | SEV: CRITICAL
+2017-01-23 11:24:13 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_fragmentation_light.iff, schematic index 142 | SEV: CRITICAL
+2017-01-23 11:24:13 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_proton.iff, schematic index 973 | SEV: CRITICAL
+2017-01-23 11:24:13 Source:DatabaseInterface.loadCraftedWeaponCaps() | Unknown schematic type for weapon schematic attribute addition on crafted item name object/weapon/ranged/grenade/shared_grenade_thermal_detonator.iff, schematic index 1191 | SEV: CRITICAL
+2017-01-23 11:24:13 Source:DatabaseInterface | Database Preload Completed. | SEV: INFO
+2017-01-23 11:24:13 Source:SWGGui | Database Interface constructed. | SEV: INFO
+2017-01-23 11:24:13 Source:SWGGui | Creating Login Server... | SEV: INFO
+2017-01-23 11:24:13 Source:LoginServerZoneTransciever | LoginZoneTransciever listening on address 0.0.0.0/0.0.0.0:35000 | SEV: INFO
+2017-01-23 11:24:23 Source:SWGGui | Creating Zone Server... | SEV: INFO
+2017-01-23 11:24:23 Source:SWGGui | GUI Creation complete. | SEV: INFO
+2017-01-23 11:24:23 Source:SWGGui | Using 56792200 bytes of 257425408 VM available.  Free: 200633208 bytes. | SEV: INFO
+2017-01-23 11:24:23 Source:SWGGui | GUI running. | SEV: INFO
+2017-01-23 11:24:23 Source:ZoneServer() | Zone server initializing... | SEV: INFO
+2017-01-23 11:24:23 Source:ZoneServer() | Set up planet positional grid. | SEV: INFO
+2017-01-23 11:24:23 Source:ZoneServer() | Planet positional grid setup complete. | SEV: INFO
+2017-01-23 11:24:23 Source:DatabaseInterface | InitializeStaticObjects | SEV: INFO

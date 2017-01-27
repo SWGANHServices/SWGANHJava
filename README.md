@@ -9,24 +9,26 @@ Requirements for Building the Core:
 <ul>
 <li>A valid Star Wars Galaxies Installation</li>
 <li>NetBeans IDE 6.9.1 or higher</li>
-<li>java programming</li>
-<lijavascript programming</li>
-<li>jdk 1.6 or higher</li>
+<li>Java programming</li>
+<li>JavaScript programming</li>
+<li>JDK 1.6 or higher</li>
 <li>MySQL Server 5.5</li>
-<li>TRE Explorer(http://forum.modsource.org/index.php?</li>
 <li>Github account</li>
-<li>(optional for windows) Github for Windows(http://windows.github.com/)</li>
+</ul>
+<ul>
+(optional for windows)
+<li>Github for Windows(http://windows.github.com/)</li>
 </ul>
 Once you have met the requirements, fork the project(click on the fork button) and then clone your forked repository. If you are using Windows then you can clone the repository with Github for Windows, otherwise you can use the following git command:
 
-git clone https://github.com/your_account_name/Swganh1.0a.git
+git clone https://github.com/SWGANHServices/SWGANHJava.git
 
 Then you can import the project to Netbeans
 
 Contributing and Submitting patches
 =========================
 To contribute, simply commit your changes to your fork of the project and then submit a pull request here
-https://github.com/oswin06082/shar-of-the-force-reborn/compare/
+https://github.com/SWGANHServices/SWGANHJava/tree/Development
 
 Now your changes will be reviewed by other developers and once the changes are approved your code will be merged into the main repository.
 

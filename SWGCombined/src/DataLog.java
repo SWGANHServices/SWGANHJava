@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
+import java.util.List;
 
 
 /**
@@ -21,8 +22,8 @@ public class DataLog implements Runnable {
     private String PacketLogFileName;
     private String ServerLogFileName;
     private static boolean dataLogRun;
-    public static ArrayList<DataLogObject> qPacketLog;
-    public static ArrayList<DataLogObject> qServerLog;
+    public static List<DataLogObject> qPacketLog;
+    public static List<DataLogObject> qServerLog;
     //private DataLog LogServer;
     private Thread myThread;
     private BufferedWriter PacketLogFile;
@@ -109,7 +110,8 @@ public class DataLog implements Runnable {
                 {
                     DataLogObject L = null;
                     try{
-                        L = qPacketLog.get(0);
+                        //L = qPacketLog.firstElement();
+                        L = qPacketLog.get(zPort);
                     }catch(Exception qe){
                         if(qe instanceof java.util.NoSuchElementException)
                         {

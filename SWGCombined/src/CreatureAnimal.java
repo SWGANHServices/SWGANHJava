@@ -1,6 +1,6 @@
 import java.util.Enumeration;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.ArrayList;
 
 
@@ -350,7 +350,7 @@ public final class CreatureAnimal extends NPC {
 					} 
 					if (!bCouldUpdate){
 						boolean bFound = false;
-						ArrayList<TangibleItem> vInventoryItems = player.getInventoryItems();
+						List<TangibleItem> vInventoryItems = player.getInventoryItems();
 						for (int i = 0; i < vInventoryItems.size() && !bFound; i++) {
 							TangibleItem item = vInventoryItems.get(i);
 							if (item instanceof ResourceContainer) {

@@ -1,8 +1,8 @@
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.Hashtable;
-import java.util.ArrayList;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.Vector;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class GridElement {
@@ -83,11 +83,11 @@ public class GridElement {
 			if (isContainedBy(o)) {
 				vObjects.put(o.getID(), o);
 				if (!o.getIsStaticObject()) { 
-					ArrayList<Player> players = getAllNearPlayers(); 
+					Vector<Player> players = getAllNearPlayers(); 
 					for (int i = 0; i < players.size(); i++) {
 						try {
-							players.get(i).spawnItem(o);
-							ZoneClient client = players.get(i).getClient();
+							players.elementAt(i).spawnItem(o);
+							ZoneClient client = players.elementAt(i).getClient();
 							if (o.getCellID() == 0) {
 								client.insertPacket(PacketFactory.buildNPCUpdateTransformMessage(o));
 							} else {
@@ -119,9 +119,9 @@ public class GridElement {
 		vObjects.remove(o.getID());
 		if (!bStillSpawned) {
 			if (!o.getIsStaticObject()) {
-				ArrayList<Player> players = getAllNearPlayers(); 
+				Vector<Player> players = getAllNearPlayers(); 
 				for (int i = 0; i < players.size(); i++) {
-					Player player = (Player)players.get(i);
+					Player player = (Player)players.elementAt(i);
 					try {
 						// If we're forcibly removing the item, or if the item is no longer in range of the Player, remove it.
 						if (!ZoneServer.isInRange(o, player)) {
@@ -140,9 +140,9 @@ public class GridElement {
 		return vObjects;
 	}
 	
-	public ArrayList<Player> getAllPlayersContained() {
+	public Vector<Player> getAllPlayersContained() {
 		Enumeration<SOEObject> vObjEnum = vObjects.elements();
-		ArrayList<Player> vPlayers = new ArrayList<Player>();
+		Vector<Player> vPlayers = new Vector<Player>();
 		while (vObjEnum.hasMoreElements()) {
 			SOEObject elementObject = vObjEnum.nextElement();
 			if (elementObject instanceof Player) {
@@ -154,9 +154,9 @@ public class GridElement {
 		return vPlayers;
 	}
 	
-	public ArrayList<NPC> getAllNPCsContained() {
+	public Vector<NPC> getAllNPCsContained() {
 		Enumeration<SOEObject> vObjEnum = vObjects.elements();
-		ArrayList<NPC> vPlayers = new ArrayList<NPC>();
+		Vector<NPC> vPlayers = new Vector<NPC>();
 		while (vObjEnum.hasMoreElements()) {
 			SOEObject elementObject = vObjEnum.nextElement();
 			if (elementObject instanceof NPC) {
@@ -175,8 +175,8 @@ public class GridElement {
 	/*public float getZ() {
 		return nearZ;
 	}*/
-	public Hashtable<Long, SOEObject> getAllNearObjects() {
-		Hashtable<Long, SOEObject> toReturn = new Hashtable<Long, SOEObject>();
+	public ConcurrentHashMap<Long, SOEObject> getAllNearObjects() {
+		ConcurrentHashMap<Long, SOEObject> toReturn = new ConcurrentHashMap<Long, SOEObject>();
 		toReturn.putAll(vObjects);
 		for (int i = 0; i < vNearbyElements.length; i++) {
 			GridElement element = vNearbyElements[i];
@@ -194,8 +194,8 @@ public class GridElement {
 		vNearbyElements[gridPosition] = e;
 	}
 	
-	public ArrayList<Player> getAllNearPlayers() {
-		ArrayList<Player> toReturn = new ArrayList<Player>();
+	public Vector<Player> getAllNearPlayers() {
+		Vector<Player> toReturn = new Vector<Player>();
 		toReturn.addAll(getAllPlayersContained());
 		for (int i = 0; i < vNearbyElements.length; i++) {
 			GridElement element = vNearbyElements[i];
@@ -206,8 +206,8 @@ public class GridElement {
 		return toReturn;
 	}
 	
-	public ArrayList<SOEObject> getAllNearCreatures() {
-		ArrayList<SOEObject> toReturn = new ArrayList<SOEObject>();
+	public Vector<SOEObject> getAllNearCreatures() {
+		Vector<SOEObject> toReturn = new Vector<SOEObject>();
 		toReturn.addAll(getAllPlayersContained());
 		for (int i = 0; i < vNearbyElements.length; i++) {
 			GridElement element = vNearbyElements[i];

@@ -19,8 +19,7 @@ import java.net.Socket;
 import java.net.SocketAddress;
 import java.util.Enumeration;
 import java.util.Random;
-//import java.util.concurrent.ConcurrentHashMap;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.swing.JFrame;
 import net.persistentworlds.config.Config;
 import net.persistentworlds.config.FatalConfigException;
@@ -80,46 +79,38 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 	private Config serverSettings;
 	private ServerSetup configManager;
 
-        @Override
 	public void mouseExited(MouseEvent m) {
 
 	}
 
-        @Override
 	public void mouseReleased(MouseEvent m){
 
 	}
 
-        @Override
 	public void mouseClicked(MouseEvent m) {
 		//Point clickLocation = m.getLocationOnScreen();
 
 	}
 
-        @Override
 	public void mousePressed(MouseEvent m) {
 		//Point clickLocation = m.getLocationOnScreen();
 
 	}
 
-        @Override
 	public void mouseEntered(MouseEvent m) {
 
 
 	}
-        @Override
 	public void keyPressed(KeyEvent arg0) {
 		bPressedAnything = true;
 		pressedKeys[arg0.getKeyCode()] = true;
 	}
 
-        @Override
 	public void keyReleased(KeyEvent arg0) {
 		pressedKeys[arg0.getKeyCode()] = false;
 
 	}
 
-        @Override
 	public void keyTyped(KeyEvent arg0) {
 	}
 
@@ -253,11 +244,11 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 		try {
 			if(!bUsingZoneServer)
 			{
-				spaceFrame = new JFrame( "Shards of the Force Pre-CU Login Server" );
+				spaceFrame = new JFrame( "Star Wars Galaxies A New Hope: " );
 			}
 			else
 			{
-				spaceFrame = new JFrame( "Shards of the Force Pre-CU Server" );
+				spaceFrame = new JFrame( "Star Wars Galaxies A New Hope: " );
 			}
 			spaceFrame.setSize(screenWidth, screenHeight);
 			spaceFrame.validate();
@@ -324,8 +315,6 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 
 	/**
 	 * The main program.
-     * @param args
-     * @throws java.lang.Exception
 	 */
 	public static void main(String[] args) throws Exception {
 
@@ -377,17 +366,17 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			g.drawImage(splashImage, 0, 0, null);
 		} else {
 			if (fontHeight == -1) {
-				font = new Font("Times New Roman", Font.TRUETYPE_FONT, 12);
+				font = new Font("Verdana", Font.TRUETYPE_FONT, 12);
 				g.setFont(font);
 				fontHeight = g.getFont().getSize();
 			}
 			//int iNoArchitectsLen = (fontHeight * ARCH_NULL.length());
 			//g.setClip(0,0,iCurrentWidth, iCurrentHeight);
-			g.setColor(Color.WHITE);
+			g.setColor(Color.BLACK);
 			g.fillRect(0,0,screenWidth, screenHeight);
 			int currentX = 10;
 			int currentY = 10;
-			g.setColor(Color.BLACK);
+			g.setColor(Color.GREEN);
 			g.drawString(Constants.getCurrentSoftwareVersion(), screenWidthDiv2 - (screenWidthDiv2/2),currentY);
 			currentY += fontHeight;
 			int stringLength = (int)getStringWidth("Uptime: ", font);
@@ -493,7 +482,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 		}
 	}
 
-	private Hashtable<SocketAddress, ZoneClient> vClients = null;
+	private ConcurrentHashMap<SocketAddress, ZoneClient> vClients = null;
 	private int iPlayerIndex = 0;
 	//protected int iCurrentWidth = 0;
 	//protected int iCurrentHeight = 0;
@@ -718,7 +707,6 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 	/**
 	 * The main thread loop.
 	 */
-        @Override
 	public void run() {
 		DataLog.logEntry("GUI running.","SWGGui",Constants.LOG_SEVERITY_INFO,true,true);
 		long lWaitTimeNano = 0;

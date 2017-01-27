@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -25,8 +26,8 @@ public class CombatAction {
 	private float fToHitModifier;
 	private float fForceCostModifier;
 	private BuffEffect[] combatEffect;
-	private ArrayList<String> sCombatAnimationSTF;
-	private ArrayList<Integer> iCombatAnimationCRC;
+	private List<String> sCombatAnimationSTF;
+	private List<Integer> iCombatAnimationCRC;
 	
 	
 	/**
@@ -210,7 +211,7 @@ public class CombatAction {
 		fForceCostModifier = forceCostModifier;
 	}
 
-	public ArrayList<String> getCombatAnimationSTF() {
+	public List<String> getCombatAnimationSTF() {
 		return sCombatAnimationSTF;
 	}
 
@@ -248,7 +249,7 @@ public class CombatAction {
 		iCombatAnimationCRC.add(iAnimationCRC);	
 	}
 
-	public ArrayList<Integer> getAnimationCRC() {
+	public List<Integer> getAnimationCRC() {
 		return iCombatAnimationCRC;
 	}
 

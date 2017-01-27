@@ -1,4 +1,5 @@
-import java.util.*;
+import java.util.List;
+import java.util.ArrayList;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -6,6 +7,8 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.SocketAddress;
+import java.util.Arrays;
+import java.util.NoSuchElementException;
 
 /**
  * The Login Client is the interface between the server and the client, and handles all interactions for logging in
@@ -30,8 +33,8 @@ public class LoginClient implements Runnable {
 	private boolean bIsDeveloper = false;
 	
 	private long iAccountID;
-	private ArrayList<Player> lCharacterList;
-	//private static ArrayList sequences = new ArrayList();
+	private List<Player> lCharacterList;
+	//private static Vector sequences = new Vector();
 	private long lLastActive = Constants.DISCONNECT_TIMEOUT_MS;
 	private int TickCount = 0; // The number of ticks the server has run.
 	private short ClientTick = 0; // The number of ticks the client has run.
@@ -47,11 +50,11 @@ public class LoginClient implements Runnable {
 	private int MAX_PACKET_SIZE = 0;
 	private LoginServer myServer;
 	//private static LoginDatabaseInterface dbInterface;
-	private ArrayList<byte[]> packetQueue;
+	private List<byte[]> packetQueue;
 	private Thread myThread;
 	private boolean hasLoggedIn = false;  // Set to true when we receive a valid username / password.
 	//private short[] queuedPacketAttributes;
-	private ArrayList<byte[]> vIncomingPacketQueue;
+	private List<byte[]> vIncomingPacketQueue;
 	private final static byte[] Session_Key = {
 		   0x20, 0x00, 0x00, 0x00, 
            0x15, 0x00, 0x00, 0x00,
@@ -1173,7 +1176,7 @@ public class LoginClient implements Runnable {
 	private void sendLoginEnumCluster() {
 		ByteArrayOutputStream bOut = new ByteArrayOutputStream() ;
 		SOEOutputStream dOut = new SOEOutputStream(bOut);
-		ArrayList<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
+		List<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
 		
 		try {
 			dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -1203,7 +1206,7 @@ public class LoginClient implements Runnable {
 		ByteArrayOutputStream bOut = new ByteArrayOutputStream() ;
 		SOEOutputStream dOut = new SOEOutputStream(bOut);
 
-		ArrayList<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
+		List<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
 		try { 
 			dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 			
@@ -1313,7 +1316,7 @@ public class LoginClient implements Runnable {
 	private void handleClientDeleteCharacter(SOEInputStream dIn) throws IOException {
 		int serverID = dIn.readInt();
 		long playerID = dIn.readLong();
-		ArrayList<Player> vPlayerList = myServer.getCharacterListForServer(serverID);
+		List<Player> vPlayerList = myServer.getCharacterListForServer(serverID);
 		for (int i = 0; i < vPlayerList.size(); i++) {
 			Player player = vPlayerList.get(i);
 			if (player.getID() == playerID) {

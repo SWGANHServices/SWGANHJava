@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Vector;
 /**
  * Creates a new Mission Object class that allows us to send missions to players mission bag.
  * @author Tomas Cruz
@@ -23,7 +23,7 @@ public final class MissionObject extends IntangibleObject{
     private int iMissionPayout;
     private String sTargetDisplaySTFString;
     private int iMissionTypeCRC;
-    private ArrayList<Short> vUpdates;
+    private Vector<Short> vUpdates;
     private transient int iUpdateCounter = 0;
     private int iLairTemplateChosen;
     private int iMissionTemplateChosen;
@@ -32,7 +32,7 @@ public final class MissionObject extends IntangibleObject{
     public MissionObject(){
         setCRC(0xDF064E7A);
         this.setIFFFileName("object/mission/shared_mission_object.iff");      
-        vUpdates = new ArrayList<Short>();
+        vUpdates = new Vector<Short>();
         iDiffcultyLevel = 1;
         iDifficultyIdentifier = 1;
     }
@@ -395,7 +395,7 @@ public final class MissionObject extends IntangibleObject{
     protected void clearUpdates(){
         if(vUpdates==null)
         {
-            vUpdates = new ArrayList<Short>();
+            vUpdates = new Vector<Short>();
         }
         vUpdates.clear();
         if(!vUpdates.contains((short)0x0D))
@@ -403,7 +403,7 @@ public final class MissionObject extends IntangibleObject{
             vUpdates.add((short)0x0D);
         }
     }
-    protected ArrayList<Short> getUpdatesList(){
+    protected Vector<Short> getUpdatesList(){
         return vUpdates;
     }
     

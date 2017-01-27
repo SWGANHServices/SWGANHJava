@@ -1,11 +1,11 @@
 import java.io.IOException;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.ArrayList;
 
 public class Factory extends Structure {
 	public final static long serialVersionUID = 1l;
-	private ArrayList<Long> vHopperAccessList;
+	private List<Long> vHopperAccessList;
 	private ManufacturingSchematic currentSchematic;
 	private TangibleItem tInputHopper;
 	private TangibleItem tOutputHopper;
@@ -111,7 +111,7 @@ public class Factory extends Structure {
 		if (vRadialsForAdmin == null) {
 			vRadialsForAdmin = new Hashtable<Character, RadialMenuItem>();
 			vRadialsForNonAdmin = new Hashtable<Character, RadialMenuItem>();
-			ArrayList<RadialMenuItem> vRadial = c.getServer().getRadialMenusByCRC(
+			List<RadialMenuItem> vRadial = c.getServer().getRadialMenusByCRC(
 					getCRC());
 			for (int i = 0; i < vRadial.size(); i++) {
 				RadialMenuItem item = vRadial.get(i);
@@ -156,8 +156,8 @@ public class Factory extends Structure {
 				return;
 			}
 			Player player = client.getPlayer();
-			ArrayList<TangibleItem> vInputHopper = tInputHopper.getLinkedObjects();
-			ArrayList<TangibleItem> vOutputHopper = tOutputHopper
+			List<TangibleItem> vInputHopper = tInputHopper.getLinkedObjects();
+			List<TangibleItem> vOutputHopper = tOutputHopper
 					.getLinkedObjects();
 			switch (commandID) {
 			case Constants.RADIAL_MENU_EXAMINE: {
@@ -172,7 +172,7 @@ public class Factory extends Structure {
 			case Constants.RADIAL_MENU_ADMIN_SERVER_MENU3: {// Manage power.
 				if (isAdmin(player.getID())) {
 					int iPowerOnHand = 0;
-					ArrayList<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
+					List<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
 					for (int i = 0; i < client.getPlayer().getInventoryItems()
 							.size(); i++) {
 						TangibleItem o = client.getPlayer().getInventoryItems()
@@ -497,7 +497,7 @@ public class Factory extends Structure {
 					DataListPrompt = "Current schematic installed: "
 							+ currentSchematic.getCraftedName();
 				}
-				ArrayList<ManufacturingSchematic> vSchematics = player.getSchematicsForFactory(iFactoryType);
+				List<ManufacturingSchematic> vSchematics = player.getSchematicsForFactory(iFactoryType);
 				int listSize = vSchematics.size();
 				if (currentSchematic != null) {
 					listSize += 1;
@@ -602,8 +602,8 @@ public class Factory extends Structure {
 				long[] vSerialsOfComponents = currentSchematic.getComponentSerials();
 				CraftingSchematic schematic= currentSchematic.getCraftingSchematic();
 				schematic.clearFactoryItemForCrafting();
-				ArrayList<CraftingSchematicComponent> vComponents = schematic.getComponents();
-				ArrayList<TangibleItem> vInputHopper= tInputHopper.getLinkedObjects();
+				List<CraftingSchematicComponent> vComponents = schematic.getComponents();
+				List<TangibleItem> vInputHopper= tInputHopper.getLinkedObjects();
 				// For each component in the list:  Is it an optional component, a required component, or a resource?
 				// If it's an optional component, must they all be identical, or similar?
 				// If it's an identical component, is it in the factory, and must they all be identical, or similar?

@@ -1,5 +1,4 @@
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
 
 public class WeaponCraftingSchematic extends CraftingSchematic {
 	public final static long serialVersionUID = 1l;

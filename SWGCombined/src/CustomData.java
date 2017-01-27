@@ -84,7 +84,7 @@ public class CustomData implements Serializable{
                 this.operandDefaultValue[iIndex] = defval;
             }
             //rebuild the customization string.
-            ArrayList<Byte> newCustomization = new ArrayList<Byte>();
+            Vector<Byte> newCustomization = new Vector<Byte>();
             newCustomization.add(this.iListCount);
             newCustomization.add(this.iOperandCount);
             if(this.raceByte != -1)

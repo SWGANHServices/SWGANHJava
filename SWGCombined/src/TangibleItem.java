@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -16,19 +17,19 @@ public class TangibleItem extends SOEObject implements Experimentable {
 	private long iContainerID;
 	private long iOwnerID;
 	private SOEObject iContainer;
-	private ArrayList<TangibleItem> vLinkedObjects; // Inventory container specific
-	private ArrayList<IntangibleObject> vContainedIntangibleObjects; // Datapad specific
+	private List<TangibleItem> vLinkedObjects; // Inventory container specific
+	private List<IntangibleObject> vContainedIntangibleObjects; // Datapad specific
 	private String sUserOptions = null;
 	private int iCurrentCondition;
 	private int iMaxCondition;    
 	private int iSocketCount = 0;
     private boolean bHasSockets = false;
     private int iSocketsLeft = 0;
-    private ArrayList<SocketAttachment> vAttachmentList;
+    private List<SocketAttachment> vAttachmentList;
     private int iToolSurveyRange = -1; // Survey tool specific
-    private ArrayList<MissionObject> vMissionList; // Mission bag specific
-    private ArrayList<MissionObject> vEmptyMissionList;
-    private ArrayList<MissionObject> vAcceptedMissionList;
+    private List<MissionObject> vMissionList; // Mission bag specific
+    private List<MissionObject> vEmptyMissionList;
+    private List<MissionObject> vAcceptedMissionList;
     
     private boolean bSendsEquipedState = true;
     private boolean bIsNoTradeItem;
@@ -36,7 +37,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
     private long lBiolinkID;
     private float fComplexity = 1.0f;
     private long lCrafterID;
-    private ArrayList<SkillModifier> vSkillModifiers;
+    private List<SkillModifier> vSkillModifiers;
     private long lSaleTimeMS = 0l;
     private BazaarTerminal saleTerminal = null;
     private boolean bInstantSale = true;
@@ -51,7 +52,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
     private transient long lSampleTimeMS = 0;
     private transient SpawnedResourceData resourceToSurvey;
     
-    private transient ArrayList<MissionObject> vRefreshedMissionList; // Mission bag specific
+    private transient List<MissionObject> vRefreshedMissionList; // Mission bag specific
     
 
         
@@ -219,7 +220,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
 		            			if (!bCouldUpdate){
 		            				System.out.println("Could not update current resource container -- searching for a match in inventory.");
 		            				boolean bFound = false;
-		            				ArrayList<TangibleItem> vInventoryItems = player.getInventoryItems();
+		            				List<TangibleItem> vInventoryItems = player.getInventoryItems();
 		            				for (int i = 0; i < vInventoryItems.size() && !bFound; i++) {
 		            					TangibleItem item = vInventoryItems.get(i);
 		            					if (item instanceof ResourceContainer) {
@@ -518,7 +519,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
 	 * Gets the list of TangibleItem object which this TangibleItem contains.
 	 * @return The list of contained items.
 	 */
-	protected ArrayList<TangibleItem> getLinkedObjects() {
+	protected List<TangibleItem> getLinkedObjects() {
 		return vLinkedObjects;
 	}
 	
@@ -548,7 +549,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
 	 * Gets the list of IntangibleObject contained by this TangibleItem.
 	 * @return The list of Intangibles.
 	 */
-	protected ArrayList<IntangibleObject> getIntangibleObjects() {
+	protected List<IntangibleObject> getIntangibleObjects() {
 		return vContainedIntangibleObjects;
 	}
 	
@@ -1038,11 +1039,11 @@ public class TangibleItem extends SOEObject implements Experimentable {
     		setIsCoolingDown(false);
         }
 
-        public ArrayList<MissionObject> getVMissionList() {
+        public List<MissionObject> getVMissionList() {
             return vMissionList;
         }
 
-        public void setVMissionList(ArrayList<MissionObject> vMissionList) {
+        public void setVMissionList(List<MissionObject> vMissionList) {
             this.vMissionList = vMissionList;
         }
         
@@ -1061,7 +1062,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
             vRefreshedMissionList.clear();
         }
         
-        public ArrayList<MissionObject> getMissionObjectRefreshList(){
+        public List<MissionObject> getMissionObjectRefreshList(){
             return vRefreshedMissionList;
         }
         
@@ -1104,7 +1105,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
             }                
         }
         
-        public ArrayList<MissionObject> getMissionObjectAcceptedList(){
+        public List<MissionObject> getMissionObjectAcceptedList(){
             return vAcceptedMissionList;
         }
 
@@ -1116,7 +1117,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
             this.bSendsEquipedState = bSendsEquipedState;
         }
 
-        public void setVEmptyMissionList(ArrayList<MissionObject> vEmptyMissionList) {
+        public void setVEmptyMissionList(List<MissionObject> vEmptyMissionList) {
             this.vEmptyMissionList = vEmptyMissionList;
         }
         
@@ -1277,7 +1278,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
         }
     }
 
-    protected ArrayList<SkillModifier> getSkillModifiers(){
+    protected List<SkillModifier> getSkillModifiers(){
         if(vSkillModifiers==null)
         {
             vSkillModifiers = new ArrayList<SkillModifier>();

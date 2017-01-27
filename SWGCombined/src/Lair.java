@@ -1,6 +1,6 @@
+import java.util.List;
 import java.util.ArrayList;
-//import java.util.concurrent.ConcurrentHashMap;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
 /**
  
@@ -49,11 +49,11 @@ import java.util.Enumeration;
  */
 public final class Lair extends NPC{
     public final static long serialVersionUID = 1l;
-    //private ArrayList<TangibleItem> EquipmentList;
-    //private ArrayList<TangibleItem> PropList;
-    private Hashtable<Long,NPC> vSpawnedChildren;
-    private ArrayList<SOEObject> vHateList;
-    //private ArrayList<TangibleItem> LootList;
+    //private Vector<TangibleItem> EquipmentList;
+    //private Vector<TangibleItem> PropList;
+    private ConcurrentHashMap<Long,NPC> vSpawnedChildren;
+    private List<SOEObject> vHateList;
+    //private Vector<TangibleItem> LootList;
     private LairTemplate myLairTemplate;
     
     //private SWGGui gui;
@@ -109,11 +109,11 @@ public final class Lair extends NPC{
         bPositionSet = false;
     }
 
-    /*private ArrayList<TangibleItem> getEquipmentList() {
+    /*private Vector<TangibleItem> getEquipmentList() {
         return EquipmentList;
     }
 
-    private void setEquipmentList(ArrayList<TangibleItem> EquipmentList) {
+    private void setEquipmentList(Vector<TangibleItem> EquipmentList) {
         this.EquipmentList = EquipmentList;
     }
 
@@ -121,11 +121,11 @@ public final class Lair extends NPC{
         EquipmentList.add(t);
     }
     */
-    protected ArrayList<SOEObject> getHateList() {
+    protected List<SOEObject> getHateList() {
         return vHateList;
     }
 
-    protected void setHateList(ArrayList<SOEObject> HateList) {
+    protected void setHateList(List<SOEObject> HateList) {
         this.vHateList = HateList;
     }
 /*
@@ -133,19 +133,19 @@ public final class Lair extends NPC{
        HateList.add(h);
     }   
     
-    private ArrayList<TangibleItem> getLootList() {
+    private Vector<TangibleItem> getLootList() {
         return LootList;
     }
 
-    private void setLootList(ArrayList<TangibleItem> LootList) {
+    private void setLootList(Vector<TangibleItem> LootList) {
         this.LootList = LootList;
     }
 
-    private ArrayList<TangibleItem> getPropList() {
+    private Vector<TangibleItem> getPropList() {
         return PropList;
     }
 
-    private void setPropList(ArrayList<TangibleItem> PropList) {
+    private void setPropList(Vector<TangibleItem> PropList) {
         this.PropList = PropList;
     }
 
@@ -358,7 +358,7 @@ public final class Lair extends NPC{
             while(!proceed )
             {
                 boolean hasclearance = true;
-                Hashtable<Long, SOEObject> vOAO = server.getAllObjects();
+                ConcurrentHashMap<Long, SOEObject> vOAO = server.getAllObjects();
                 Enumeration <SOEObject> oEnum = vOAO.elements();
                 while(oEnum.hasMoreElements())
                 {
@@ -410,7 +410,7 @@ public final class Lair extends NPC{
             while(!proceed )
             {
                 boolean hasclearance = true;
-                Hashtable<Long, SOEObject> vOAO = server.getAllObjects();
+                ConcurrentHashMap<Long, SOEObject> vOAO = server.getAllObjects();
                 Enumeration <SOEObject> oEnum = vOAO.elements();
                 while(oEnum.hasMoreElements())
                 {
@@ -447,7 +447,7 @@ public final class Lair extends NPC{
     /**
      * Sets the template for this lair.
      * If the template requested is not valid this function returns null and will not spawn.
-     * @param lairTemplateID - The template we want for the lair - same template id as on the item_template talble but taken from the server lair_template ArrayList
+     * @param lairTemplateID - The template we want for the lair - same template id as on the item_template talble but taken from the server lair_template Vector
      * @param iPlanetID - The planet We want the lair on.
      * @return
      */
@@ -476,7 +476,7 @@ public final class Lair extends NPC{
      */
     public void setLairRandomTemplate(int planetID, boolean bSetSpecific){
         
-        ArrayList<LairTemplate> vLairSelections = server.getLairTemplatesForPlanet(planetID, bSetSpecific);  
+        List<LairTemplate> vLairSelections = server.getLairTemplatesForPlanet(planetID, bSetSpecific);  
         int it = 0;
         while(myLairTemplate == null && it < vLairSelections.size())
         {
@@ -505,11 +505,11 @@ public final class Lair extends NPC{
                     iWaveID = 0;            
                     iMaxChildren = myLairTemplate.getIMaxWaves() + myLairTemplate.getIMaxPerWave() + 1;            
                     iBabyCount = 0;        
-                    //EquipmentList = new ArrayList<TangibleItem>();
-                    //PropList = new ArrayList<TangibleItem>();
-                    vSpawnedChildren = new Hashtable<Long,NPC>();
+                    //EquipmentList = new Vector<TangibleItem>();
+                    //PropList = new Vector<TangibleItem>();
+                    vSpawnedChildren = new ConcurrentHashMap<Long,NPC>();
                     vHateList = new ArrayList<SOEObject>();
-                    //LootList = new ArrayList<TangibleItem>();
+                    //LootList = new Vector<TangibleItem>();
                     bIsLairSpawned = false;            
                     //iLairId = -1;            
                     setTemplateID(myLairTemplate.getILairTemplate());
@@ -546,7 +546,7 @@ public final class Lair extends NPC{
                     /* This HAS TO BE LAST!!!!!*/            
                     bIsLairSpawned = true;
                     //System.out.println("Lair Spawned " + bIsLairSpawned );
-                     ArrayList<Player> vPL = server.getPlayersAroundNPC(this);
+                     List<Player> vPL = server.getPlayersAroundNPC(this);
                     if(!vPL.isEmpty())
                     {
                         for(int c =0; c < vPL.size();c++)
@@ -571,7 +571,7 @@ public final class Lair extends NPC{
                     //adult spawn
         			int maxPerWave = getIMaxPerWave();
                     int maxChildrenForLair = getIMaxChildren();
-                    ArrayList<SpawnedResourceData> vResourcesThisPlanet = server.getResourceManager().getResourcesByPlanetID(getPlanetID());
+                    List<SpawnedResourceData> vResourcesThisPlanet = server.getResourceManager().getResourcesByPlanetID(getPlanetID());
                     for(int i = 0; i < maxPerWave; i++)
                     {
                         //System.out.println("Spawn Number " + i + "of " + getIMaxPerWave());
@@ -772,7 +772,7 @@ public final class Lair extends NPC{
                                 }   
                                 server.addObjectToAllObjects(LairChild,true,false);
                                 iDefenderCount = vSpawnedChildren.size();
-                                ArrayList<Player> vPL = server.getPlayersAroundNPC(this);
+                                List<Player> vPL = server.getPlayersAroundNPC(this);
                                 if(!vPL.isEmpty())
                                 {
                                     for(int c =0; c < vPL.size();c++)
@@ -912,7 +912,7 @@ public final class Lair extends NPC{
                                 server.addObjectToAllObjects(LairChild,true,false);
                                 iDefenderCount = vSpawnedChildren.size();
                                 
-                                ArrayList<Player> vPL = server.getPlayersAroundNPC(this);
+                                List<Player> vPL = server.getPlayersAroundNPC(this);
                                 if(!vPL.isEmpty())
                                 {
                                     for(int c =0; c < vPL.size();c++)
@@ -938,7 +938,7 @@ public final class Lair extends NPC{
         }
     }
     
-    public Hashtable<Long, NPC> getChildren()
+    public ConcurrentHashMap<Long, NPC> getChildren()
     {
     	return vSpawnedChildren;
     }

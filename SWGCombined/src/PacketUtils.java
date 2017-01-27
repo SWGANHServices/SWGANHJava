@@ -7,7 +7,7 @@ import java.io.DataOutputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.ArrayList;
+import java.util.Vector;
 import java.util.zip.Deflater;
 import java.util.zip.DeflaterOutputStream;
 import java.util.zip.Inflater;
@@ -754,16 +754,16 @@ public class PacketUtils {
 	 * @throws ArrayIndexOutOfBoundsException
 	 * @throws Exception
 	 */
-	public static ArrayList<byte[]> fragmentDataA(ArrayList<byte[]> packet)
+	public static Vector<byte[]> fragmentDataA(Vector<byte[]> packet)
 			throws ArrayIndexOutOfBoundsException, Exception {
 		// Fragments the data provided into subpackets based on the specified
 		// MAX_PACKET_SIZE. If MAX_PACKET_SIZE is not allocated, throws an
 		// ArrayIndexOutOfBoundsException
-		ArrayList<byte[]> vPacketsToReturn = new ArrayList<byte[]>();
+		Vector<byte[]> vPacketsToReturn = new Vector<byte[]>();
 		int totalPacketSize = packet.size();
 		int iNumberOfFragments = totalPacketSize / MAX_PACKET_SIZE;
 		for (int i = 0; i < packet.size(); i++) {
-			byte[] fragPacket = packet.get(i);
+			byte[] fragPacket = packet.elementAt(i);
 
 			SOEInputStream dIn = new SOEInputStream(new ByteArrayInputStream(
 					fragPacket));
@@ -813,8 +813,8 @@ public class PacketUtils {
 	 * @return
 	 * @throws Exception
 	 */
-	public static ArrayList<byte[]> buildDataAMultiPacket(
-			ArrayList<byte[]> packetDatas) throws Exception {
+	public static Vector<byte[]> buildDataAMultiPacket(
+			Vector<byte[]> packetDatas) throws Exception {
 		// This function is designed specifically for the multipacketing of
 		// SOE_CHL_DATA_A packets.
 		// Format: Opcode SOE_CHL_DATA_A
@@ -826,12 +826,12 @@ public class PacketUtils {
 		// }
 		// short crc
 		// boolean compressed;
-		ArrayList<byte[]> vMultipacketedData = new ArrayList<byte[]>();
+		Vector<byte[]> vMultipacketedData = new Vector<byte[]>();
 		int iTotalPackets = packetDatas.size();
 		SOEOutputStream sOut = new SOEOutputStream(new ByteArrayOutputStream());
 
 		SOEInputStream sIn = new SOEInputStream(new ByteArrayInputStream(
-				packetDatas.get(0)));
+				packetDatas.elementAt(0)));
 		short opcode = sIn.getOpcode();
 		if (opcode != Constants.SOE_CHL_DATA_A) {
 			// /System.out.println("Error:  Trying to DATA_A_MULTIPACKET a non-SOE_CHL_DATA_A packet");
@@ -843,7 +843,7 @@ public class PacketUtils {
 		sOut.setSequence(sequence);
 		sOut.setUpdateType(Constants.DATA_A_MULTI_PKT);
 		for (int i = 0; i < iTotalPackets; i++) {
-			byte[] data = packetDatas.get(i);
+			byte[] data = packetDatas.elementAt(i);
 			if (data.length + sOut.written < 487) {
 				sOut.writeByte((byte) data.length);
 				iBytesWrittenThisPacket++;
@@ -878,16 +878,16 @@ public class PacketUtils {
 	 * @return
 	 * @throws IOException
 	 */
-	public static ArrayList<byte[]> buildMultiPacket(ArrayList<byte[]> vPackets)
+	public static Vector<byte[]> buildMultiPacket(Vector<byte[]> vPackets)
 			throws IOException {
-		ArrayList<byte[]> vReadyPackets = new ArrayList<byte[]>();
+		Vector<byte[]> vReadyPackets = new Vector<byte[]>();
 
 		int iTotalPackets = vPackets.size();
 		int iBytesInMulti = 2;
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_MULTI_PKT);
 		for (int i = 0; i < iTotalPackets; i++) {
-			byte[] aPacket = vPackets.get(i);
+			byte[] aPacket = vPackets.elementAt(i);
 			if (aPacket.length + iBytesInMulti > 492) {
 				dOut.flush();
 				vReadyPackets.add(dOut.getBuffer());
@@ -905,7 +905,7 @@ public class PacketUtils {
 	}
 
 	/*
-	 * public static ArrayList<byte[]> preparePacketsForSending(Vector<byte[]>
+	 * public static Vector<byte[]> preparePacketsForSending(Vector<byte[]>
 	 * packetDatas, int CRC) throws Exception { // This function is designed for
 	 * the general multipacketing of any type of packet. Note: This type of
 	 * multipacket // may contain a DATA_A_MULTI_PACKET within it. int
@@ -916,8 +916,8 @@ public class PacketUtils {
 	 * byte[] packet data // } // short crc // boolean compressed; // First,
 	 * we're going to get the number of DATA_A's in here, and see if they're
 	 * multipacketable. // We want to re-build the packetDatas array, such that
-	 * any packet that can be multipacketed will be. ArrayList<byte[]>
-	 * vPacketsToFragment = new ArrayList<byte[]>(); Vector<byte[]>
+	 * any packet that can be multipacketed will be. Vector<byte[]>
+	 * vPacketsToFragment = new Vector<byte[]>(); Vector<byte[]>
 	 * vPacketsToMultipacket = new Vector<byte[]>(); Vector<byte[]>
 	 * vDataAMultipacket = new Vector<byte[]>(); Vector<byte[]>
 	 * packetsToSendBeforeFiddle = new Vector<byte[]>(); for (int i = 0; i <

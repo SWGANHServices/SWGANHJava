@@ -3,7 +3,6 @@
  * and open the template in the editor.
  */
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
 /**
  *
@@ -269,7 +268,7 @@ public final class TutorialObject extends Structure {
             while(!proceed )
             {
                 boolean hasclearance = true;
-                Hashtable<Long, SOEObject> vOAO = zServer.getAllObjects();
+                ConcurrentHashMap<Long, SOEObject> vOAO = zServer.getAllObjects();
                 Enumeration <SOEObject> oEnum = vOAO.elements();
                 while(oEnum.hasMoreElements())
                 {

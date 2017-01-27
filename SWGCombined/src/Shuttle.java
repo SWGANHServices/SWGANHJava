@@ -1,6 +1,6 @@
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
-//import java.util.concurrent.ConcurrentHashMap;
 import java.util.Hashtable;
 
 /**
@@ -79,7 +79,7 @@ public class Shuttle extends NPC{
 	            {
 	            	setStance(null, Constants.STANCE_PRONE, true);
 	            	//System.out.println("Shuttle Taking Off ID " + this.getTicketID());
-                    ArrayList <Player>playerList = this.getServer().getPlayersAroundNPC(this);
+                    List <Player>playerList = this.getServer().getPlayersAroundNPC(this);
                     if(!playerList.isEmpty())
                     {
                         for(int i = 0; i < playerList.size(); i++)
@@ -127,7 +127,7 @@ public class Shuttle extends NPC{
 	                
 	                if(TD!=null)
 	                {
-	                    ArrayList <Player>PlayerList = this.getServer().getPlayersAroundNPC(TD);                    
+	                    List <Player>PlayerList = this.getServer().getPlayersAroundNPC(TD);                    
 	                    if(PlayerList!=null && PlayerList.size() >= 1)
 	                    {
 	                        for(int i = 0; i < PlayerList.size(); i++)

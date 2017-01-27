@@ -1,4 +1,4 @@
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * Container class for all items in the game.  This tells us everything we need to know to spawn an item, equip an item,
@@ -23,7 +23,7 @@ public class ItemTemplate {
 	private String sSTFLookAtIdentifier = "";
 	private boolean[][] bStarterItem = null;
 	private int iCellCount = 0;
-	private ArrayList<RadialMenuItem> vRadialMenuItems;
+	private Vector<RadialMenuItem> vRadialMenuItems;
 	private String sScriptName = "";
 	private int iScriptType = -1;
         private boolean isContainer;
@@ -52,7 +52,7 @@ public class ItemTemplate {
 	 */
 	public ItemTemplate() {
 		bStarterItem = new boolean[Constants.NUM_RACES][Constants.NUM_PROFESSIONS];
-		vRadialMenuItems = new ArrayList<RadialMenuItem>();
+		vRadialMenuItems = new Vector<RadialMenuItem>();
                 isContainer = false;
 	}
 
@@ -328,7 +328,7 @@ public class ItemTemplate {
 		iTangibleTemplateID = iTemplateID;
 	}
 
-	public ArrayList<RadialMenuItem> getRadialMenuItems() {
+	public Vector<RadialMenuItem> getRadialMenuItems() {
 		return vRadialMenuItems;
 	}
 

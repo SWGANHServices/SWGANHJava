@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Resource Container is an extension of a Tangible Item that holds data specific to Resources.

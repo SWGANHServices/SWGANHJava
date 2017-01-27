@@ -1,9 +1,8 @@
 import java.io.IOException;
 import java.util.Hashtable;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.List;
-//import java.util.concurrent.ConcurrentHashMap;
 /**
  * The Structure class represents Buildings in the SWG game.
  * @author Darryl
@@ -30,12 +29,12 @@ public class Structure extends TangibleItem {
     //private int currentCondition;
     private long structureOwnerID;
     
-    private ArrayList<Long> vAdminList;
-    private ArrayList<Long> vEnterList;
-    private ArrayList<Long> vBanList;
-    private ArrayList<Long> vHopperAdminList;
+    private List<Long> vAdminList;
+    private List<Long> vEnterList;
+    private List<Long> vBanList;
+    private List<Long> vHopperAdminList;
     
-    //private ArrayList<Long> vHopperList;
+    //private Vector<Long> vHopperList;
     private short structureStatus;
     //private boolean bUpdateThreadIsUsing;
     private int iStructureMaxItemsCapacity;
@@ -58,7 +57,7 @@ public class Structure extends TangibleItem {
     private long lGuildTickTime;
     //private boolean isStructureMarker;
     //private long lNextMovementUpdate; //LOL YES STRUCTURES MOVE BELIEVE ME !!!! PF
-    private ArrayList<Terminal> vElevatorTerminals;
+    private List<Terminal> vElevatorTerminals;
 
     private transient long constructionMarkerID;
     private transient Structure constructionMarkerObject;
@@ -107,7 +106,7 @@ public class Structure extends TangibleItem {
                 iPowerRate = d.getIEnergyMaintenanceRate();//need to get this from the template
                 this.iFacingDirection = iFacingDirection;
                 this.structureOwnerID = lStructureOwnerID;
-                //vHopperList = new ArrayList<Long>();
+                //vHopperList = new Vector<Long>();
                 vAdminList = new ArrayList<Long>();
                 vEnterList = new ArrayList<Long>();
                 vBanList = new ArrayList<Long>();
@@ -565,10 +564,8 @@ public class Structure extends TangibleItem {
                          Message += "X:" + this.getX() + "\r\n";
                          Message += "Y:" + this.getY() + "\r\n";
                          Message += "Planet: " + Constants.PlanetNames[this.getPlanetID()] + "\r\n";                         
-                         List<Waypoint> WL;                 
-                        WL = new ArrayList<Waypoint>();
-                         SWGEmail E;                 
-                        E = new SWGEmail(-1,Constants.SERVER_STRUCTURE_MANAGER_OBJECT_ID,this.structureOwnerID,"Structure Damaged!",Message, WL,false);
+                         List<Waypoint> WL = new ArrayList<Waypoint>();                 
+                         SWGEmail E = new SWGEmail(-1,Constants.SERVER_STRUCTURE_MANAGER_OBJECT_ID,this.structureOwnerID,"Structure Damaged!",Message,WL,false);                 
                          server.queueEmailNewClientMessage(E);        
                     }
                     //--------------------------------
@@ -588,7 +585,7 @@ public class Structure extends TangibleItem {
                             Message += "Y:" + this.getY() + "\r\n";
                             Message += "Planet: " + Constants.PlanetNames[this.getPlanetID()] + "\r\n";                         
                             List<Waypoint> WL = new ArrayList<Waypoint>();                 
-                            SWGEmail E = new SWGEmail(-1,Constants.SERVER_STRUCTURE_MANAGER_OBJECT_ID,this.structureOwnerID,"Structure Out of Power",Message, (ArrayList<Waypoint>) WL,false);                 
+                            SWGEmail E = new SWGEmail(-1,Constants.SERVER_STRUCTURE_MANAGER_OBJECT_ID,this.structureOwnerID,"Structure Out of Power",Message,WL,false);                 
                             server.queueEmailNewClientMessage(E); 
                         }
                     }
@@ -634,7 +631,7 @@ public class Structure extends TangibleItem {
                     String Message = "Construction of your Structure is now complete. You have " + player.getFreeLots() + " lots remaining. ";
                     List<Waypoint> WL = new ArrayList<Waypoint>();
                     WL.add(this.structureWaypoint);
-                    SWGEmail E = new SWGEmail(-1,Constants.SERVER_STRUCTURE_MANAGER_OBJECT_ID,player.getID(),"Construction Complete",Message, (ArrayList<Waypoint>) WL,false);
+                    SWGEmail E = new SWGEmail(-1,Constants.SERVER_STRUCTURE_MANAGER_OBJECT_ID,player.getID(),"Construction Complete",Message,WL,false);
                     E.setTransactionRequester(player.getClient());
                     server.queueEmailNewClientMessage(E);                        
 
@@ -652,7 +649,7 @@ public class Structure extends TangibleItem {
                 {
                     //lets update everyone around us.
                     structurenamechanged = false;
-                    ArrayList<Player> vPL = server.getPlayersAroundObject(this, false);
+                    List<Player> vPL = server.getPlayersAroundObject(this, false);
                     for(int i = 0; i < vPL.size();i ++)
                     {
                         Player p = vPL.get(i);
@@ -1471,7 +1468,7 @@ public class Structure extends TangibleItem {
                                 if(this.isAdmin(client.getPlayer().getID()))
                                 {
                                     int iPowerOnHand = 0;
-                                    ArrayList<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
+                                    List<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
                                     for(int i =0; i < client.getPlayer().getInventoryItems().size();i++)
                                     {
                                         TangibleItem o = client.getPlayer().getInventoryItems().get(i);
@@ -1689,21 +1686,21 @@ public class Structure extends TangibleItem {
             this.iOutputHopperSize = iOutputHopperSize;
         }
 
-        public ArrayList<Long> getVAdminList() {
+        public List<Long> getVAdminList() {
             return vAdminList;
         }
 
-        public ArrayList<Long> getVBanList() {
+        public List<Long> getVBanList() {
             return vBanList;
         }
 
-        public ArrayList<Long> getVEnterList() {
+        public List<Long> getVEnterList() {
             return vEnterList;
         }
         
         public void updateStructureCellPermissions(ZoneClient client){
             try{
-                ArrayList<Player> vPL = client.getServer().getPlayersAroundObject(this,true);
+                List<Player> vPL = client.getServer().getPlayersAroundObject(this,true);
                 Hashtable<Long,Cell> vCells = this.getCellsInBuilding();
                 for(int i = 0; i < vPL.size();i++)
                 {
@@ -1733,11 +1730,11 @@ public class Structure extends TangibleItem {
             this.server = server;
         }
 
-        public ArrayList<Long> getVHopperAdminList() {
+        public List<Long> getVHopperAdminList() {
             return vHopperAdminList;
         }
 
-        public void setVHopperAdminList(ArrayList<Long> vHopperAdminList) {
+        public void setVHopperAdminList(List<Long> vHopperAdminList) {
             this.vHopperAdminList = vHopperAdminList;
         }
         
@@ -1833,7 +1830,7 @@ public class Structure extends TangibleItem {
             return isGuild;
         }
 
-        public ArrayList<Terminal> getVElevatorTerminals() {
+        public List<Terminal> getVElevatorTerminals() {
             if(vElevatorTerminals==null)
             {
                 vElevatorTerminals = new ArrayList<Terminal>();

@@ -1,6 +1,6 @@
 import java.util.Hashtable;
+import java.util.List;
 import java.util.ArrayList;
-//import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -13,7 +13,7 @@ public class ResourceManager implements Runnable{
 	private ZoneServer myServer;
 	private DatabaseInterface dbInterface = null;
 	//private SWGGui SWGGui = null;
-	private ArrayList<SpawnedResourceData> vAllSpawnedResources;
+	private List<SpawnedResourceData> vAllSpawnedResources;
 	private SpawnedResourceData spawnedPool1Steel;
 	private SpawnedResourceData spawnedPool1Copper;
 	private SpawnedResourceData spawnedPool1Aluminum;
@@ -27,11 +27,11 @@ public class ResourceManager implements Runnable{
 	private SpawnedResourceData spawnedPool1LiquidPetrochemical;
 	private SpawnedResourceData[] spawnedPool1Polymer;
 	private SpawnedResourceData[] spawnedPool1LubricatingOil;
-	private ArrayList<SpawnedResourceData> spawnedPool2Resources;
-	private ArrayList<SpawnedResourceData> spawnedPool3Resources;
-	private Hashtable<Integer, ArrayList<SpawnedResourceData>> spawnedPool4ResourcesByPlanet;
-	private ArrayList<SpawnedResourceData> vAllDespawnedResources;
-    private ArrayList<String> vAllResourceNames;
+	private List<SpawnedResourceData> spawnedPool2Resources;
+	private List<SpawnedResourceData> spawnedPool3Resources;
+	private Hashtable<Integer, List<SpawnedResourceData>> spawnedPool4ResourcesByPlanet;
+	private List<SpawnedResourceData> vAllDespawnedResources;
+    private List<String> vAllResourceNames;
 	
 	private int iGeneratedResourceCount;
 	
@@ -44,7 +44,7 @@ public class ResourceManager implements Runnable{
 		spawnedPool1LubricatingOil = new SpawnedResourceData[2];
 		spawnedPool2Resources = new ArrayList<SpawnedResourceData>();
 		spawnedPool3Resources = new ArrayList<SpawnedResourceData>();
-		spawnedPool4ResourcesByPlanet = new Hashtable<Integer, ArrayList<SpawnedResourceData>>();
+		spawnedPool4ResourcesByPlanet = new Hashtable<Integer, List<SpawnedResourceData>>();
 		// Note:  The Tutorial map is also a Planet, but it should have no resources spawned on it.  Thus the -1 in the loop.
 		for (int i = 0; i < Constants.PlanetNames.length - 1; i++) {
 			spawnedPool4ResourcesByPlanet.put(i, new ArrayList<SpawnedResourceData>());
@@ -62,7 +62,7 @@ public class ResourceManager implements Runnable{
 		bInitialized = true;
 		//SWGGui = myServer.getGUI();
 		vAllDespawnedResources = new ArrayList<SpawnedResourceData>();
-		vAllSpawnedResources = (ArrayList<SpawnedResourceData>) dbInterface.loadResources(myServer.getServerID());
+		vAllSpawnedResources = dbInterface.loadResources(myServer.getServerID());
 		if (vAllSpawnedResources.isEmpty()) {
 			generateResourceTable();
 		} 
@@ -132,7 +132,7 @@ public class ResourceManager implements Runnable{
 						break;
 					}
 					case Constants.RESOURCE_POOL_2: {
-						// Pool 2 is the random pool -- we'll just throw the pointers into the ArrayList.
+						// Pool 2 is the random pool -- we'll just throw the pointers into the vector.
 						spawnedPool2Resources.add(vResource);
 						break;
 					}
@@ -253,8 +253,8 @@ public class ResourceManager implements Runnable{
 	}
 	
 	/**
-	 * This function generates a fresh resource table and inputs it into the passed ArrayList.
-	 * @param resources -- The ArrayList to store the new resources in.
+	 * This function generates a fresh resource table and inputs it into the passed vector.
+	 * @param resources -- The vector to store the new resources in.
 	 */
 	private void generateResourceTable() {
 		//System.out.println("Generating first server resource spawn list.");
@@ -525,7 +525,7 @@ public class ResourceManager implements Runnable{
 	protected void generateResourceListForSurveyMessage(ZoneClient client, TangibleItem item) {
 		try {
 			int templateID = item.getTemplateID();
-			ArrayList<SpawnedResourceData> vResources = getResourceListForTool(templateID, client.getPlayer().getPlanetID());
+			List<SpawnedResourceData> vResources = getResourceListForTool(templateID, client.getPlayer().getPlanetID());
 			for (int i = 0; i < vResources.size(); i++) {
 				SpawnedResourceData data = vResources.get(i);
 				if (!data.isSpawned()) {
@@ -541,7 +541,7 @@ public class ResourceManager implements Runnable{
 	}
 	
 	
-	protected ArrayList<SpawnedResourceData> getResourceListForTool(int iResourceToolTemplateID, int iPlanetID) {
+	protected List<SpawnedResourceData> getResourceListForTool(int iResourceToolTemplateID, int iPlanetID) {
 	
 		switch (iResourceToolTemplateID) {
 			case 14037: {
@@ -577,9 +577,9 @@ public class ResourceManager implements Runnable{
 	}
 
 
-	private ArrayList<SpawnedResourceData> getWindEnergyResourceList(int iPlanetID) {
-		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
-		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private List<SpawnedResourceData> getWindEnergyResourceList(int iPlanetID) {
+		List<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		List<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
 			if (resourcesOnPlanet.get(i).getType() == Constants.RESOURCE_TYPE_ENERGY_WIND_CORELLIAN + iPlanetID) {
 				resourceListToReturn.add(resourcesOnPlanet.get(i));
@@ -588,9 +588,9 @@ public class ResourceManager implements Runnable{
 		return resourceListToReturn;
 	}
 	
-	private ArrayList<SpawnedResourceData> getSolarEnergyResourceList(int iPlanetID) {
-		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
-		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private List<SpawnedResourceData> getSolarEnergyResourceList(int iPlanetID) {
+		List<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		List<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
 			if (resourcesOnPlanet.get(i).getType() == Constants.RESOURCE_TYPE_ENERGY_SOLAR_CORELLIAN + iPlanetID) {
 				resourceListToReturn.add(resourcesOnPlanet.get(i));
@@ -599,9 +599,9 @@ public class ResourceManager implements Runnable{
 		return resourceListToReturn;
 	}
 	
-	private ArrayList<SpawnedResourceData> getWaterVaporResourceList(int iPlanetID) {
-		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
-		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private List<SpawnedResourceData> getWaterVaporResourceList(int iPlanetID) {
+		List<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		List<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
 			if (resourcesOnPlanet.get(i).getType() == Constants.RESOURCE_TYPE_WATER_CORELLIAN + iPlanetID) {
 				resourceListToReturn.add(resourcesOnPlanet.get(i));
@@ -610,9 +610,9 @@ public class ResourceManager implements Runnable{
 		return resourceListToReturn;
 	}
 	
-	private ArrayList<SpawnedResourceData> getWoodResourceList(int iPlanetID) {
-		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
-		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private List<SpawnedResourceData> getWoodResourceList(int iPlanetID) {
+		List<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		List<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
 			SpawnedResourceData resource = resourcesOnPlanet.get(i);
 			int iType = resource.getType();
@@ -625,8 +625,8 @@ public class ResourceManager implements Runnable{
 		return resourceListToReturn;
 	}
 	
-	private ArrayList<SpawnedResourceData> getGasResourceList(int iPlanetID) {
-		ArrayList<SpawnedResourceData> vGasResources = new ArrayList<SpawnedResourceData>();
+	private List<SpawnedResourceData> getGasResourceList(int iPlanetID) {
+		List<SpawnedResourceData> vGasResources = new ArrayList<SpawnedResourceData>();
 		for (int i = 0; i < spawnedPool2Resources.size(); i++) {
 			SpawnedResourceData theResource = spawnedPool2Resources.get(i);
 			int iResourceType = theResource.getType();
@@ -658,8 +658,8 @@ public class ResourceManager implements Runnable{
 		return vGasResources;
 	}
 	
-	private ArrayList<SpawnedResourceData> getMineralResourceList(int iPlanetID) {
-		ArrayList<SpawnedResourceData> vResourcesToReturn = new ArrayList<SpawnedResourceData>();
+	private List<SpawnedResourceData> getMineralResourceList(int iPlanetID) {
+		List<SpawnedResourceData> vResourcesToReturn = new ArrayList<SpawnedResourceData>();
 		for (int i = 0; i < vAllSpawnedResources.size(); i++) {
 			SpawnedResourceData theResource = vAllSpawnedResources.get(i);
 			int iResourceType = theResource.getType();
@@ -692,8 +692,8 @@ public class ResourceManager implements Runnable{
 		return vResourcesToReturn;
 	}
 	
-	private ArrayList<SpawnedResourceData> getPetrochemicalResourceList(int iPlanetID) {
-		ArrayList<SpawnedResourceData> vResourcesToReturn = new ArrayList<SpawnedResourceData>();
+	private List<SpawnedResourceData> getPetrochemicalResourceList(int iPlanetID) {
+		List<SpawnedResourceData> vResourcesToReturn = new ArrayList<SpawnedResourceData>();
 		if(spawnedPool1LubricatingOil != null)
         {
             for (int i = 0; i < spawnedPool1LubricatingOil.length; i++) {
@@ -737,7 +737,7 @@ public class ResourceManager implements Runnable{
         
         if(spawnedPool4ResourcesByPlanet != null)
         {
-            ArrayList<SpawnedResourceData> vPlanetResources = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+            List<SpawnedResourceData> vPlanetResources = spawnedPool4ResourcesByPlanet.get(iPlanetID);
             for (int i = 0; i < vPlanetResources.size(); i++) {
                 SpawnedResourceData theResource = vPlanetResources.get(i);
                 int iResourceType = theResource.getType();
@@ -816,8 +816,8 @@ public class ResourceManager implements Runnable{
 		return (int)amount;
 	}
 	
-	protected ArrayList<SpawnedResourceData> getResourcesByPlanetID(int iPlanetID) throws NullPointerException {
-		ArrayList<SpawnedResourceData> toReturn = new ArrayList<SpawnedResourceData>();
+	protected List<SpawnedResourceData> getResourcesByPlanetID(int iPlanetID) throws NullPointerException {
+		List<SpawnedResourceData> toReturn = new ArrayList<SpawnedResourceData>();
 		toReturn.addAll(spawnedPool4ResourcesByPlanet.get(iPlanetID));
 		for (int i = 0; i < spawnedPool2Resources.size(); i++) {
 			SpawnedResourceData resource = spawnedPool2Resources.get(i);

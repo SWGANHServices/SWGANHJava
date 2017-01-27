@@ -1,3 +1,4 @@
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,7 @@ import java.util.ArrayList;
  *
  */
 public class NPCUpdateThread implements Runnable {
-	private ArrayList<NPC> vAllNPCs;
+	private List<NPC> vAllNPCs;
 	private ZoneServer server;
 	private Thread myThread;
 	private long lLastUpdateTimeMS;
@@ -15,7 +16,7 @@ public class NPCUpdateThread implements Runnable {
 	private long lDeltaUpdateTimeMS;
 	private int iClusterID;
 	//private NPCSpawnManager manager;
-	private ArrayList<DynamicLairSpawn> vLairSpawns;
+	private List<DynamicLairSpawn> vLairSpawns;
 	
 	/**
 	 * Construct a new NPC Update Thread for the given Zone Server.
@@ -53,7 +54,7 @@ public class NPCUpdateThread implements Runnable {
 	 */
 	public void removeRandomNPC(NPC npc) {
 		vAllNPCs.remove(npc);
-		ArrayList<Player> vPlayersAroundNPC = server.getPlayersAroundNPC(npc);
+		List<Player> vPlayersAroundNPC = server.getPlayersAroundNPC(npc);
 		for (int i = 0; i < vPlayersAroundNPC.size(); i++) {
 			Player player = vPlayersAroundNPC.get(i);
 			try {
@@ -105,7 +106,7 @@ public class NPCUpdateThread implements Runnable {
 							npc.setServer(server);
 						}
 						// TODO -- This will be / is handled by the Grid system.
-						//ArrayList<Player> vObjectsBeforeMovement = server.getPlayersAroundNPC(npc);
+						//Vector<Player> vObjectsBeforeMovement = server.getPlayersAroundNPC(npc);
                         if(npc.isTerminal() && !npc.IsSkillTrainer())
                         {
                            
@@ -116,8 +117,8 @@ public class NPCUpdateThread implements Runnable {
                         }
                         
                         
-						/*ArrayList<Player> vObjectsAfterMovement = server.getPlayersAroundNPC(npc);
-						ArrayList<Player> vStillSpawned = new ArrayList<Player>();
+						/*Vector<Player> vObjectsAfterMovement = server.getPlayersAroundNPC(npc);
+						Vector<Player> vStillSpawned = new Vector<Player>();
 						
 						for (int j = 0; j < vObjectsBeforeMovement.size(); j++) {
 							Player p = vObjectsBeforeMovement.elementAt(j);

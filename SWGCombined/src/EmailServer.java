@@ -1,8 +1,8 @@
 import java.net.SocketAddress;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.Hashtable;
 
 /**
  * The in game mail object will contain all of the information for an in-game
@@ -51,7 +51,7 @@ public class EmailServer implements Runnable {
 
 	public ConcurrentLinkedQueue<ZoneClient> qClearSentEmails;
 
-	public ArrayList<SWGEmail> vSentEmails;
+	public List<SWGEmail> vSentEmails;
 
 	public Player SystemPlayer;
 
@@ -160,7 +160,7 @@ public class EmailServer implements Runnable {
 							// Emails to You."));
 
 							// build email for testing Comment out once db is in
-							// ArrayList<Waypoint> WL = new ArrayList<Waypoint>();
+							// Vector<Waypoint> WL = new Vector<Waypoint>();
 
 							// SWGEmail E = new SWGEmail(16843009,
 							// lPlayerID,lPlayerID,"(Subj) - Welcome to
@@ -169,7 +169,7 @@ public class EmailServer implements Runnable {
 							// retrieve email from db
 							// SWGEmail E = DB CALL GOES HERE
 							long lPlayerID = client.getPlayer().getID();
-							ArrayList<SWGEmail> vAllClientEmails = dbInterface
+							List<SWGEmail> vAllClientEmails = dbInterface
 									.getAllEmailsForPlayer(lPlayerID, client
 											.getPlayer().getServerID());
 							// System.out.println("Client Has " +
@@ -406,7 +406,7 @@ public class EmailServer implements Runnable {
 					// THIS IS THE MESSAGE TRANSFER AGENT!!!!!!
 					// here we iterate through all clients and check to see if
 					// they have emails awaiting and put them in the queue
-					Hashtable<SocketAddress, ZoneClient> CL = zServer
+					ConcurrentHashMap<SocketAddress, ZoneClient> CL = zServer
 							.getAllClients();
 					// if(CL.size() >= 1)
 					// {
@@ -416,7 +416,7 @@ public class EmailServer implements Runnable {
 						ZoneClient client = CL.elements().nextElement();
 						if (client != null && client.getClientReadyStatus()) {
 
-							ArrayList<SWGEmail> EV = dbInterface
+							List<SWGEmail> EV = dbInterface
 									.getNewEmailsForPlayer(client.getPlayer()
 											.getID(), client.getServer()
 											.getServerID());
@@ -479,7 +479,7 @@ public class EmailServer implements Runnable {
 											// list.");
 											DataLogObject E = new DataLogObject(
 													"EmailServer::EmailThread::MTA",
-													"Error Ocurred while delivering a new message to a player. Could not add the new message to the SentMails ArrayList.",
+													"Error Ocurred while delivering a new message to a player. Could not add the new message to the SentMails Vector.",
 													Constants.LOG_SEVERITY_CRITICAL);
 											DataLog.qServerLog.add(E);
 										}

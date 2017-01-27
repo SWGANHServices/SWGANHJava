@@ -1,5 +1,5 @@
 import java.awt.geom.Rectangle2D;
-import java.util.ArrayList;
+import java.util.Vector;
 
 
 public class DynamicLairSpawn {
@@ -19,7 +19,7 @@ public class DynamicLairSpawn {
 	private long lRespawnDelay;
 	private ZoneServer server;
 	//private long lTimeToNextSpawn;
-	private ArrayList<Lair> lairs;
+	private Vector<Lair> lairs;
 	private long lNextUpdateTime = UPDATE_TIMEOUT;
 	private int targetNumToSpawn;
 	private int iNumPlayersBeforeSpawn = 1;
@@ -67,7 +67,7 @@ public class DynamicLairSpawn {
 
 	protected void setMaxNumToSpawn(int maxNumToSpawn) {
 		iMaxNumToSpawn = maxNumToSpawn;
-		lairs = new ArrayList<Lair>(iMaxNumToSpawn);
+		lairs = new Vector<Lair>(iMaxNumToSpawn);
 	}
 
 	protected short getSpawnTemplateID() {
@@ -130,19 +130,19 @@ public class DynamicLairSpawn {
 		
 		lNextUpdateTime -= lDeltaTimeMS;
 		for (int i = 0; i < lairs.size(); i++) {
-			lairs.get(i).update(lDeltaTimeMS);
+			lairs.elementAt(i).update(lDeltaTimeMS);
 		}
 		
 		
 		if (lNextUpdateTime <= 0) {
 			//System.out.println("Update dynamic spawn.");
 			lNextUpdateTime = UPDATE_TIMEOUT;
-			ArrayList<GridElement> vElements = theGrid.getAllContainedElements(spawnBoundaries);
+			Vector<GridElement> vElements = theGrid.getAllContainedElements(spawnBoundaries);
 			
-			//ArrayList<Player> vNearbyPlayers = new ArrayList<Player>(); 
+			//Vector<Player> vNearbyPlayers = new Vector<Player>(); 
 			int iNumPlayersInSpawn = 0;
 			for (int i =0; i < vElements.size(); i++) {
-				iNumPlayersInSpawn+= vElements.get(i).getAllPlayersContained().size();
+				iNumPlayersInSpawn+= vElements.elementAt(i).getAllPlayersContained().size();
 			}
 			//myElement.getAllNearPlayers();
 			if (iNumPlayersInSpawn < iNumPlayersBeforeSpawn) {

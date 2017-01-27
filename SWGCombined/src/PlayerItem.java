@@ -1,6 +1,6 @@
 import java.util.BitSet;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.ArrayList;
 import java.io.IOException;
 import java.io.Serializable;
@@ -24,11 +24,11 @@ public class PlayerItem extends SOEObject implements Serializable {
 
 	private String sTitle;
 	
-	private ArrayList<Waypoint> vWaypointList;
+	private List<Waypoint> vWaypointList;
 	//private BitSet vCertificationsList; // TODO:  Convert to bitset. -- Doesn't even need to exist.
 	private Hashtable<Integer, PlayerExperience> vExperienceList;
-	private ArrayList<PlayerFriends> vFriendsList; // This is convenient...
-	private ArrayList<PlayerFriends> vIgnoreList; // This is convenient
+	private List<PlayerFriends> vFriendsList; // This is convenient...
+	private List<PlayerFriends> vIgnoreList; // This is convenient
 	private BitSet vSchematicList; 
 	private BitSet skillsBits;
 	private int[] badgeBits; // Can stay as an int array, or could become a BitSet.
@@ -106,13 +106,13 @@ public class PlayerItem extends SOEObject implements Serializable {
 		ZoneClient client = myOwner.getClient();
 		ZoneServer server = client.getServer();
 		Skills s = client.getServer().getSkillFromIndex(skillID);
-		ArrayList<SkillMods> vPlayerMods = myOwner.getSkillModsList();
-		ArrayList<SkillMods> vSkillMods = server.getSkillModsFromSkillIndex(skillID);
+		List<SkillMods> vPlayerMods = myOwner.getSkillModsList();
+		List<SkillMods> vSkillMods = server.getSkillModsFromSkillIndex(skillID);
 		//System.out.println("Got skill mods for skill index " + s.getSkillID() + ", name " + s.getName());
 		for (int i = 0; i < vSkillMods.size(); i++) {
 			System.out.println("Skill " + s.getName() + "has mod " + i + " " + vSkillMods.get(i).getName() + " with value " + vSkillMods.get(i).getSkillModModdedValue());
 		}
-		ArrayList<CraftingSchematic> vSchematics = DatabaseInterface.getAllSchematicsForSkill(s.getSkillID());
+		List<CraftingSchematic> vSchematics = DatabaseInterface.getAllSchematicsForSkill(s.getSkillID());
 		if (bGainingSkill) {
 			System.out.println("Learn skill " + s.getName());
 			if (hasSkill(s.getSkillID())) {
@@ -225,7 +225,7 @@ public class PlayerItem extends SOEObject implements Serializable {
 				if (vSchematics != null) {
 					for (int i = 0; i < vSchematics.size(); i++) {
 						CraftingSchematic schematic = vSchematics.get(i);
-						ArrayList<Integer> vSkillIDForSchematic = schematic.getRequiredSkillID();
+						List<Integer> vSkillIDForSchematic = schematic.getRequiredSkillID();
 						boolean bStillCanUseSchematic = false;
 						for (int j = 0; j < vSkillIDForSchematic.size() && !bStillCanUseSchematic; j++) {
 							bStillCanUseSchematic = hasSkill(vSkillIDForSchematic.get(j));
@@ -244,7 +244,7 @@ public class PlayerItem extends SOEObject implements Serializable {
 						client.insertPacket(PacketFactory.buildCertificationsDelta(this, s.getCertificationList()));
 					}
 					if (updateZone && needSchematicUpdate) {
-						ArrayList<CraftingSchematic> vNewSchematicList = new ArrayList<CraftingSchematic>();
+						List<CraftingSchematic> vNewSchematicList = new ArrayList<CraftingSchematic>();
 						for (int i = vSchematicList.nextSetBit(0); i >= 0; i = vSchematicList.nextSetBit(i+1)) {
 							vNewSchematicList.add(DatabaseInterface.getSchematicByIndex(i));
 						}
@@ -303,7 +303,7 @@ public class PlayerItem extends SOEObject implements Serializable {
 	 * Gets the Friends list.
 	 * @return The Friends list.
 	 */
-	protected ArrayList<PlayerFriends> getFriendsList() {
+	protected List<PlayerFriends> getFriendsList() {
             if(vFriendsList==null)
             {
                 vFriendsList = new ArrayList<PlayerFriends>();
@@ -315,7 +315,7 @@ public class PlayerItem extends SOEObject implements Serializable {
 	 * Gets the Ignore list.
 	 * @return The Ignore List.
 	 */
-	protected ArrayList<PlayerFriends> getIgnoreList() {
+	protected List<PlayerFriends> getIgnoreList() {
             if(vIgnoreList==null)
             {
                 vIgnoreList = new ArrayList<PlayerFriends>();
@@ -359,7 +359,7 @@ public class PlayerItem extends SOEObject implements Serializable {
 	 * Gets the list of Waypoints.
 	 * @return The Player's waypoints.
 	 */
-	public ArrayList<Waypoint> getWaypoints() {
+	public List<Waypoint> getWaypoints() {
 		return vWaypointList;
 	}
 	
@@ -630,7 +630,7 @@ public class PlayerItem extends SOEObject implements Serializable {
 	 * Sets the Friends list.
 	 * @param vFriendsList -- The new Friends List.
 	 */
-	protected void setFriendsList(ArrayList<PlayerFriends> vFriendsList) {
+	protected void setFriendsList(List<PlayerFriends> vFriendsList) {
 		this.vFriendsList = vFriendsList;
 	}
 	

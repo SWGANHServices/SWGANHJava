@@ -16,9 +16,9 @@ import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
+import java.util.List;
 import java.util.ArrayList;
-import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JFrame;
 
@@ -134,11 +134,11 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	//private int fontHeightDiv2;
 	//private int fontWidth;
 	//private int fontWidthDiv2;
-	private ArrayList<NPC>[] vCreaturesSortedByPlanet;
-	private ArrayList<SpawnedResourceData>[] vResourcesSortedByPlanet;
-	private ArrayList<Player>[] vPlayersSortedByPlanet;
-	private ArrayList<Structure>[] vStructuresSortedByPlanet;
-	private static ArrayList<LairTemplate>[] vLairTemplates;
+	private List<NPC>[] vCreaturesSortedByPlanet;
+	private List<SpawnedResourceData>[] vResourcesSortedByPlanet;
+	private List<Player>[] vPlayersSortedByPlanet;
+	private List<Structure>[] vStructuresSortedByPlanet;
+	private static List<LairTemplate>[] vLairTemplates;
 	private final static String loadingString = "Loading...";
 	
 	public ZoneServerScreen(ZoneServer server) {
@@ -311,7 +311,6 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	}
 
 	private Rectangle2D dynamicLairRectangleSelection = null;
-        @Override
 	public void mouseReleased(MouseEvent arg0) {
 		
 		// TODO Auto-generated method stub
@@ -401,7 +400,6 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	private long lDeltaTimeMS;
 	private long lCurrentTimeMS;
 	private long lLastTimeMS;
-        @Override
 	public void run() {
 		lLastTimeMS = System.currentTimeMillis();
 		while (myThread != null) {
@@ -560,7 +558,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		if (bChangedPlanet || lairTemplateBubbleWidth == 0) {
 			iPlanetToView = (iPlanetToView + planetMaps.length) % planetMaps.length;
 			vLairSpawns[iPlanetToView] = server.getLairSpawnForPlanet(iPlanetToView);
-			ArrayList<LairTemplate> lairs = vLairTemplates[iPlanetToView];
+			List<LairTemplate> lairs = vLairTemplates[iPlanetToView];
 			for (int i = 0; i < lairs.size(); i++) {
 				LairTemplate lairTemplate = lairs.get(i);
 				String sLairType = server.getTemplateData(lairTemplate.getIMob1Template()).getIFFFileName();
@@ -725,7 +723,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	private int iMaxNumDynamicLairsToSpawn = 1;
 	private int iMinNumPlayersToTriggerDynamicLairSpawn = 1;
 	private long lDynamicLairRespawnTimeMS = 5000;
-	private ArrayList<DynamicLairSpawn>[] vLairSpawns;
+	private List<DynamicLairSpawn>[] vLairSpawns;
 	private void updatePlaceDynamicSpawns() {
 		int gridMaxIndex = zoneServerGrid[iPlanetToView].getGridCount();
 		gridElementIndexX = (gridElementIndexX + gridMaxIndex) % gridMaxIndex;
@@ -889,20 +887,20 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	
 	private void updateShowCreatures() {
 		if (numFrames % 10 == 0) {
-                    for (GridElement[] vAllGridElement : vAllGridElements) {
-                        for (GridElement vAllGridElement1 : vAllGridElement) {
-                            Enumeration<SOEObject> vCreaturesThisElement = vAllGridElement1.getAllObjectContained().elements();
-                            while (vCreaturesThisElement.hasMoreElements()) {
-                                SOEObject o = vCreaturesThisElement.nextElement();
-                                if (o instanceof NPC) {
-                                    NPC npc = (NPC) o;
-                                    if (!vCreaturesSortedByPlanet[iPlanetToView].contains(npc)) {
-                                        vCreaturesSortedByPlanet[iPlanetToView].add(npc);
-                                    }
-                                }
-                            }
-                        }
-                    }
+			for (int i = 0; i < vAllGridElements.length; i++) {
+				for (int j = 0; j < vAllGridElements[i].length; j++) {
+					Enumeration<SOEObject> vCreaturesThisElement = vAllGridElements[i][j].getAllObjectContained().elements();
+					while (vCreaturesThisElement.hasMoreElements()) {
+						SOEObject o = vCreaturesThisElement.nextElement();
+						if (o instanceof NPC) {
+							NPC npc = (NPC) o;
+							if (!vCreaturesSortedByPlanet[iPlanetToView].contains(npc)) {
+								vCreaturesSortedByPlanet[iPlanetToView].add(npc);
+							}
+						}
+					}
+				}
+			}
 		}
 		
 	}
@@ -911,7 +909,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		if (numFrames % 10 == 0) {
 			for (int i = 0; i < vAllGridElements.length; i++) {
 				for (int j = 0; j < vAllGridElements[i].length; j++) {
-					ArrayList<Player> vCreaturesThisElement = vAllGridElements[i][j].getAllPlayersContained();
+					List<Player> vCreaturesThisElement = vAllGridElements[i][j].getAllPlayersContained();
 					for (int k = 0; k < vCreaturesThisElement.size(); k++) {
 						Player player = vCreaturesThisElement.get(i);
 						if (!vPlayersSortedByPlanet[iPlanetToView].contains(player)) {
@@ -940,8 +938,8 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		} else {
 			SOEObject o = null;
 			try {
-				// Load the ArrayLists.
-				Hashtable<Long, SOEObject> vAllObjectsOnServer = server.getAllObjects();
+				// Load the Vectors.
+				ConcurrentHashMap<Long, SOEObject> vAllObjectsOnServer = server.getAllObjects();
 				Enumeration<SOEObject> vObjectEnum = vAllObjectsOnServer.elements();
 				while (vObjectEnum.hasMoreElements()) {
 					o = vObjectEnum.nextElement();
@@ -1003,7 +1001,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 			int resourceRadiusDiv2;
 			for (int i = 0; i < vResourcesSortedByPlanet[iPlanetToView].size(); i++){
 				SpawnedResourceData resource = vResourcesSortedByPlanet[iPlanetToView].get(i);
-				ArrayList<ResourceSpawnCoordinateData> vCoordinates = resource.getCoordinates();
+				List<ResourceSpawnCoordinateData> vCoordinates = resource.getCoordinates();
 				Color drawColor = ColorManager.getColor(resource.getDrawColor());
 				
 				for (int j = 0; j < vCoordinates.size(); j++) {
@@ -1174,7 +1172,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	}
 	
 	private void drawChooseDynamicSpawn(Graphics2D g) {
-		ArrayList<LairTemplate> lairTemplatesThisPlanet = vLairTemplates[iPlanetToView];
+		List<LairTemplate> lairTemplatesThisPlanet = vLairTemplates[iPlanetToView];
 		g.setTransform(identity);
 		int currentX = 0;
 		int currentY = 0;
@@ -1443,7 +1441,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		//float topY = (float)bounds.getY();
 		//float rightX = (float)(leftX + bounds.getWidth());
 		//float bottomY = (float)(topY + bounds.getHeight());
-		ArrayList<GridElement> vElementsInSpawn = zoneServerGrid[iPlanetToView].getAllContainedElements(bounds);
+		List<GridElement> vElementsInSpawn = zoneServerGrid[iPlanetToView].getAllContainedElements(bounds);
 		float numElements = vElementsInSpawn.size();
 		if (numElements == 0) {
 			

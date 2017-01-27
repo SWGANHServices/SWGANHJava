@@ -1,5 +1,4 @@
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
 
 public class BazaarTerminal extends Terminal {
 	public final static long serialVersionUID = 1l;

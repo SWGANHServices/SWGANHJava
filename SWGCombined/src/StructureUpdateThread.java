@@ -1,7 +1,6 @@
 
 import java.util.Enumeration;
-import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 
@@ -53,7 +52,7 @@ public class StructureUpdateThread implements Runnable {
 	
 	private void update(long lDeltaUpdateTimeMS) {
 		// Write the code that updates the structures here.
-        Hashtable<Long, Structure> vStructures = server.getAllPlayerStructures();
+        ConcurrentHashMap<Long, Structure> vStructures = server.getAllPlayerStructures();
         synchronized(vStructures) {
         	Enumeration <Structure> sEnum = vStructures.elements();
             while(sEnum.hasMoreElements())

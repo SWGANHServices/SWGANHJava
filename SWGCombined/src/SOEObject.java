@@ -1,6 +1,6 @@
 import java.io.Serializable;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.ArrayList;
 import java.awt.geom.Point2D;
 
@@ -46,7 +46,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	private long lCellID = 0;
 	// private transient byte[][] baselinePackets;
 	// private boolean bIsWorldObject = false;
-	private ArrayList<SOEObject> vEquippedItems;
+	private List<SOEObject> vEquippedItems;
 	private int slotID = 0;
 	private int iTemplateID = 0;
 	private int iConditionFlag = 0;
@@ -74,9 +74,9 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	private transient int iMovementUpdateCounter = 0;
 	// private transient boolean bIsInCombat = false;
 
-	private transient ArrayList<ZoneClient> vSynchListeners;
+	private transient List<ZoneClient> vSynchListeners;
 
-	private transient ArrayList<CreaturePet> vPetsFollowingObject;
+	private transient List<CreaturePet> vPetsFollowingObject;
 
 	private boolean bCanBePickedUp;
 
@@ -392,7 +392,6 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	 * Gets a list of all of the Attributes for this object. Attributes are
 	 * viewed by the Player when they select this item.
 	 * 
-     * @param c
 	 * @return The Attributes.
 	 */
 	public Hashtable<Integer, Attribute> getAttributeList(ZoneClient c) {
@@ -1180,7 +1179,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 											.getSocketsLeft()));
 						}
 
-						ArrayList<SkillModifier> vSKM = T.getSkillModifiers();
+						List<SkillModifier> vSKM = T.getSkillModifiers();
 						if (vSKM.size() >= 1) {
 							addAttribute(new Attribute(
 									Constants.OBJECT_ATTRIBUTE_ATTRIBMODS, ""));
@@ -1486,7 +1485,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 			}
 		}
-		if (!retVector.isEmpty()) {
+		if (retVector.size() != 0) {
 			return retVector;
 		}
 		return vAttributes;
@@ -1514,7 +1513,6 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	 * account for different conditions. i/e equipped, not used , used, dead,
 	 * incapped, opened , closed, etc, etc...
 	 * 
-     * @param c
 	 * @return The Radial Items.
 	 */
 	public Hashtable<Character, RadialMenuItem> getRadialMenus(ZoneClient c) {
@@ -1531,7 +1529,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 			iRadialCondition = 0;
 		}
 		Hashtable<Character, RadialMenuItem> retHash = new Hashtable<Character, RadialMenuItem>();
-		ArrayList<RadialMenuItem> V = c.getServer().getRadialMenusByCRC(
+		List<RadialMenuItem> V = c.getServer().getRadialMenusByCRC(
 				this.getCRC());
 		int retcount = 0;
 		System.out.println("Searching for Radials for Item With CRC: " +  this.getCRC() + " RadialCondition " + Constants.RADIAL_CONDITION_STR[iRadialCondition]);
@@ -2242,7 +2240,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 	protected void updateAngle(ZoneClient c) {
 		try {
-			ArrayList<Player> PL = c.getServer().getPlayersAroundObject(
+			List<Player> PL = c.getServer().getPlayersAroundObject(
 					(SOEObject) this, false);
 			SOEObject Parent = c.getServer().getObjectFromAllObjects(
 					this.getCellID());
@@ -2401,7 +2399,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 		}
 	}
 
-	protected ArrayList<CreaturePet> getPetsFollowingObject() {
+	protected List<CreaturePet> getPetsFollowingObject() {
 		if (vPetsFollowingObject == null) {
 			vPetsFollowingObject = new ArrayList<CreaturePet>();
 		}

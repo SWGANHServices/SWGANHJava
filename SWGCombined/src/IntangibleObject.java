@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.util.List;
 import java.util.ArrayList;
 
 /**
@@ -502,7 +503,7 @@ public class IntangibleObject extends SOEObject {
                 try {
                         
                         //player.spawnItem(theVehicle, true);
-                        ArrayList<Player> vPlayersInRange = client.getServer().getPlayersAroundObject(theVehicle, true);
+                        List<Player> vPlayersInRange = client.getServer().getPlayersAroundObject(theVehicle, true);
                         if(!vPlayersInRange.isEmpty()) {
                                 for (int i = 0; i < vPlayersInRange.size(); i++) {
                                         vPlayersInRange.get(i).spawnItem(theVehicle);

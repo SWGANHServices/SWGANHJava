@@ -1,7 +1,7 @@
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
+import java.util.List;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -12,7 +12,7 @@ public class Harvester extends Structure {
 	
     private SpawnedResourceData currentHarvestResource;
     private float currentResourceConcentration;
-    private transient ArrayList<ZoneClient> vSyncronizedListeners;
+    private transient List<ZoneClient> vSyncronizedListeners;
 
     private byte harvesterUpdateCounter;
     private int iHarvesterResourceUpdateCounter;
@@ -27,7 +27,7 @@ public class Harvester extends Structure {
     private ResourceContainer theResource;
     private transient int iTicks = 0;
     private Hashtable<Long, SOEObject> vOutputHopper;
-    private ArrayList<SpawnedResourceData> vResourcesAvailable;
+    private List<SpawnedResourceData> vResourcesAvailable;
     private byte iHarvesterType;
 
 	/**
@@ -340,9 +340,8 @@ public class Harvester extends Structure {
 	        /**
 	         * @todo send updates about the harvester to any clients in this list!
 	         */
-	            //Enumeration<ZoneClient> zcEnum = this.vSyncronizedListeners.elements();
-                    Iterator<ZoneClient> zcEnum = this.vSyncronizedListeners.iterator();
-	            while(zcEnum.hasNext())
+	            Iterator<ZoneClient> zcEnum = this.vSyncronizedListeners.iterator();
+	            while(zcEnum.equals(this))
 	            {
 	                ZoneClient client = zcEnum.next();
 	                if(client.bHasActiveThread())
@@ -552,14 +551,13 @@ public class Harvester extends Structure {
     	}
     }
     
-    public ArrayList<SpawnedResourceData> getResourcesAvailable() {
+    public List<SpawnedResourceData> getResourcesAvailable() {
     	return vResourcesAvailable;
     }
     public Hashtable<Long, SOEObject> getOutputHopper() {
     	return vOutputHopper;
     }
     
-        @Override
     protected byte[] setConditionDamage(int iCondition, boolean bUpdate) throws IOException {
 		super.setConditionDamage(iCondition, false);
 		if (bUpdate) {

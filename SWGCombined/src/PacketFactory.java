@@ -4,11 +4,10 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
-//import java.util.concurrent.ConcurrentHashMap;
-//import java.util.ArrayList;
-import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
+import java.util.ArrayList;
+
+import java.util.Iterator;
 
 public class PacketFactory {
 
@@ -662,7 +661,7 @@ public class PacketFactory {
 			throws IOException {
 		SOEOutputStream sOut = new SOEOutputStream(new ByteArrayOutputStream());
 		int packetSize = 110;
-		ArrayList<SkillMods> vSkillMods = player.getSkillModsList();
+		List<SkillMods> vSkillMods = player.getSkillModsList();
 		if (vSkillMods != null) {
 			for (int i = 0; i < vSkillMods.size(); i++) {
 				packetSize += (vSkillMods.get(i).getName().length() + 11); // Length
@@ -737,8 +736,8 @@ public class PacketFactory {
 		// op 12
 		sOut.writeFloat(0.125f); // Unknown
 		/*
-		 * sOut.writeInt(unknownArrayList.size());
-		 * sOut.writeInt(unknownArrayListUpdateCount);
+		 * sOut.writeInt(unknownVector.size());
+		 * sOut.writeInt(unknownVectorUpdateCount);
 		 */
 		// op 13
 		sOut.writeInt(0);
@@ -772,7 +771,7 @@ public class PacketFactory {
 			PacketSize += sPerformanceString.length();
 		}
 
-		ArrayList<TangibleItem> vEquippedItems = player.getEquippedItems();
+		List<TangibleItem> vEquippedItems = player.getEquippedItems();
 		if (vEquippedItems != null) {
 			for (int i = 0; i < vEquippedItems.size(); i++) {
 				TangibleItem t = vEquippedItems.get(i);
@@ -1004,7 +1003,7 @@ public class PacketFactory {
 			throws IOException {
 		// Calculate Packet Size
 		int PacketSize = 58; // Size without xp or waypoints
-		ArrayList<Waypoint> vWaypoints = player.getWaypoints();
+		List<Waypoint> vWaypoints = player.getWaypoints();
 		for (int i = 0; i < vWaypoints.size(); i++) {
 			PacketSize += ((vWaypoints.get(i).getName().length() * 2) + 51);
 		}
@@ -1085,17 +1084,17 @@ public class PacketFactory {
 
 		SOEOutputStream sOut = new SOEOutputStream(new ByteArrayOutputStream());
 		int packetSize = 98; // Correct
-		ArrayList<PlayerFriends> vFriendsList = player.getFriendsList();
-		ArrayList<PlayerFriends> vIgnoreList = player.getIgnoreList();
+		List<PlayerFriends> vFriendsList = player.getFriendsList();
+		List<PlayerFriends> vIgnoreList = player.getIgnoreList();
 		BitSet skillBits = player.getSkillBits();
 		BitSet schematics = player.getSchematics();
 		int schematicCount = 0;
-		ArrayList<String> vCertifications = new ArrayList<String>();
+		List<String> vCertifications = new ArrayList<String>();
 		for (int i = skillBits.nextSetBit(0); i >= 0; i = skillBits
 				.nextSetBit(i + 1)) {
 			Skills skill = player.getMyPlayer().getServer()
 					.getSkillFromIndex(i);
-			ArrayList<String> vCertificationsThisSkill = skill
+			List<String> vCertificationsThisSkill = skill
 					.getCertificationList();
 			for (int j = 0; j < vCertificationsThisSkill.size(); j++) {
 				String cert = vCertificationsThisSkill.get(j);
@@ -2366,7 +2365,7 @@ public class PacketFactory {
 			// TOTAL 158 + Lengths
 		}
 		TangibleItem t = m.getTParentObject();
-		ArrayList<MissionObject> vML = t.getVMissionList();
+		List<MissionObject> vML = t.getVMissionList();
 		int iMissionKey = vML.indexOf(m);
 		if (iMissionKey < 0
 				|| iMissionKey >= (Constants.MAX_MISSION_BAG_ITEMS - 1)) {
@@ -2656,7 +2655,7 @@ public class PacketFactory {
 		dOut.writeInt(Constants.AttributesList);
 		dOut.writeLong(o.getID());
 		Hashtable<Integer, Attribute> vList = o.getAttributeList(c);
-		// ArrayList<Attribute> vList = o.getAttributeList(c);
+		// Vector<Attribute> vList = o.getAttributeList(c);
 		dOut.writeInt(vList.size());
 		Enumeration<Attribute> vItr = vList.elements();
 		while (vItr.hasMoreElements()) {
@@ -3271,7 +3270,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerMessage_RadialsResponse(
-			Player player, SOEObject target, ArrayList<RadialMenuItem> vRadials,
+			Player player, SOEObject target, List<RadialMenuItem> vRadials,
 			byte rCounter) throws IOException {
 
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
@@ -3308,7 +3307,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerMessage_RadialsResponse(
-			Player player, long targetID, ArrayList<RadialMenuItem> vRadials,
+			Player player, long targetID, List<RadialMenuItem> vRadials,
 			byte rCounter) throws IOException {
 
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
@@ -3683,7 +3682,7 @@ public class PacketFactory {
 		case Constants.Group_ResetGroup:// 3
 		{
 			packetSize += 2;
-			ArrayList<SOEObject> vML = g.getGroupMembers();
+			List<SOEObject> vML = g.getGroupMembers();
 			for (int i = 0; i < vML.size(); i++) {
 				SOEObject o = vML.get(i);
 				if (o instanceof Player) {
@@ -3990,7 +3989,7 @@ public class PacketFactory {
 
 	/*
 	 * protected static byte[] buildDeltasMessageList(int iBaselineIndex, byte
-	 * iBaselineType, short updateCount, short updateOperand, ArrayList updateData,
+	 * iBaselineType, short updateCount, short updateOperand, Vector updateData,
 	 * SOEObject p) throws IOException { int packetSize = 4; for (int i = 0; i <
 	 * updateData.size(); i++) { Object object = updateData.elementAt(i); if
 	 * (object instanceof Experience) { Experience e = (Experience)object;
@@ -4031,7 +4030,7 @@ public class PacketFactory {
 		dOut.writeLong(originator.getID());
 		dOut.writeInt(0);
 		dOut.writeLong(friend.getID());
-		ArrayList<PlayerFriends> v = originator.getFriendsList();
+		List<PlayerFriends> v = originator.getFriendsList();
 		String s = friend.getFirstName();
 		boolean bFound = false;
 		PlayerFriends f;
@@ -4085,7 +4084,7 @@ public class PacketFactory {
 	protected static byte[] buildTravelPointListResponse(Player player,
 			int _PlanetID) throws IOException {
 
-		ArrayList<TravelDestination> vTd = player.getServer()
+		List<TravelDestination> vTd = player.getServer()
 				.getTravelDestinationsForPlanet(player, _PlanetID);
 		// this allows us to send 0 size lists for any planet
 		int ListSize = 0;
@@ -4460,7 +4459,7 @@ public class PacketFactory {
 
 	// Note: The SOEObject here will eventually become a TangibleItem
 	protected static byte[] buildResourceListForSurveyMessage(TangibleItem o,
-			ArrayList<SpawnedResourceData> vResources) throws IOException {
+			List<SpawnedResourceData> vResources) throws IOException {
 		int templateID = o.getTemplateID();
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -4638,7 +4637,7 @@ public class PacketFactory {
 		dOut.setUpdateType(Constants.ACCOUNT_UPDATE);
 		dOut.writeInt(Constants.FriendListRequestResponse);
 		dOut.writeLong(player.getID());
-		ArrayList<PlayerFriends> vFriendsList = player.getFriendsList();
+		List<PlayerFriends> vFriendsList = player.getFriendsList();
 		dOut.writeInt(vFriendsList.size());
 		Iterator<PlayerFriends> itr = vFriendsList.iterator();
 		while (itr.hasNext()) {
@@ -4733,7 +4732,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildNPCConversationOptions(Player player,
-			ArrayList<DialogOption> vOptions) throws IOException {
+			List<DialogOption> vOptions) throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 		dOut.setSequence(0);
@@ -5003,7 +5002,7 @@ public class PacketFactory {
 		return dOut.getBuffer();
 	}
 
-	protected static byte[] buildChatroomList(ArrayList<ChatServer> vServers)
+	protected static byte[] buildChatroomList(List<ChatServer> vServers)
 			throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -5029,7 +5028,7 @@ public class PacketFactory {
 				// in the room should be written here.
 				// If it isn't, then these 2 loops would go outside the "j"
 				// loop... or even outside the "i" loop.
-                                List<String> vModerators = r.getModeratorList();
+				List<String> vModerators = r.getModeratorList();
 				List<String> vUsers = r.getPlayersInRoom();
 				dOut.writeInt(1);
 				for (int k = 0; k < vModerators.size(); k++) {
@@ -5070,7 +5069,7 @@ public class PacketFactory {
 			int ByteCount;
 			ByteCount = 15; // count without names
 
-			ArrayList<PlayerFriends> vPlayerFriendsList = p.getFriendsList();
+			List<PlayerFriends> vPlayerFriendsList = p.getFriendsList();
 			Iterator<PlayerFriends> itr = vPlayerFriendsList.iterator();
 
 			while (itr.hasNext()) {
@@ -5419,11 +5418,11 @@ public class PacketFactory {
 		System.out.println("buildSurveyMessage called");
 		int iPlanetID = player.getPlanetID();
 		float fToolRadius = 0;
-		ArrayList<Float> vDensitiesAndLocations = null; // Note: Floats are in this
-								// ArrayList in order by
-								// of: X coordinate, Y
-								// coordinate, density
-								// value.
+		List<Float> vDensitiesAndLocations = null; // Note: Floats are in this
+														// vector in order by
+														// of: X coordinate, Y
+														// coordinate, density
+														// value.
 		int numberOfPoints = 0;
 		int iDivider = 0;
 
@@ -5510,8 +5509,8 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildGetMapLocationsResponseMessage(
-			String sPlanetName, ArrayList<MapLocationData> vStaticLocations,
-			ArrayList<MapLocationData> vPlayerMadeLocations) throws IOException {
+			String sPlanetName, List<MapLocationData> vStaticLocations,
+			List<MapLocationData> vPlayerMadeLocations) throws IOException {
 
 		// vStaticLocations.clear();
 		// vPlayerMadeLocations.clear();
@@ -5912,7 +5911,7 @@ public class PacketFactory {
 	protected static byte[] buildFactionResponseMessage(Player p)
 			throws IOException {
 		// if (true) return null;
-		ArrayList<PlayerFactions> vFactionList = p.getFactionList();
+		List<PlayerFactions> vFactionList = p.getFactionList();
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 		dOut.setSequence(0);
@@ -6087,7 +6086,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildSUIUseTravelTicketList(Player p,
-			ArrayList<TravelTicket> ticketList) throws IOException {
+			List<TravelTicket> ticketList) throws IOException {
 
 		/*
 		 * @travel/travel: 1 no_shuttle_for_location There is no shuttle nearby
@@ -6673,7 +6672,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildSkillModsDelta(Player p,
-			ArrayList<SkillMods> mods, byte deltaType) throws IOException {
+			List<SkillMods> mods, byte deltaType) throws IOException {
 		if (mods == null || mods.isEmpty()) {
 			return null;
 		}
@@ -6763,7 +6762,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildCertificationsDelta(PlayerItem p,
-			ArrayList<String> certification, byte updateType) throws IOException {
+			List<String> certification, byte updateType) throws IOException {
 		if (certification == null || certification.isEmpty()) {
 			return null;
 		}
@@ -6798,7 +6797,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildCertificationsDelta(PlayerItem p,
-			ArrayList<String> certification) throws IOException {
+			List<String> certification) throws IOException {
 		if (certification == null || certification.isEmpty()) {
 			return null;
 		}
@@ -6833,7 +6832,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildDraftSchematicsDelta(PlayerItem p,
-			ArrayList<CraftingSchematic> vSchematics, int updateType,
+			List<CraftingSchematic> vSchematics, int updateType,
 			boolean bResetList) throws IOException {
 		if (vSchematics == null || (vSchematics.isEmpty() && !bResetList)) {
 			return null;
@@ -7341,7 +7340,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildBaselineHINO7(Harvester s,
-			ArrayList<SpawnedResourceData> vSRD) throws IOException {
+			List<SpawnedResourceData> vSRD) throws IOException {
 
 		int iPacketSize = 74;
 		int iResourceCount = vSRD.size();
@@ -7527,7 +7526,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildDeltasMessageHINO7(Harvester s,
-			ArrayList<SpawnedResourceData> vSRD) throws IOException {
+			List<SpawnedResourceData> vSRD) throws IOException {
 
 		int iPacketSize = 66;
 		int iResourceCount = vSRD.size();
@@ -7699,7 +7698,7 @@ public class PacketFactory {
 		dOut.writeLong(s.getID());
 		dOut.writeInt(Constants.BaselinesTypes[Constants.BASELINES_HINO]);
 		dOut.writeByte(7);
-//		dOut.writeInt(36);// this packet should always be 36 bytes WHY����
+		dOut.writeInt(36);// this packet should always be 36 bytes WHY����
 		dOut.writeShort(3);// upd count 2
 		dOut.writeShort(0x0C);// 4
 		dOut.writeByte(s.getHarvesterUpdateCounter());// 5
@@ -7946,7 +7945,7 @@ public class PacketFactory {
 
 	protected final static byte[] buildObjectController_CraftingSchematicList(
 			Player player, TangibleItem item,
-			ArrayList<CraftingSchematic> schematics,
+			List<CraftingSchematic> schematics,
 			TangibleItem nearbyCraftingStation) throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -8519,7 +8518,7 @@ public class PacketFactory {
 		if (schematic == null) {
 			return null;
 		}
-		ArrayList<CraftingSchematicComponent> vComponents = schematic
+		List<CraftingSchematicComponent> vComponents = schematic
 				.getComponents();
 		if (vComponents == null) {
 			return null;
@@ -8577,7 +8576,7 @@ public class PacketFactory {
 
 	protected static byte[] buildObjectController_DraftSchematicComponentMessage(
 			Player player, CraftingSchematic schematic,
-			ArrayList<CraftingSchematicComponent> vComponents) throws IOException {
+			List<CraftingSchematicComponent> vComponents) throws IOException {
 		if (schematic == null) {
 			return null;
 		}
@@ -8632,7 +8631,7 @@ public class PacketFactory {
 
 	protected static byte[] buildObjectController_CraftingSchematicComponentMessage(
 			Player player, ManufacturingSchematic schematic,
-			ArrayList<CraftingSchematicComponent> vComponents,
+			List<CraftingSchematicComponent> vComponents,
 			TangibleItem craftingTool, TangibleItem itemBeingCrafted,
 			boolean bCanMakeFactorySchematic) throws IOException {
 		if (schematic == null || craftingTool == null
@@ -8763,7 +8762,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerStartingLocationsWindow(
-			Player player, ArrayList<StartingLocation> vSL) throws IOException {
+			Player player, List<StartingLocation> vSL) throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 		dOut.setSequence(0);
@@ -8870,7 +8869,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerHarvesterResourceData(
-			Player p, Structure s, ArrayList<SpawnedResourceData> vSRD)
+			Player p, Structure s, List<SpawnedResourceData> vSRD)
 			throws IOException {
 
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
@@ -10032,12 +10031,11 @@ public class PacketFactory {
 				+ numUpdates - 1;
 		buff.writeInt(updateCount);
 		schematic.setSchematicAttributeUpdateCount(updateCount);
-		ArrayList<ManufacturingSchematicAttribute> vAttribs = schematic
+		List<ManufacturingSchematicAttribute> vAttribs = schematic
 				.getSchematicAttributes();
 
 		for (int i = 0; i < numUpdates; i++) {
-			//ManufacturingSchematicAttribute attrib = vAttribs.elementAt(i);
-                        ManufacturingSchematicAttribute attrib = vAttribs.get(i);
+			ManufacturingSchematicAttribute attrib = vAttribs.get(i);
 			buff.writeByte(updateType);
 			buff.writeUTF(attrib.getAttributeName());
 			buff.writeInt(0);

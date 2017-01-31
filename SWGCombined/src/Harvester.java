@@ -1,9 +1,7 @@
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.Iterator;
+import java.util.Vector;
 
 
 public class Harvester extends Structure {
@@ -12,7 +10,7 @@ public class Harvester extends Structure {
 	
     private SpawnedResourceData currentHarvestResource;
     private float currentResourceConcentration;
-    private transient List<ZoneClient> vSyncronizedListeners;
+    private transient Vector<ZoneClient> vSyncronizedListeners;
 
     private byte harvesterUpdateCounter;
     private int iHarvesterResourceUpdateCounter;
@@ -27,7 +25,7 @@ public class Harvester extends Structure {
     private ResourceContainer theResource;
     private transient int iTicks = 0;
     private Hashtable<Long, SOEObject> vOutputHopper;
-    private List<SpawnedResourceData> vResourcesAvailable;
+    private Vector<SpawnedResourceData> vResourcesAvailable;
     private byte iHarvesterType;
 
 	/**
@@ -340,10 +338,10 @@ public class Harvester extends Structure {
 	        /**
 	         * @todo send updates about the harvester to any clients in this list!
 	         */
-	            Iterator<ZoneClient> zcEnum = this.vSyncronizedListeners.iterator();
-	            while(zcEnum.equals(this))
+	            Enumeration<ZoneClient> zcEnum = this.vSyncronizedListeners.elements();
+	            while(zcEnum.hasMoreElements())
 	            {
-	                ZoneClient client = zcEnum.next();
+	                ZoneClient client = zcEnum.nextElement();
 	                if(client.bHasActiveThread())
 	                {
 	                   client.insertPacket(PacketFactory.buildBaselineHINO7(this, vResourcesAvailable));
@@ -415,7 +413,7 @@ public class Harvester extends Structure {
     public boolean addSyncronizedListener(ZoneClient client){
         if(vSyncronizedListeners == null)
         {
-            vSyncronizedListeners = new ArrayList<ZoneClient>();
+            vSyncronizedListeners = new Vector<ZoneClient>();
         }
         if(!vSyncronizedListeners.contains(client))
         {
@@ -427,7 +425,7 @@ public class Harvester extends Structure {
     public boolean removeSyncronizedListener(ZoneClient client){
         if(vSyncronizedListeners == null)
         {
-            vSyncronizedListeners = new ArrayList<ZoneClient>();
+            vSyncronizedListeners = new Vector<ZoneClient>();
         }
         if(vSyncronizedListeners.contains(client))
         {
@@ -497,7 +495,7 @@ public class Harvester extends Structure {
 	    	case Constants.HARVESTER_TYPE_FUSION: {
 	    		vResourcesAvailable = resourceManager.getResourceListForTool(14041, getPlanetID());
 	    		for (int i = 0; i < vResourcesAvailable.size(); i++) {
-	    			SpawnedResourceData resource = vResourcesAvailable.get(i);
+	    			SpawnedResourceData resource = vResourcesAvailable.elementAt(i);
 	    			int resourceIndex = resource.getIGenericResourceIndex();
 	    			if ((resourceIndex >= Constants.RESOURCE_START_RADIOACTIVE && resourceIndex <= Constants.RESOURCE_END_RADIOACTIVE )
 	    					|| resourceIndex == Constants.RESOURCE_TYPE_JTL_RADIOACTIVE_PLOYMETRIC
@@ -537,7 +535,7 @@ public class Harvester extends Structure {
     
     public void updateAvailableResources() {
     	for (int i = 0; i < vResourcesAvailable.size(); i++) {
-    		SpawnedResourceData resource = vResourcesAvailable.get(i);
+    		SpawnedResourceData resource = vResourcesAvailable.elementAt(i);
     		if (resource.isSpawned()) {
     			// Do nothing -- still available.
     		} else {
@@ -551,7 +549,7 @@ public class Harvester extends Structure {
     	}
     }
     
-    public List<SpawnedResourceData> getResourcesAvailable() {
+    public Vector<SpawnedResourceData> getResourcesAvailable() {
     	return vResourcesAvailable;
     }
     public Hashtable<Long, SOEObject> getOutputHopper() {

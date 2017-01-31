@@ -2,8 +2,7 @@ import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * The NPC class represents any non-player character present in the world.  This can include anything from 
@@ -221,7 +220,7 @@ public class NPC extends Player {
     }
     protected void animateNPC(ZoneClient c, String sAnimation){
        try{
-            List<Player> currentPlayers = c.getServer().getPlayersAroundNPC(this);
+            Vector<Player> currentPlayers = c.getServer().getPlayersAroundNPC(this);
             byte [] A = PacketFactory.buildNPCAnimation(this, sAnimation);
             for(int i = 0; i < currentPlayers.size(); i++)
             {
@@ -236,7 +235,7 @@ public class NPC extends Player {
     
     protected void speakNPC(ZoneClient c, String sSpeech, short Mood1, short Mood2){
        try{
-            List<Player> currentPlayers = c.getServer().getPlayersAroundNPC(this);
+            Vector<Player> currentPlayers = c.getServer().getPlayersAroundNPC(this);
             
             for(int i = 0; i < currentPlayers.size(); i++)
             {
@@ -505,12 +504,12 @@ public class NPC extends Player {
     private void updateAggressiveIntelligence(long lElapsedTimeMS) throws Exception {
     	// If we don't hate anything, grab the closest player or NPC to hate.  Any player / NPC within 16 metres will be a viable target, provided it is not of the same species I am.
     	if (lCurrentHateID == 0) {
-        	List<SOEObject> vObjectsInRange = getServer().getWorldObjectsAroundObject(this, 16.0f);
+        	Vector<SOEObject> vObjectsInRange = getServer().getWorldObjectsAroundObject(this, 16.0f);
 	    	if (!vObjectsInRange.isEmpty()) {
 	    		float fClosestObjectRange = 0;
     			SOEObject tarObject = null;
 	    		for (int i = 0; i < vObjectsInRange.size(); i++) {
-	    			tarObject = vObjectsInRange.get(i);
+	    			tarObject = vObjectsInRange.elementAt(i);
 	    			if (tarObject instanceof Player) {
 	    				Player tarPlayer = (Player)tarObject;
 	    				// Can't hate something of your own exact species.
@@ -677,12 +676,12 @@ public class NPC extends Player {
     	try {
 	    	if (lCurrentHateID == 0) {
 	    		// Find something nearby to stalk.
-	    		List<SOEObject> vObjectsInRange = getServer().getWorldObjectsAroundObject(this, 16.0f);
+	    		Vector<SOEObject> vObjectsInRange = getServer().getWorldObjectsAroundObject(this, 16.0f);
 		    	if (!vObjectsInRange.isEmpty()) {
 		    		float fClosestObjectRange = 0;
 	    			SOEObject tarObject = null;
 		    		for (int i = 0; i < vObjectsInRange.size(); i++) {
-		    			tarObject = vObjectsInRange.get(i);
+		    			tarObject = vObjectsInRange.elementAt(i);
 		    			if (tarObject instanceof Player) {
 		    				Player tarPlayer = (Player)tarObject;
 		    				// Can't hate something of your own exact species.
@@ -1011,9 +1010,9 @@ public class NPC extends Player {
         unarmedWeapon.setWeaponType(Constants.WEAPON_TYPE_UNARMED);
 		getServer().addObjectToAllObjects(unarmedWeapon, false, false);
 		equipWeapon(unarmedWeapon, false);
-		List<Player> vNearbyPlayers = getServer().getPlayersAroundNPC(this);
+		Vector<Player> vNearbyPlayers = getServer().getPlayersAroundNPC(this);
 		for (int i = 0; i < vNearbyPlayers.size(); i++) {
-			Player nearPlayer = vNearbyPlayers.get(i);
+			Player nearPlayer = vNearbyPlayers.elementAt(i);
 			nearPlayer.spawnItem(unarmedWeapon);
 		}
 		getServer().sendToRange(PacketFactory.buildDeltasMessage(Constants.BASELINES_CREO, (byte)6, (short)1, (short)5, this, unarmedWeapon.getID()), Constants.PACKET_RANGE_CHAT_RANGE_EXCLUDE_SENDER, this);
@@ -1265,11 +1264,11 @@ public class NPC extends Player {
 		int iTotalDamage = iDamageToApply;
 
 		// If the damage to apply was 0 or less, we must have missed or been blocked somehow.
-		List<Integer> vCRCs = specialAttack.getAnimationCRC();
+		Vector<Integer> vCRCs = specialAttack.getAnimationCRC();
 		int iCRCToSend = 0;
 		if (vCRCs != null) {
 			if (!vCRCs.isEmpty()) {
-				iCRCToSend = vCRCs.get(0);
+				iCRCToSend = vCRCs.elementAt(0);
 			}
 		} else {
 			if (iWeaponType <= Constants.WEAPON_TYPE_POLEARM) {
@@ -1311,9 +1310,9 @@ public class NPC extends Player {
 		if (iDamageToReflect != 0) {
 			updateCurrentHam(iHamToDamage, -iDamageToReflect);
 		}
-		List<Player> vPlayersInRange = getServer().getPlayersAroundObject(this, true);
+		Vector<Player> vPlayersInRange = getServer().getPlayersAroundObject(this, true);
 		for (int i = 0; i < vPlayersInRange.size(); i++) {
-			Player thePlayer = vPlayersInRange.get(i);
+			Player thePlayer = vPlayersInRange.elementAt(i);
 			thePlayer.getClient().insertPacket(PacketFactory.buildCombatTextSpam(this, thePlayer, tarPlayer, "cbt_spam", specialAttack.getCombatSTFSpamArr()[iHitState], iTotalDamage));
 		}
 		if (client != null) {

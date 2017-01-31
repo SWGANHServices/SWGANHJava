@@ -244,11 +244,11 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 		try {
 			if(!bUsingZoneServer)
 			{
-				spaceFrame = new JFrame( "Star Wars Galaxies A New Hope: " );
+				spaceFrame = new JFrame( "Shards of the Force Pre-CU Login Server" );
 			}
 			else
 			{
-				spaceFrame = new JFrame( "Star Wars Galaxies A New Hope: " );
+				spaceFrame = new JFrame( "Shards of the Force Pre-CU Server" );
 			}
 			spaceFrame.setSize(screenWidth, screenHeight);
 			spaceFrame.validate();
@@ -262,7 +262,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			fontHeight = font.getSize();
 			spaceFrame.addKeyListener(this);
 			spaceFrame.addMouseListener(this);
-			splashImage = Toolkit.getDefaultToolkit().createImage("./images/swganhBG4.jpg");
+			splashImage = Toolkit.getDefaultToolkit().createImage("./images/splash.png");
 			pressedKeys = new boolean[(int)Character.MAX_VALUE+1];
 			DataLog.logEntry("GUI Constructor:  Construct DatabaseInterface","SWGGui",Constants.LOG_SEVERITY_INFO,true,true);
 			//System.out.println("GUI Constructor:  Construct DatabaseInterface");
@@ -366,17 +366,17 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			g.drawImage(splashImage, 0, 0, null);
 		} else {
 			if (fontHeight == -1) {
-				font = new Font("Verdana", Font.TRUETYPE_FONT, 12);
+				font = new Font("Times New Roman", Font.TRUETYPE_FONT, 12);
 				g.setFont(font);
 				fontHeight = g.getFont().getSize();
 			}
 			//int iNoArchitectsLen = (fontHeight * ARCH_NULL.length());
 			//g.setClip(0,0,iCurrentWidth, iCurrentHeight);
-			g.setColor(Color.BLACK);
+			g.setColor(Color.WHITE);
 			g.fillRect(0,0,screenWidth, screenHeight);
 			int currentX = 10;
 			int currentY = 10;
-			g.setColor(Color.GREEN);
+			g.setColor(Color.BLACK);
 			g.drawString(Constants.getCurrentSoftwareVersion(), screenWidthDiv2 - (screenWidthDiv2/2),currentY);
 			currentY += fontHeight;
 			int stringLength = (int)getStringWidth("Uptime: ", font);

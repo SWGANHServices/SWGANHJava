@@ -1,6 +1,5 @@
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * The IntangibleObject class is a subclass of the generic SOEObject and represents Datapad objects such as pets, mounts
@@ -503,10 +502,10 @@ public class IntangibleObject extends SOEObject {
                 try {
                         
                         //player.spawnItem(theVehicle, true);
-                        List<Player> vPlayersInRange = client.getServer().getPlayersAroundObject(theVehicle, true);
+                        Vector<Player> vPlayersInRange = client.getServer().getPlayersAroundObject(theVehicle, true);
                         if(!vPlayersInRange.isEmpty()) {
                                 for (int i = 0; i < vPlayersInRange.size(); i++) {
-                                        vPlayersInRange.get(i).spawnItem(theVehicle);
+                                        vPlayersInRange.elementAt(i).spawnItem(theVehicle);
                                 }
                         }
                 } catch (Exception e) {

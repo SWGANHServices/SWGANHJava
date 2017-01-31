@@ -6,10 +6,9 @@
 import java.util.Date;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
-import java.util.ArrayList;
+import java.util.Vector;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
-import java.util.List;
 
 
 /**
@@ -22,8 +21,8 @@ public class DataLog implements Runnable {
     private String PacketLogFileName;
     private String ServerLogFileName;
     private static boolean dataLogRun;
-    public static List<DataLogObject> qPacketLog;
-    public static List<DataLogObject> qServerLog;
+    public static Vector<DataLogObject> qPacketLog;
+    public static Vector<DataLogObject> qServerLog;
     //private DataLog LogServer;
     private Thread myThread;
     private BufferedWriter PacketLogFile;
@@ -39,11 +38,11 @@ public class DataLog implements Runnable {
        lLoopYieldTime = 10000;
        if(qPacketLog==null)
        {
-           qPacketLog = new ArrayList<DataLogObject>();
+           qPacketLog = new Vector<DataLogObject>();
        }
        if(qServerLog==null)
        {
-           qServerLog = new ArrayList<DataLogObject>();
+           qServerLog = new Vector<DataLogObject>();
        }
        dataLogRun = true;
        //start
@@ -62,11 +61,11 @@ public class DataLog implements Runnable {
        try {
            if(qPacketLog==null)
            {
-               qPacketLog = new ArrayList<DataLogObject>();
+               qPacketLog = new Vector<DataLogObject>();
            }
            if(qServerLog==null)
            {
-               qServerLog = new ArrayList<DataLogObject>();
+               qServerLog = new Vector<DataLogObject>();
            }
                                
            StartTime = new Date();
@@ -110,8 +109,7 @@ public class DataLog implements Runnable {
                 {
                     DataLogObject L = null;
                     try{
-                        //L = qPacketLog.firstElement();
-                        L = qPacketLog.get(zPort);
+                        L = qPacketLog.firstElement();
                     }catch(Exception qe){
                         if(qe instanceof java.util.NoSuchElementException)
                         {

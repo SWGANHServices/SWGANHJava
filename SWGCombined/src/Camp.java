@@ -1,6 +1,4 @@
-import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Vector;
 
 
 /**
@@ -23,11 +21,11 @@ public final class Camp extends TangibleItem {
     private Terminal adminTerminal;
     private Player campOwner;
     private long lAbandonTimer;
-    List<Long> vCampVisitors;
-    List<Long> vGreetedVisitors;
+    Vector<Long> vCampVisitors;
+    Vector<Long> vGreetedVisitors;
     private boolean  bPropsMade;
     private long lProbBuildTimer;
-    private List<SOEObject> vCampPropList;
+    private Vector<SOEObject> vCampPropList;
     public Camp(){
         super();
         setTemplateID(iDefaultTemplateID);
@@ -39,11 +37,12 @@ public final class Camp extends TangibleItem {
         this.setPVPStatus(Constants.PVP_STATUS_IS_ITEM);
         //lCampHeartbeat = 2000;
         this.setBSendsEquipedState(false);
-        vCampVisitors = new ArrayList<Long>();
-        vGreetedVisitors = new ArrayList<Long>();
+        vCampVisitors = new Vector<Long>();
+        vGreetedVisitors = new Vector<Long>();
         lAbandonTimer = 0;
         bPropsMade = false;
         lProbBuildTimer = 2500;
+		System.out.println(vCampVisitors);
     }
 
     public Camp(int iTemplateID, long lTimeToLive){
@@ -54,7 +53,7 @@ public final class Camp extends TangibleItem {
         try {
 	        this.setConditionDamage(0, false);
 	        this.setMaxCondition(1000, false);
-        } catch (IOException e) {
+        } catch (Exception e) {
         	// Can't happen -- not building the packets.
         }
         //iRequiredSkill = DatabaseInterface.getTemplateDataByID(iTemplateID).getRequiredSkillID();
@@ -63,8 +62,8 @@ public final class Camp extends TangibleItem {
         this.setPVPStatus(Constants.PVP_STATUS_IS_NORMAL_NON_ATTACKABLE);
         //lCampHeartbeat = 2000;
         this.setBSendsEquipedState(false);
-        vCampVisitors = new ArrayList<Long>();
-        vGreetedVisitors = new ArrayList<Long>();
+        vCampVisitors = new Vector<Long>();
+        vGreetedVisitors = new Vector<Long>();
         lAbandonTimer = 0;
         bPropsMade = false;
         lProbBuildTimer = 2500;
@@ -92,7 +91,7 @@ public final class Camp extends TangibleItem {
             {
                 this.lTimeToLive-=lElapsedTime;
             }
-            List<Player> vPL = server.getPlayersAroundObject(this,false);
+            Vector<Player> vPL = server.getPlayersAroundObject(this,false);
             for(int i = 0; i < vPL.size(); i++)
             {
                 Player p = vPL.get(i);
@@ -153,7 +152,7 @@ public final class Camp extends TangibleItem {
                     lProbBuildTimer-=lElapsedTime;
                 }
             }
-        }catch(IOException e){
+        }catch(Exception e){
             DataLog.logException("Exception in Update", "Camp", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }
@@ -196,7 +195,7 @@ public final class Camp extends TangibleItem {
                     //System.out.println("Unhandled Command id in Camp Terminal. ID: " + commandID);
                 }
             }
-        }catch(IOException e){
+        }catch(Exception e){
             DataLog.logException("Error in useItem", "Camp",ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }
@@ -232,7 +231,7 @@ public final class Camp extends TangibleItem {
 
     protected void makeProps(ZoneServer server){
         try{
-            vCampPropList = new ArrayList<SOEObject>();
+            vCampPropList = new Vector<SOEObject>();
             for(int i =0; i < dT.getICampPropTemplateID().length;i++)
             {
                 ItemTemplate iT = DatabaseInterface.getTemplateDataByID(dT.getICampPropTemplateID()[i]);
@@ -296,7 +295,7 @@ public final class Camp extends TangibleItem {
                     vCampPropList.add(prop);
                 }
             }
-            List<Player> vPL = server.getPlayersAroundObject(this, false);
+            Vector<Player> vPL = server.getPlayersAroundObject(this, false);
             for(int i = 0; i < vPL.size();i++)
             {
                 Player p = vPL.get(i);
@@ -310,7 +309,7 @@ public final class Camp extends TangibleItem {
                 p.getClient().insertPacket(PacketFactory.buildObjectControllerDataTransformObjectToClient(adminTerminal,0x21));
             }
             bPropsMade = true;
-        }catch(IOException e){
+        }catch(Exception e){
             DataLog.logException("Error in makeProps", "Camp", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }
@@ -327,7 +326,7 @@ public final class Camp extends TangibleItem {
             }
             
             campOwner.setCurrentCampObject(null);
-            List<Player> vPL = server.getPlayersAroundObject(this, false);
+            Vector<Player> vPL = server.getPlayersAroundObject(this, false);
             for(int i = 0; i < vPL.size();i++)
             {
                 Player p = vPL.get(i);
@@ -351,7 +350,7 @@ public final class Camp extends TangibleItem {
                 int iDeltaTimeToLive = (int)(iXPTimeToLive - lTime);
                 campOwner.updateExperience(null, DatabaseInterface.getExperienceIDFromName("camp"),(int)(iDeltaTimeToLive / iCampXPMultiplier) + visitorXPBonus);
             }
-        }catch(IOException e){
+        }catch(Exception e){
             DataLog.logException("Error While Disbanding Camp", "Camp", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }

@@ -1,7 +1,6 @@
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Vector;
 
 
 
@@ -350,9 +349,9 @@ public final class CreatureAnimal extends NPC {
 					} 
 					if (!bCouldUpdate){
 						boolean bFound = false;
-						List<TangibleItem> vInventoryItems = player.getInventoryItems();
+						Vector<TangibleItem> vInventoryItems = player.getInventoryItems();
 						for (int i = 0; i < vInventoryItems.size() && !bFound; i++) {
-							TangibleItem item = vInventoryItems.get(i);
+							TangibleItem item = vInventoryItems.elementAt(i);
 							if (item instanceof ResourceContainer) {
 								ResourceContainer tempContainer = (ResourceContainer) item;
 								if (tempContainer.getResourceSpawnID() == resourceTypeID) {

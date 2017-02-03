@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.*;
 /**
@@ -443,7 +444,7 @@ public class Deed extends TangibleItem {
                                 allowedtoplace = true;
                             }
                         }
-                        
+                        if(dT!=null && allowedtoplace)
                         {                            
                             ItemTemplate t = client.getServer().getTemplateData(dT.getObject_iff_template_id());                
                             if(t!=null)
@@ -457,7 +458,7 @@ public class Deed extends TangibleItem {
                                 client.insertPacket(PacketFactory.buildChatSystemMessage("Structure Template Error, Contact a CSR. Code:" + deedTemplateID));
                             }
                         }
-                        
+                        else if(!allowedtoplace)
                         {
                             client.insertPacket(PacketFactory.buildChatSystemMessage(
                             		"player_structure",
@@ -478,7 +479,7 @@ public class Deed extends TangibleItem {
                             		0f, false));
 
                         }
-                        
+                        else
                         {
                             client.insertPacket(PacketFactory.buildChatSystemMessage("Structure Template Error, Contact a CSR. Code:" + deedTemplateID));
                         }
@@ -744,15 +745,15 @@ public class Deed extends TangibleItem {
 
     private void placeCamp(ZoneClient client){
         try{
-            //System.out.println("Camp Deed Template ID: " + this.getTemplateID());
-            //System.out.println("Camp Placement, Required Skill: " + DatabaseInterface.getTemplateDataByID(this.getTemplateID()).getRequiredSkillID());
+            System.out.println("Camp Deed Template ID: " + this.getTemplateID());
+            System.out.println("Camp Placement, Required Skill: " + DatabaseInterface.getTemplateDataByID(this.getTemplateID()).getRequiredSkillID());
             if(client.getPlayer().getCellID() == 0)
             {
                 if(client.getPlayer().getCurrentCampObject()==null)
                 {
                     if(client.getPlayer().hasSkill(DatabaseInterface.getTemplateDataByID(this.getTemplateID()).getRequiredSkillID()))
                     {
-                        List<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(client.getPlayer());
+                        Vector<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(client.getPlayer());
                         boolean hasClearance = true;
                         for(int i = 0; i < vNearbyObjects.size();i++)
                         {
@@ -843,7 +844,7 @@ public class Deed extends TangibleItem {
             {
                 client.insertPacket(PacketFactory.buildChatSystemMessage("You cannot place a camp while indoors."));
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception while placing a Camp", "Deed", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }

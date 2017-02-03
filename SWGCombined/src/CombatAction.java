@@ -1,5 +1,4 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Vector;
 
 /**
  * A CombatAction is any action the Server receives from the Client that is classified as being able to alter
@@ -26,8 +25,8 @@ public class CombatAction {
 	private float fToHitModifier;
 	private float fForceCostModifier;
 	private BuffEffect[] combatEffect;
-	private List<String> sCombatAnimationSTF;
-	private List<Integer> iCombatAnimationCRC;
+	private Vector<String> sCombatAnimationSTF;
+	private Vector<Integer> iCombatAnimationCRC;
 	
 	
 	/**
@@ -211,13 +210,13 @@ public class CombatAction {
 		fForceCostModifier = forceCostModifier;
 	}
 
-	public List<String> getCombatAnimationSTF() {
+	public Vector<String> getCombatAnimationSTF() {
 		return sCombatAnimationSTF;
 	}
 
 	public void setCombatActionSTF(String combatActionSTF) {
 		if (sCombatAnimationSTF == null) {
-			sCombatAnimationSTF = new ArrayList<String>();
+			sCombatAnimationSTF = new Vector<String>();
 		}
 		if (combatActionSTF == null || combatActionSTF.isEmpty()) {
 			
@@ -244,12 +243,12 @@ public class CombatAction {
 
 	public void setAnimationCRC(int iAnimationCRC) {
 		if(iCombatAnimationCRC == null) {
-			iCombatAnimationCRC = new ArrayList<Integer>();
+			iCombatAnimationCRC = new Vector<Integer>();
 		}
 		iCombatAnimationCRC.add(iAnimationCRC);	
 	}
 
-	public List<Integer> getAnimationCRC() {
+	public Vector<Integer> getAnimationCRC() {
 		return iCombatAnimationCRC;
 	}
 

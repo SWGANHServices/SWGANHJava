@@ -15,8 +15,8 @@ import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.Hashtable;
 import java.util.LinkedList;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 import javax.script.ScriptException;
 
@@ -47,13 +47,13 @@ public class ZoneServer implements Runnable {
 	private int iServerStatus = STATUS_OFFLINE;
 	private List<DatagramPacket> vPacketsToSend = null;
 	private Hashtable<String, Point2D> sStartingLocations;
-	private Hashtable<Integer, List<MapLocationData>> vStaticMapLocationsByPlanet;
-	private Hashtable<Integer, List<MapLocationData>> vPlayerMapLocationsByPlanet;
+	private Hashtable<Integer, Vector<MapLocationData>> vStaticMapLocationsByPlanet;
+	private Hashtable<Integer, Vector<MapLocationData>> vPlayerMapLocationsByPlanet;
 	private String sClusterName;
 	private Thread theThread;
 	private StructureUpdateThread structureThread;
 	private int iServerID;
-	private List<String> vUsedRandomNames;
+	private Vector<String> vUsedRandomNames;
 	// This is where we store all our players we know about (our active
 	// clients).
 	private ConcurrentHashMap<SocketAddress, ZoneClient> vAllClients; // To be preloaded.
@@ -66,7 +66,7 @@ public class ZoneServer implements Runnable {
 	private Hashtable<Integer, NPCUpdateThread> vNPCUpdateThreads;
 	private Hashtable<Integer, Grid> coffeetree;
 	private DataOutputStream dOut = null;
-	private List<Terminal> ServerTerminals;
+	private Vector<Terminal> ServerTerminals;
 	private SWGGui theGui;
 	private int port;
 	protected PingServer pingServer;
@@ -77,9 +77,9 @@ public class ZoneServer implements Runnable {
 	private DatabaseInterface dbInterface;
 	private long lTicks;
 	private int[][][] iStartingHams;
-	private List<Long> vUsedObjectID = null;
-	private List<Long> vUsedSerialNumbers = null;
-	private List<Integer> vUsedEmailID = null;
+	private Vector<Long> vUsedObjectID = null;
+	private Vector<Long> vUsedSerialNumbers = null;
+	private Vector<Integer> vUsedEmailID = null;
 	private String sMOTD = null;
 	private short[][][] iHeightMap;
 	private ResourceManager resourceManager;
@@ -87,15 +87,15 @@ public class ZoneServer implements Runnable {
 	private Hashtable<Integer, RadialTemplateData> vServerRadials;
 	private Hashtable<Long, RadialMenuItem> chmServerObjectRadials;
 	//private NPCSpawnManager[] npcSpawnManager;
-	private List<TravelDestination> vAllTravelDestinations;
+	private Vector<TravelDestination> vAllTravelDestinations;
 	public TicketPriceMatrix ServerTicketPriceList;
-	private List<Shuttle> ServerShuttleList;
-	private List<DynamicLairSpawn>[] vLairSpawnsSortedByPlanet;
+	private Vector<Shuttle> ServerShuttleList;
+	private Vector<DynamicLairSpawn>[] vLairSpawnsSortedByPlanet;
 	private ScriptManager scriptManager;
 	private long lNextWebUpdate;
 	private String sScriptDirectory = "";
 	//private Vector<POI> vServerPOIList;
-	private static List<LairTemplate> vServerLairTemplates;
+	private static Vector<LairTemplate> vServerLairTemplates;
 	/**
 	 * planetaryHeightMap [planetid][xIndex][yIndex] = height
 	 */
@@ -106,7 +106,7 @@ public class ZoneServer implements Runnable {
 	 */
 	private short[][][][] cellHeightMap;
 
-	private List<String> vUsedCharacterNames;
+	private Vector<String> vUsedCharacterNames;
 	private ZoneServerScreen theScreen;
 
 	private boolean bUsingLoginServer = true;
@@ -134,11 +134,11 @@ public class ZoneServer implements Runnable {
 
 			if(DataLog.qServerLog==null)
 			{
-				DataLog.qServerLog = new ArrayList<DataLogObject>();
+				DataLog.qServerLog = new Vector<DataLogObject>();
 			}
 			if(DataLog.qPacketLog==null)
 			{
-				DataLog.qPacketLog = new ArrayList<DataLogObject>();
+				DataLog.qPacketLog = new Vector<DataLogObject>();
 			}
 
 			//DataLogObject L = new DataLogObject("ZoneServer()","Server Starting", Constants.LOG_SEVERITY_INFO);
@@ -175,10 +175,10 @@ public class ZoneServer implements Runnable {
 		coffeetree = new Hashtable<Integer, Grid>();
 		DataLog.logEntry("Set up planet positional grid.","ZoneServer()", Constants.LOG_SEVERITY_INFO, ZoneRunOptions.bLogToConsole, true);
 		//System.out.println("Set up planet positional grid.");
-		vLairSpawnsSortedByPlanet = new ArrayList[Constants.PlanetNames.length];
+		vLairSpawnsSortedByPlanet = new Vector[Constants.PlanetNames.length];
 		for (int i = 0; i < Constants.PlanetNames.length; i++) {
 			coffeetree.put(i, new Grid(this, GRID_RESOLUTION, i));
-			vLairSpawnsSortedByPlanet[i] = new ArrayList<DynamicLairSpawn>();
+			vLairSpawnsSortedByPlanet[i] = new Vector<DynamicLairSpawn>();
 		}
 		//add tutorial grid
 		coffeetree.put(Constants.TUTORIAL, new Grid(this, GRID_RESOLUTION, Constants.TUTORIAL));
@@ -207,8 +207,8 @@ public class ZoneServer implements Runnable {
 		}
 		dbInterface = theGui.getDB();
 		vSkillsMasterList = DatabaseInterface.getSkillList();
-		vUsedObjectID = new ArrayList<Long>();
-		vUsedSerialNumbers = new ArrayList<Long>();
+		vUsedObjectID = new Vector<Long>();
+		vUsedSerialNumbers = new Vector<Long>();
 
 
 		lCurrentWeatherMS = new long[Constants.PlanetNames.length];
@@ -251,7 +251,7 @@ public class ZoneServer implements Runnable {
 		vAllSpawnedObjects = new ConcurrentHashMap<Long, SOEObject>();
 		vNoBuildZoneBypassObjects = new ConcurrentHashMap<Long, SOEObject>();
 
-		vUsedCharacterNames = new ArrayList<String>();
+		vUsedCharacterNames = new Vector<String>();
 		lServer = theGui.getLoginServer();
 		bUsingLoginServer = (lServer != null);
 		if (bUsingLoginServer) {
@@ -390,14 +390,14 @@ public class ZoneServer implements Runnable {
 			TangibleItem structureBase = s.getStructureBase();
 			Terminal structureSign = s.getStructureSign();
 			Terminal adminTerminal = s.getAdminTerminal();
-			List<Terminal> vElevatorTerminal = s.getVElevatorTerminals();
+			Vector<Terminal> vElevatorTerminal = s.getVElevatorTerminals();
 			addObjectToAllObjects(guildTerminal, true, false);
 			addObjectToAllObjects(structureSign, true, false);
 			addObjectToAllObjects(structureBase, true, false);
 			addObjectToAllObjects(adminTerminal, true, false);
 			if (!vElevatorTerminal.isEmpty()) {
 				for (int i = 0; i < vElevatorTerminal.size(); i++) {
-					addObjectToAllObjects(vElevatorTerminal.get(i), true, false);
+					addObjectToAllObjects(vElevatorTerminal.elementAt(i), true, false);
 				}
 			}
 			if (s instanceof Factory) {
@@ -411,17 +411,17 @@ public class ZoneServer implements Runnable {
 				}
 				addObjectToAllObjects(inputHopper, false, false);
 				addObjectToAllObjects(factory.getOutputHopper(), false, false);
-				List<TangibleItem> vContainedItems = inputHopper.getLinkedObjects();
+				Vector<TangibleItem> vContainedItems = inputHopper.getLinkedObjects();
 				if (!vContainedItems.isEmpty()) {
 					for (int i = 0; i < vContainedItems.size(); i++) {
 						
-						addObjectToAllObjects(vContainedItems.get(i), false, false);
+						addObjectToAllObjects(vContainedItems.elementAt(i), false, false);
 					}
 				}
 				vContainedItems = outputHopper.getLinkedObjects();
 				if (!vContainedItems.isEmpty()) {
 					for (int i = 0; i < vContainedItems.size(); i++) {
-						addObjectToAllObjects(vContainedItems.get(i), false, false);
+						addObjectToAllObjects(vContainedItems.elementAt(i), false, false);
 					}
 				}
 			}
@@ -472,7 +472,7 @@ public class ZoneServer implements Runnable {
 
 		if (!ServerShuttleList.isEmpty()) {
 			for (int i = 0; i < ServerShuttleList.size(); i++) {
-				Shuttle s = ServerShuttleList.get(i);
+				Shuttle s = ServerShuttleList.elementAt(i);
 				s.setID(getNextObjectID());
 				addObjectToAllObjects(s, true,false);
 			}
@@ -822,8 +822,8 @@ public class ZoneServer implements Runnable {
 		return vSkillsMasterList;
 	}
 
-	protected List<Skills> getAllSkillsWithSimilarNameVector(String SkillFamily){
-		List<Skills> SL = new ArrayList<Skills>();
+	protected Vector<Skills> getAllSkillsWithSimilarNameVector(String SkillFamily){
+		Vector<Skills> SL = new Vector<Skills>();
 		// This is NOT the proper way to iterate through a Hashtable.
 		for(int i = 0; i < vSkillsMasterList.size(); i++) {
 			Skills S = vSkillsMasterList.get(i);
@@ -849,9 +849,9 @@ public class ZoneServer implements Runnable {
 		return null;
 	}
 
-	protected List<Player> getAllPlayersOnPlanet(int p) {
+	protected Vector<Player> getAllPlayersOnPlanet(int p) {
 		Enumeration<Player> playersOnPlanet = vAllPlayers.elements();
-		List<Player> allPlayersOnPlanet = new ArrayList<Player>();
+		Vector<Player> allPlayersOnPlanet = new Vector<Player>();
 
 		while(playersOnPlanet.hasMoreElements()) {
 			Player currentPlayer = playersOnPlanet.nextElement();
@@ -871,13 +871,13 @@ public class ZoneServer implements Runnable {
 	 * @param status -- The status, Online is true, offline is false.
 	 * @return A list of all players with the specified online status on the specified planet.
 	 */
-	protected List<Player> getStatusPlayersOnPlanet(int p, boolean bIsOnline) {
+	protected Vector<Player> getStatusPlayersOnPlanet(int p, boolean bIsOnline) {
 		if(vAllPlayers == null)
 		{
-			return new ArrayList<Player>();
+			return new Vector<Player>();
 		}
 		Enumeration<Player> playersOnPlanet = vAllPlayers.elements();
-		List<Player> allPlayersOnPlanet = new ArrayList<Player>();
+		Vector<Player> allPlayersOnPlanet = new Vector<Player>();
 
 		while(playersOnPlanet.hasMoreElements()) {
 			Player currentPlayer = playersOnPlanet.nextElement();
@@ -892,9 +892,9 @@ public class ZoneServer implements Runnable {
 		return allPlayersOnPlanet;
 	}
 	
-	protected List<Player> getAllOnlinePlayers() {
+	protected Vector<Player> getAllOnlinePlayers() {
 		//Store the online players.
-		List<Player> vOnlinePlayers = new ArrayList<Player>();
+		Vector<Player> vOnlinePlayers = new Vector<Player>();
 		Enumeration<Player> onlinePlayers = vAllPlayers.elements();
 		
 		while(onlinePlayers.hasMoreElements()) {
@@ -911,7 +911,7 @@ public class ZoneServer implements Runnable {
 
 	protected String[] getAllSkillsWithSimilarNameStringArray(String SkillFamily){
 
-		List<Skills> SL = new ArrayList<Skills>();
+		Vector<Skills> SL = new Vector<Skills>();
 		for(int i = 0; i < vSkillsMasterList.size(); i++)
 		{
 			Skills S = vSkillsMasterList.get(i);
@@ -1003,7 +1003,7 @@ public class ZoneServer implements Runnable {
 	 *            The skill index.
 	 * @return The list of skill mods for the skill.
 	 */
-	protected List<SkillMods> getSkillModsFromSkillIndex(int i) {
+	protected Vector<SkillMods> getSkillModsFromSkillIndex(int i) {
 		return vSkillsMasterList.get(i).getAllSkillMods();
 	}
 
@@ -1014,7 +1014,7 @@ public class ZoneServer implements Runnable {
 	 *            The skill name.
 	 * @return The list of skill mods.
 	 */
-	protected List<SkillMods> getSkillModsFromSkillName(String sProfessionName) {
+	protected Vector<SkillMods> getSkillModsFromSkillName(String sProfessionName) {
 		return vSkillsMasterList.get(getSkillIndexFromName(sProfessionName))
 		.getAllSkillMods();
 	}
@@ -1169,7 +1169,7 @@ public class ZoneServer implements Runnable {
 		int iPlayerCount = 0;
 		for(int i = 0; i < 10; i++)
 		{
-			List<Player> vPL = this.getStatusPlayersOnPlanet(i,true);
+			Vector<Player> vPL = this.getStatusPlayersOnPlanet(i,true);
 			if(vPL!=null)
 			{
 				iPlayerCount += vPL.size();
@@ -1493,16 +1493,16 @@ public class ZoneServer implements Runnable {
 	 *            The NPC which we are spawning.
 	 * @return A list of all Players within range of the NPC.
 	 */
-	protected List<Player> getPlayersAroundNPC(NPC npc) {
+	protected Vector<Player> getPlayersAroundNPC(NPC npc) {
 		int planetID = npc.getPlanetID();
 		// System.out.println("GetPlayersAroundPlayer -- Planet ID " +
 		// Constants.PlanetNames[planetID]);
-		List<Player> vPlayersToReturn = new ArrayList<Player>();
+		Vector<Player> vPlayersToReturn = new Vector<Player>();
 		GridElement element = coffeetree.get(planetID).getNearestElement(npc.getX(), npc.getY());
 		if (element != null) {
-			List<Player> vNearbyPlayers = element.getAllNearPlayers();
+			Vector<Player> vNearbyPlayers = element.getAllNearPlayers();
 			for (int i = 0; i < vNearbyPlayers.size(); i++) {
-				Player p = vNearbyPlayers.get(i);
+				Player p = vNearbyPlayers.elementAt(i);
 				if (isInRange(p, npc, Constants.CHATRANGE)) {
 					vPlayersToReturn.add(p);
 				}
@@ -1511,14 +1511,14 @@ public class ZoneServer implements Runnable {
 		return vPlayersToReturn;
 	}
 
-	protected List<SOEObject> getCreaturesAroundPlayer(Player p) {
+	protected Vector<SOEObject> getCreaturesAroundPlayer(Player p) {
 		int planetID = p.getPlanetID();
 		GridElement element = coffeetree.get(planetID).getNearestElement(p.getX(), p.getY());
-		List<SOEObject> vCreaturesToReturn = new ArrayList<SOEObject>();
+		Vector<SOEObject> vCreaturesToReturn = new Vector<SOEObject>();
 		if (element != null) {
-			List<SOEObject> vNearbyPlayers = element.getAllNearCreatures();
+			Vector<SOEObject> vNearbyPlayers = element.getAllNearCreatures();
 			for (int i = 0; i < vNearbyPlayers.size(); i++) {
-				SOEObject obj = vNearbyPlayers.get(i);
+				SOEObject obj = vNearbyPlayers.elementAt(i);
 				if (isInRange(p, obj, Constants.CHATRANGE)) {
 					vCreaturesToReturn.add(p);
 				}
@@ -1534,9 +1534,9 @@ public class ZoneServer implements Runnable {
 	 * @param p -- The player.
 	 * @return The list of all nearby objects.
 	 */
-	protected List<SOEObject> getWorldObjectsAroundObject(SOEObject p) {
+	protected Vector<SOEObject> getWorldObjectsAroundObject(SOEObject p) {
 		int planetID = p.getPlanetID();
-		List<SOEObject> vObjectListToReturn = new ArrayList<SOEObject>();
+		Vector<SOEObject> vObjectListToReturn = new Vector<SOEObject>();
 		GridElement element = coffeetree.get(planetID).getNearestElement(p.getX(), p.getY());
 		if (element != null) {
 			ConcurrentHashMap<Long, SOEObject> vAllNearObjects = element.getAllNearObjects();
@@ -1634,9 +1634,9 @@ public class ZoneServer implements Runnable {
 	 * @param range -- The distance in which to check.
 	 * @return The list of all nearby objects.
 	 */
-	protected List<SOEObject> getWorldObjectsAroundObject(SOEObject p, float range) {
+	protected Vector<SOEObject> getWorldObjectsAroundObject(SOEObject p, float range) {
 		int planetID = p.getPlanetID();
-		List<SOEObject> vObjectListToReturn = new ArrayList<SOEObject>();
+		Vector<SOEObject> vObjectListToReturn = new Vector<SOEObject>();
 		GridElement element = coffeetree.get(planetID).getNearestElement(p.getX(), p.getY());
 		if (element != null) {
 			ConcurrentHashMap<Long, SOEObject> vAllNearObjects = element.getAllNearObjects();
@@ -1726,9 +1726,9 @@ public class ZoneServer implements Runnable {
 		return vObjectListToReturn;
 	}
 
-	protected List<SOEObject> getStaticObjectsAroundObject(SOEObject p) {
+	protected Vector<SOEObject> getStaticObjectsAroundObject(SOEObject p) {
 		int planetID = p.getPlanetID();
-		List<SOEObject> vObjectListToReturn = new ArrayList<SOEObject>();
+		Vector<SOEObject> vObjectListToReturn = new Vector<SOEObject>();
 		GridElement element = coffeetree.get(planetID).getNearestElement(p.getX(), p.getY());
 		if (element != null) {
 			ConcurrentHashMap<Long, SOEObject> vAllNearObjects = element.getAllNearObjects();
@@ -1747,9 +1747,9 @@ public class ZoneServer implements Runnable {
 		return vObjectListToReturn;
 	}
 
-	protected List<SOEObject> getStaticObjectsAroundObject(SOEObject p, int range) {
+	protected Vector<SOEObject> getStaticObjectsAroundObject(SOEObject p, int range) {
 		int planetID = p.getPlanetID();
-		List<SOEObject> vObjectListToReturn = new ArrayList<SOEObject>();
+		Vector<SOEObject> vObjectListToReturn = new Vector<SOEObject>();
 		GridElement element = coffeetree.get(planetID).getNearestElement(p.getX(), p.getY());
 		if (element != null) {
 			ConcurrentHashMap<Long, SOEObject> vAllNearObjects = element.getAllNearObjects();
@@ -1776,7 +1776,7 @@ public class ZoneServer implements Runnable {
 	 *            The player.
 	 * @return The list of nearby players.
 	 */
-	protected List<Player> getPlayersAroundObject(SOEObject p, boolean bIncludePlayer) {
+	protected Vector<Player> getPlayersAroundObject(SOEObject p, boolean bIncludePlayer) {
 		int planetID = p.getPlanetID();
 		/**
 		 * @todo handle planets other than the first 10 for space and tutorial.
@@ -1796,13 +1796,13 @@ public class ZoneServer implements Runnable {
 		// System.out.println("GetPlayersAroundPlayer -- Planet ID " +
 		// Constants.PlanetNames[planetID]);
 		GridElement element = coffeetree.get(planetID).getNearestElement(p.getX(), p.getY());
-		List<Player> vPlayerList = null;
+		Vector<Player> vPlayerList = null;
 		if (element != null) {
 			vPlayerList = element.getAllNearPlayers();
 			if (!bIncludePlayer) {
 				boolean bFound = false;
 				for (int i = 0; i < vPlayerList.size() && !bFound; i++) {
-					Player player = vPlayerList.get(i);
+					Player player = vPlayerList.elementAt(i);
 					if (player.getID() == p.getID()) {
 						vPlayerList.remove(i);
 						bFound = true;
@@ -1813,15 +1813,15 @@ public class ZoneServer implements Runnable {
 			DataLog.logEntry("Coffeetree returned null element for object at ("+p.getX()+", " + p.getY()+")", "ZoneServer", Constants.LOG_SEVERITY_CRITICAL, true, true);
 		}
 		if (vPlayerList == null) {
-			vPlayerList = new ArrayList<Player>();
+			vPlayerList = new Vector<Player>();
 		}
 		return vPlayerList;
 	}
 
-	protected List<Player> getPlayersAroundObject(SOEObject p, boolean bIncludePlayer, float range) {
-		List<Player> vPlayerList = getPlayersAroundObject(p, bIncludePlayer);
+	protected Vector<Player> getPlayersAroundObject(SOEObject p, boolean bIncludePlayer, float range) {
+		Vector<Player> vPlayerList = getPlayersAroundObject(p, bIncludePlayer);
 		for (int i = 0; i < vPlayerList.size(); i++) {
-			if (!isInRange(p, vPlayerList.get(i), range)) {
+			if (!isInRange(p, vPlayerList.elementAt(i), range)) {
 				vPlayerList.remove(i);
 				i--;
 			}
@@ -1961,9 +1961,9 @@ public class ZoneServer implements Runnable {
 		vUsedObjectID.remove(o.getID());
 		
 		if (bInTree) {
-			List<Player> vInRangePlayers = getPlayersAroundObject(o, false);
+			Vector<Player> vInRangePlayers = getPlayersAroundObject(o, false);
 			for (int i = 0; i < vInRangePlayers.size(); i++) {
-				Player p = vInRangePlayers.get(i);
+				Player p = vInRangePlayers.elementAt(i);
 				try {
 					p.despawnItem(o);
 				} catch (Exception e) {
@@ -2200,7 +2200,7 @@ public class ZoneServer implements Runnable {
 		if (player == null) {
 			return;
 		}
-		List<Player> vObjectsAfterRemoval = getPlayersAroundObject(player, false);
+		Vector<Player> vObjectsAfterRemoval = getPlayersAroundObject(player, false);
 		for (int i = 0; i < vObjectsAfterRemoval.size(); i++) {
 			SOEObject o = (SOEObject) vObjectsAfterRemoval.get(i);
 			if (o instanceof Player) {
@@ -2310,7 +2310,7 @@ public class ZoneServer implements Runnable {
 		vPlayerMapLocationsByPlanet.get(i).add(data);
 	}
 
-	protected List<MapLocationData> getStaticMapLocations(String sPlanetName) {
+	protected Vector<MapLocationData> getStaticMapLocations(String sPlanetName) {
 		for (int i = 0; i < Constants.PlanetNames.length; i++) {
 			if (sPlanetName.equalsIgnoreCase(Constants.PlanetNames[i])) {
 				return vStaticMapLocationsByPlanet.get(i);
@@ -2319,7 +2319,7 @@ public class ZoneServer implements Runnable {
 		return null;
 	}
 
-	protected List<MapLocationData> getPlayerMapLocations(String sPlanetName) {
+	protected Vector<MapLocationData> getPlayerMapLocations(String sPlanetName) {
 		for (int i = 0; i < Constants.PlanetNames.length; i++) {
 			if (sPlanetName.equalsIgnoreCase(Constants.PlanetNames[i])) {
 				return vPlayerMapLocationsByPlanet.get(i);
@@ -2341,7 +2341,7 @@ public class ZoneServer implements Runnable {
 	protected String getTravelTerminalLocationName(int TerminalID){
 		TravelDestination t = null;
 		for (int i = 0; i < vAllTravelDestinations.size(); i++) {
-			t = vAllTravelDestinations.get(i);
+			t = vAllTravelDestinations.elementAt(i);
 			if (t.getTerminalID() == TerminalID) {
 				return t.getDestinationName();
 			}
@@ -2356,8 +2356,8 @@ public class ZoneServer implements Runnable {
 
 	}
 
-	protected List<TravelDestination> getTravelDestinationsForPlanet(Player p, int PlanetID){
-		List<TravelDestination> retval = new ArrayList<TravelDestination>();
+	protected Vector<TravelDestination> getTravelDestinationsForPlanet(Player p, int PlanetID){
+		Vector<TravelDestination> retval = new Vector<TravelDestination>();
 		if(p.getPlanetID() != PlanetID)
 		{
 			//return null;
@@ -2404,7 +2404,7 @@ public class ZoneServer implements Runnable {
 
 	}
 
-	protected List<TravelDestination> getAllTravelDestinations(){
+	protected Vector<TravelDestination> getAllTravelDestinations(){
 		return vAllTravelDestinations;
 	}
 
@@ -2414,7 +2414,7 @@ public class ZoneServer implements Runnable {
 		// System.out.println("Requested playerTravel Destination Sought " + Name);
 		for(int i = 0; i < vAllTravelDestinations.size(); i++)
 		{
-			TravelDestination t = vAllTravelDestinations.get(i);
+			TravelDestination t = vAllTravelDestinations.elementAt(i);
 			if(t.getDestinationName().equalsIgnoreCase(Name) && t.getDestinationPlanet() == iPlanetID)
 			{
 				// System.out.println("Requested playerTravel Destination Found " + Name);
@@ -2461,7 +2461,7 @@ public class ZoneServer implements Runnable {
 		boolean proceed = false;
 		if(vUsedRandomNames==null)
 		{
-			vUsedRandomNames = new ArrayList<String>();
+			vUsedRandomNames = new Vector<String>();
 		}
 
 		while(!proceed)
@@ -2771,8 +2771,8 @@ public class ZoneServer implements Runnable {
 		return retval;
 	}
 
-	public List<RadialMenuItem> getRadialMenusByCRC(int crc){
-		List<RadialMenuItem> R = new ArrayList<RadialMenuItem>();
+	public Vector<RadialMenuItem> getRadialMenusByCRC(int crc){
+		Vector<RadialMenuItem> R = new Vector<RadialMenuItem>();
 		Enumeration<RadialMenuItem> MI = chmServerObjectRadials.elements();
 		while(MI.hasMoreElements())
 		{
@@ -2790,7 +2790,7 @@ public class ZoneServer implements Runnable {
 		long NewTerminalID = this.getNextObjectID();
 		boolean retval = dbInterface.insertSkillTrainer(NewTerminalID,TemplateID, TrainerName, x, y, z, oI, oJ, oK, oW, _cellID, _planetid);
 
-		List<Terminal> V = dbInterface.LoadServerTerminals(this, NewTerminalID);
+		Vector<Terminal> V = dbInterface.LoadServerTerminals(this, NewTerminalID);
 
 		this.spawnTerminal(V,false);
 		this.addTerminalToServerTerminals(V);
@@ -2815,7 +2815,7 @@ public class ZoneServer implements Runnable {
 		long NewTerminalID = this.getNextObjectID();
 		boolean retval = dbInterface.insertTerminal(NewTerminalID,TemplateID, TerminalName, x, y, z, oI, oJ, oK, oW, _cellID, _planetid, terminalType);
 
-		List<Terminal> V = dbInterface.LoadServerTerminals(this, NewTerminalID);
+		Vector<Terminal> V = dbInterface.LoadServerTerminals(this, NewTerminalID);
 
 		this.spawnTerminal(V,true);
 		this.addTerminalToServerTerminals(V);
@@ -2835,12 +2835,12 @@ public class ZoneServer implements Runnable {
 		return retval;
 	}
 
-	protected void spawnTerminal(List<Terminal> V, boolean debug){
+	protected void spawnTerminal(Vector<Terminal> V, boolean debug){
 		Hashtable<Long,Terminal> TL = new Hashtable<Long,Terminal>();
 
 		if (!V.isEmpty()) {
 			for (int i = 0; i < V.size(); i++) {
-				Terminal t = V.get(i);
+				Terminal t = V.elementAt(i);
 				long objectID = t.getID();
 				if (bIsObjectIDUsed(objectID)) {
 					objectID = getNextObjectID();
@@ -2865,7 +2865,7 @@ public class ZoneServer implements Runnable {
 		}
 	}
 
-	protected boolean addTerminalToServerTerminals(List<Terminal> V){
+	protected boolean addTerminalToServerTerminals(Vector<Terminal> V){
 		boolean retval = false;
 		for(int i =0; i < V.size(); i++)
 		{
@@ -2888,7 +2888,7 @@ public class ZoneServer implements Runnable {
 			GalaxyStatusScript.createNewFile();
 			FileWriter W = new FileWriter(GalaxyStatus);
 			FileWriter SSCR = new FileWriter(GalaxyStatusScript);
-			List<DatabaseServerInfoContainer> vZSList =  DatabaseInterface.getZoneServers(bGetDevServers);
+			Vector<DatabaseServerInfoContainer> vZSList =  DatabaseInterface.getZoneServers(bGetDevServers);
 
 			String StatusData = "";
 			String StatusScript = "";
@@ -3096,10 +3096,10 @@ public class ZoneServer implements Runnable {
 		try{
 			//File GalaxyPlayerPositions = new File(SWGGui.getWebPath() + "GalaxyPlayerPositions.csv");
 			//String sPlayerPositionData = "";
-            List<Player> vPLOut = new ArrayList<Player>();
+            Vector<Player> vPLOut = new Vector<Player>();
 			for(int i = 0; i < 10; i++)
 			{
-				List<Player> vPL = this.getStatusPlayersOnPlanet(i,true);
+				Vector<Player> vPL = this.getStatusPlayersOnPlanet(i,true);
 				if(vPL!=null)
 				{
 					//for(int p = 0; p < vPL.size();p++)
@@ -3125,7 +3125,7 @@ public class ZoneServer implements Runnable {
 	}   
 
 
-	protected List<String> getTesterPunchList(){
+	protected Vector<String> getTesterPunchList(){
 		return dbInterface.getTesterPunchList();
 	}
 
@@ -3153,8 +3153,8 @@ public class ZoneServer implements Runnable {
 	 * @param bReturnSpecific
 	 * @return
 	 */        
-	protected List<LairTemplate> getLairTemplatesForPlanet(int iPlanetID, boolean bReturnSpecific){
-		List<LairTemplate> retval = new ArrayList<LairTemplate>();
+	protected Vector<LairTemplate> getLairTemplatesForPlanet(int iPlanetID, boolean bReturnSpecific){
+		Vector<LairTemplate> retval = new Vector<LairTemplate>();
 		if(bReturnSpecific)
 		{
 			for(int i = 0; i < vServerLairTemplates.size(); i++)
@@ -3211,9 +3211,9 @@ public class ZoneServer implements Runnable {
 	 * @param bReturnSpecific -- Indicates whether to return only lairs which spawn specifically on this planet and nowhere else.
 	 * @return
 	 */        
-	protected List<LairTemplate> getLairTemplatesForPlanet(List<LairTemplate> templateData, int iPlanetID, boolean bReturnSpecific){
+	protected Vector<LairTemplate> getLairTemplatesForPlanet(Vector<LairTemplate> templateData, int iPlanetID, boolean bReturnSpecific){
 		if (templateData == null) {
-			templateData = new ArrayList<LairTemplate>();
+			templateData = new Vector<LairTemplate>();
 		}
 		if(bReturnSpecific)
 		{
@@ -3263,7 +3263,7 @@ public class ZoneServer implements Runnable {
 	 * Returns a complete list of all lairs in the server vServerLairTemplates vector.
 	 * @return
 	 */
-	protected List<LairTemplate> getAllLairTemplates(){
+	protected Vector<LairTemplate> getAllLairTemplates(){
 		return vServerLairTemplates;
 	}
 
@@ -3291,7 +3291,7 @@ public class ZoneServer implements Runnable {
 		vUsedCharacterNames.remove(sName);
 	}
 
-	protected List<String> getUsedCharacterNames() {
+	protected Vector<String> getUsedCharacterNames() {
 		return vUsedCharacterNames;
 	}
 
@@ -3736,14 +3736,14 @@ public class ZoneServer implements Runnable {
 		return retval;
 	}
 
-	protected List<MissionTemplate> getMissionTemplates(int iTerminalType, int iPlanetID){
+	protected Vector<MissionTemplate> getMissionTemplates(int iTerminalType, int iPlanetID){
 		return dbInterface.getMissionTemplates(iTerminalType, iPlanetID);
 	}
 
 	protected MissionCollateral getMissionCollateral(int missionid,int collateralid){
 		return dbInterface.getMissionCollateral(missionid, collateralid);
 	}
-	protected List<MissionCollateral> getMissionCollateralVector(int missionid,int planetid){
+	protected Vector<MissionCollateral> getMissionCollateralVector(int missionid,int planetid){
 		return dbInterface.getMissionCollateralVector(missionid, planetid);
 	}      
 
@@ -3763,7 +3763,7 @@ public class ZoneServer implements Runnable {
 		vLairSpawnsSortedByPlanet[planetID].add(spawn);
 	}
 
-	protected List<DynamicLairSpawn> getLairSpawnForPlanet(int planetID) {
+	protected Vector<DynamicLairSpawn> getLairSpawnForPlanet(int planetID) {
 		return vLairSpawnsSortedByPlanet[planetID];
 	}
 
@@ -3953,9 +3953,9 @@ public class ZoneServer implements Runnable {
 
 	protected int sendRequestPlayerExistOnServer(int serverID, String sFirstName) {
 		if (bUsingLoginServer) {
-			List<Player> vPlayers= lServer.getCharacterListForServer(serverID);
+			Vector<Player> vPlayers= lServer.getCharacterListForServer(serverID);
 			for (int i = 0; i < vPlayers.size(); i++) {
-				Player player = vPlayers.get(i);
+				Player player = vPlayers.elementAt(i);
 				if (player.getFirstName().equalsIgnoreCase(sFirstName)) {
 					return Constants.FRIEND_EXISTS_ON_SERVER;
 				}
@@ -3992,12 +3992,12 @@ public class ZoneServer implements Runnable {
 	public void broadcastAreaMessage(SOEObject sourceObject, String message, boolean bIncludeObject) {
 		
 		//Get the object and all players around the object.
-		Iterator<Player> ePlayerList = getPlayersAroundObject(sourceObject, bIncludeObject).iterator();
+		Enumeration<Player> ePlayerList = getPlayersAroundObject(sourceObject, bIncludeObject).elements();
 
 		//While we have more players to send a message to.
-		while (ePlayerList.equals(dOut)) {	
+		while (ePlayerList.hasMoreElements()) {	
 			//Get the player and client.
-			Player targetPlayer = ePlayerList.next();
+			Player targetPlayer = ePlayerList.nextElement();
 
 			//Send the message.
 			broadcastSystemMessage(targetPlayer, message);
@@ -4007,13 +4007,13 @@ public class ZoneServer implements Runnable {
 	public void broadcastPlanetaryMessage(int planetID, String message) {
 		
 		//Get the object and all players around the object.
-		Iterator<Player> ePlayerList = getAllPlayersOnPlanet(planetID).iterator();
+		Enumeration<Player> ePlayerList = getAllPlayersOnPlanet(planetID).elements();
 
 		//While we have more players to send a message to.
-		while (ePlayerList.equals(dOut)) {	
+		while (ePlayerList.hasMoreElements()) {	
 			
 			//Get the player and client.
-			Player targetPlayer = ePlayerList.next();
+			Player targetPlayer = ePlayerList.nextElement();
 
 			//Send the message.
 			broadcastSystemMessage(targetPlayer, message);
@@ -4023,14 +4023,14 @@ public class ZoneServer implements Runnable {
 	public void broadcastServerWideMessage(String message) {
 		
 		//Get all players on the servers.
-		Iterator<Player> ePlayerList = getAllOnlinePlayers().iterator();
+		Enumeration<Player> ePlayerList = getAllOnlinePlayers().elements();
 		
 
 		//While we have more players to send a message to.
-		while (ePlayerList.equals(dOut)) {
+		while (ePlayerList.hasMoreElements()) {
 				
 			//Get the player and client.
-			Player currentPlayer = ePlayerList.next();
+			Player currentPlayer = ePlayerList.nextElement();
 			
 				
 			//Send the message.
@@ -4056,7 +4056,7 @@ public class ZoneServer implements Runnable {
 	}
 	
 	protected void sendToRange(byte[] packet, int range, SOEObject generatingPlayer) throws Exception {
-        List<ZoneClient> vSendList = new ArrayList<ZoneClient>();
+        Vector<ZoneClient> vSendList = new Vector<ZoneClient>();
         //ZoneClient generatingClient = generatingPlayer.getClient();
 		switch(range)
         {
@@ -4077,7 +4077,7 @@ public class ZoneServer implements Runnable {
             }
             case 0x03: // PACKET_RANGE_CHAT_RANGE = 0x03;
             {
-                List<Player> vPL = getPlayersAroundObject(generatingPlayer, true);
+                Vector<Player> vPL = getPlayersAroundObject(generatingPlayer, true);
                 for(int i = 0 ; i < vPL.size(); i++)
                 {
                     Player T = vPL.get(i);
@@ -4093,7 +4093,7 @@ public class ZoneServer implements Runnable {
             }
             case 0x04: //  PACKET_RANGE_CHAT_RANGE_EXCLUDE_SENDER = 0x04;
             {
-                List<Player> vPL = getPlayersAroundObject(generatingPlayer, false);
+                Vector<Player> vPL = getPlayersAroundObject(generatingPlayer, false);
                 for(int i = 0 ; i < vPL.size(); i++)
                 {
                     Player T = vPL.get(i);
@@ -4111,9 +4111,9 @@ public class ZoneServer implements Runnable {
             }
             case 0x05: //  PACKET_RANGE_PLANET = 0x05;
             {
-                List<Player> vPlayersOnPlanet = getAllPlayersOnPlanet(generatingPlayer.getPlanetID());
+                Vector<Player> vPlayersOnPlanet = getAllPlayersOnPlanet(generatingPlayer.getPlanetID());
             	for (int i = 0; i < vPlayersOnPlanet.size(); i++) {
-            		ZoneClient client = vPlayersOnPlanet.get(i).getClient();
+            		ZoneClient client = vPlayersOnPlanet.elementAt(i).getClient();
             		if (client != null) {
             			vSendList.add(client);
             		}
@@ -4122,11 +4122,11 @@ public class ZoneServer implements Runnable {
             }
             case 0x06: //  PACKET_RANGE_PLANET_EXCLUDE_SENDER = 0x06;
             {
-                List<Player> vPlayersOnPlanet = getAllPlayersOnPlanet(generatingPlayer.getPlanetID());
+                Vector<Player> vPlayersOnPlanet = getAllPlayersOnPlanet(generatingPlayer.getPlanetID());
             	for (int i = 0; i < vPlayersOnPlanet.size(); i++) {
-            		Player tarPlayer = vPlayersOnPlanet.get(i);
+            		Player tarPlayer = vPlayersOnPlanet.elementAt(i);
             		if (tarPlayer.getID() != generatingPlayer.getID()) {
-	            		ZoneClient client = vPlayersOnPlanet.get(i).getClient();
+	            		ZoneClient client = vPlayersOnPlanet.elementAt(i).getClient();
 	            		if (client != null) {
 	            			vSendList.add(client);
 	            		}
@@ -4192,7 +4192,7 @@ public class ZoneServer implements Runnable {
         {
             for(int i = 0; i < vSendList.size();i++)
             {
-            	ZoneClient recipient = vSendList.get(i);
+            	ZoneClient recipient = vSendList.elementAt(i);
             	if (recipient != null) {
             		recipient.insertPacket(packet);
             	}

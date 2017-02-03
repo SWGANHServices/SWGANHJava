@@ -1,7 +1,7 @@
 import net.persistentworlds.script.ScriptConstants;
 
 public class ScriptAPI implements ScriptConstants {
-	private ZoneServer server;
+	private final ZoneServer server;
 
 	public ScriptAPI(ZoneServer z) {
 		server = z;

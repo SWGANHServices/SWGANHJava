@@ -1,5 +1,4 @@
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
@@ -7,8 +6,6 @@ import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.InetAddress;
 import java.net.SocketAddress;
-import java.util.Arrays;
-import java.util.NoSuchElementException;
 
 /**
  * The Login Client is the interface between the server and the client, and handles all interactions for logging in
@@ -33,7 +30,7 @@ public class LoginClient implements Runnable {
 	private boolean bIsDeveloper = false;
 	
 	private long iAccountID;
-	private List<Player> lCharacterList;
+	private Vector<Player> lCharacterList;
 	//private static Vector sequences = new Vector();
 	private long lLastActive = Constants.DISCONNECT_TIMEOUT_MS;
 	private int TickCount = 0; // The number of ticks the server has run.
@@ -50,11 +47,11 @@ public class LoginClient implements Runnable {
 	private int MAX_PACKET_SIZE = 0;
 	private LoginServer myServer;
 	//private static LoginDatabaseInterface dbInterface;
-	private List<byte[]> packetQueue;
+	private Vector<byte[]> packetQueue;
 	private Thread myThread;
 	private boolean hasLoggedIn = false;  // Set to true when we receive a valid username / password.
 	//private short[] queuedPacketAttributes;
-	private List<byte[]> vIncomingPacketQueue;
+	private Vector<byte[]> vIncomingPacketQueue;
 	private final static byte[] Session_Key = {
 		   0x20, 0x00, 0x00, 0x00, 
            0x15, 0x00, 0x00, 0x00,
@@ -88,7 +85,7 @@ public class LoginClient implements Runnable {
 		lLastActive = System.currentTimeMillis();
 		bValidSession = true;
 		MAX_PACKET_SIZE = packetSize;
-		packetQueue = new ArrayList<byte[]>(); // Don't allocate the entire array: Too much memory taken.
+		packetQueue = new Vector<byte[]>(); // Don't allocate the entire array: Too much memory taken.
 		TickCount = 0;
 		serverPacketsReceivedThisClient = 0;
 		serverPacketsSentThisClient = 1;
@@ -97,7 +94,7 @@ public class LoginClient implements Runnable {
 		if (myAddress.toString().startsWith("/192")) {
 			bIsLocal = true;
 		}
-		vIncomingPacketQueue = new ArrayList<byte[]>();
+		vIncomingPacketQueue = new Vector<byte[]>();
 		myThread = new Thread(this);
 		myThread.start();
 	}
@@ -1176,7 +1173,7 @@ public class LoginClient implements Runnable {
 	private void sendLoginEnumCluster() {
 		ByteArrayOutputStream bOut = new ByteArrayOutputStream() ;
 		SOEOutputStream dOut = new SOEOutputStream(bOut);
-		List<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
+		Vector<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
 		
 		try {
 			dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -1187,7 +1184,7 @@ public class LoginClient implements Runnable {
 			dOut.writeInt(serverContainers.size());
 			//dOut.writeInt(1); // Number of servers.
 			for (int i = 0; i < serverContainers.size(); i++) {
-				DatabaseServerInfoContainer server = serverContainers.get(i);
+				DatabaseServerInfoContainer server = serverContainers.elementAt(i);
 				dOut.writeInt(server.iServerID);
 				dOut.writeUTF(server.sServerName);
 				dOut.writeInt(server.iTimeOffset * 3600);
@@ -1206,7 +1203,7 @@ public class LoginClient implements Runnable {
 		ByteArrayOutputStream bOut = new ByteArrayOutputStream() ;
 		SOEOutputStream dOut = new SOEOutputStream(bOut);
 
-		List<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
+		Vector<DatabaseServerInfoContainer> serverContainers = DatabaseInterface.getZoneServers(bIsDeveloper);
 		try { 
 			dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 			
@@ -1216,7 +1213,7 @@ public class LoginClient implements Runnable {
 			
 			dOut.writeInt(serverContainers.size());
 			for (int i = 0; i < serverContainers.size(); i++) {
-				DatabaseServerInfoContainer server = serverContainers.get(i);
+				DatabaseServerInfoContainer server = serverContainers.elementAt(i);
 				dOut.writeInt(server.iServerID);
 				InetAddress serverAddress = InetAddress.getByName(server.sLocalAddress);
 				dOut.writeUTF(serverAddress.getHostAddress());
@@ -1262,7 +1259,7 @@ public class LoginClient implements Runnable {
 			dOut.writeInt(lCharacterList.size());
 			if (!lCharacterList.isEmpty()) {
 				for (int i = 0; i < lCharacterList.size(); i++) {
-					Player character = lCharacterList.get(i);
+					Player character = lCharacterList.elementAt(i);
 					dOut.writeUTF16(character.getFullName());
 					dOut.writeInt(character.getCRC());
 					dOut.writeLong(character.getID());
@@ -1316,9 +1313,9 @@ public class LoginClient implements Runnable {
 	private void handleClientDeleteCharacter(SOEInputStream dIn) throws IOException {
 		int serverID = dIn.readInt();
 		long playerID = dIn.readLong();
-		List<Player> vPlayerList = myServer.getCharacterListForServer(serverID);
+		Vector<Player> vPlayerList = myServer.getCharacterListForServer(serverID);
 		for (int i = 0; i < vPlayerList.size(); i++) {
-			Player player = vPlayerList.get(i);
+			Player player = vPlayerList.elementAt(i);
 			if (player.getID() == playerID) {
 				// Found him
 				player.setIsDeleted(true);

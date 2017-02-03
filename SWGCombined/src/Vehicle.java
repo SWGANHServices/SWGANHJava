@@ -1,4 +1,4 @@
-import java.util.List;
+import java.util.Vector;
 
 
 /**
@@ -79,7 +79,7 @@ public final class Vehicle extends NPC{
         if(getDamage() >= 1 && this.getIsVehicle())
         {
             //System.out.println("-------------------------------------------------------------");
-            List<SOEObject> vO = myMaster.getServer().getStaticObjectsAroundObject(this,30);
+            Vector<SOEObject> vO = myMaster.getServer().getStaticObjectsAroundObject(this,30);
             boolean foundgarage = false;
             for(int i = 0; i < vO.size();i++)
             {

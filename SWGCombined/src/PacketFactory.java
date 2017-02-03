@@ -4,9 +4,7 @@ import java.util.BitSet;
 import java.util.Collection;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.List;
-import java.util.ArrayList;
-
+import java.util.Vector;
 import java.util.Iterator;
 
 public class PacketFactory {
@@ -661,10 +659,10 @@ public class PacketFactory {
 			throws IOException {
 		SOEOutputStream sOut = new SOEOutputStream(new ByteArrayOutputStream());
 		int packetSize = 110;
-		List<SkillMods> vSkillMods = player.getSkillModsList();
+		Vector<SkillMods> vSkillMods = player.getSkillModsList();
 		if (vSkillMods != null) {
 			for (int i = 0; i < vSkillMods.size(); i++) {
-				packetSize += (vSkillMods.get(i).getName().length() + 11); // Length
+				packetSize += (vSkillMods.elementAt(i).getName().length() + 11); // Length
 																					// of
 																					// the
 																					// name
@@ -704,7 +702,7 @@ public class PacketFactory {
 			sOut.writeInt(vSkillMods.size());
 			sOut.writeInt(player.getSkillModsUpdateCounter(false));
 			for (int i = 0; i < vSkillMods.size(); i++) {
-				SkillMods s = vSkillMods.get(i);
+				SkillMods s = vSkillMods.elementAt(i);
 				sOut.writeByte(Constants.DELTA_CREATING_ITEM);
 				sOut.writeUTF(s.getName());
 				sOut.writeInt(s.getSkillModModdedValue());
@@ -771,10 +769,10 @@ public class PacketFactory {
 			PacketSize += sPerformanceString.length();
 		}
 
-		List<TangibleItem> vEquippedItems = player.getEquippedItems();
+		Vector<TangibleItem> vEquippedItems = player.getEquippedItems();
 		if (vEquippedItems != null) {
 			for (int i = 0; i < vEquippedItems.size(); i++) {
-				TangibleItem t = vEquippedItems.get(i);
+				TangibleItem t = vEquippedItems.elementAt(i);
 
 				if (t == null) {
 					vEquippedItems.remove(i);
@@ -866,7 +864,7 @@ public class PacketFactory {
 			// EQUIPMENT LIST
 
 			for (int i = 0; i < vEquippedItems.size(); i++) {
-				TangibleItem item = vEquippedItems.get(i);
+				TangibleItem item = vEquippedItems.elementAt(i);
 				byte[] customizationData = item.getCustomData();
 				if (customizationData != null) {
 					dOut.writeShort(customizationData.length);
@@ -1003,9 +1001,9 @@ public class PacketFactory {
 			throws IOException {
 		// Calculate Packet Size
 		int PacketSize = 58; // Size without xp or waypoints
-		List<Waypoint> vWaypoints = player.getWaypoints();
+		Vector<Waypoint> vWaypoints = player.getWaypoints();
 		for (int i = 0; i < vWaypoints.size(); i++) {
-			PacketSize += ((vWaypoints.get(i).getName().length() * 2) + 51);
+			PacketSize += ((vWaypoints.elementAt(i).getName().length() * 2) + 51);
 		}
 		int iExperienceCount = 0;
 		Hashtable<Integer, PlayerExperience> vExperienceList = player
@@ -1045,7 +1043,7 @@ public class PacketFactory {
 		dOut.writeInt(vWaypoints.size());
 		dOut.writeInt(player.getWaypointUpdateCount(false));
 		for (int i = 0; i < vWaypoints.size(); i++) {
-			Waypoint w = vWaypoints.get(i);
+			Waypoint w = vWaypoints.elementAt(i);
 			dOut.writeByte(Constants.DELTA_CREATING_ITEM);
 			dOut.writeLong(w.getID());
 			dOut.writeInt(0);
@@ -1084,20 +1082,20 @@ public class PacketFactory {
 
 		SOEOutputStream sOut = new SOEOutputStream(new ByteArrayOutputStream());
 		int packetSize = 98; // Correct
-		List<PlayerFriends> vFriendsList = player.getFriendsList();
-		List<PlayerFriends> vIgnoreList = player.getIgnoreList();
+		Vector<PlayerFriends> vFriendsList = player.getFriendsList();
+		Vector<PlayerFriends> vIgnoreList = player.getIgnoreList();
 		BitSet skillBits = player.getSkillBits();
 		BitSet schematics = player.getSchematics();
 		int schematicCount = 0;
-		List<String> vCertifications = new ArrayList<String>();
+		Vector<String> vCertifications = new Vector<String>();
 		for (int i = skillBits.nextSetBit(0); i >= 0; i = skillBits
 				.nextSetBit(i + 1)) {
 			Skills skill = player.getMyPlayer().getServer()
 					.getSkillFromIndex(i);
-			List<String> vCertificationsThisSkill = skill
+			Vector<String> vCertificationsThisSkill = skill
 					.getCertificationList();
 			for (int j = 0; j < vCertificationsThisSkill.size(); j++) {
-				String cert = vCertificationsThisSkill.get(j);
+				String cert = vCertificationsThisSkill.elementAt(j);
 				packetSize += (cert.length() + 2);
 			}
 			vCertifications.addAll(vCertificationsThisSkill);
@@ -1111,11 +1109,11 @@ public class PacketFactory {
 		packetSize += (8 * schematicCount);
 
 		for (int i = 0; i < vFriendsList.size(); i++) {
-			packetSize += (vFriendsList.get(i).getName().length() + 2);
+			packetSize += (vFriendsList.elementAt(i).getName().length() + 2);
 		}
 
 		for (int i = 0; i < vIgnoreList.size(); i++) {
-			packetSize += (vIgnoreList.get(i).getName().length() + 2);
+			packetSize += (vIgnoreList.elementAt(i).getName().length() + 2);
 		}
 		sOut.setOpcode(Constants.SOE_CHL_DATA_A);
 		sOut.setSequence(0); // Sequence
@@ -1129,7 +1127,7 @@ public class PacketFactory {
 		sOut.writeInt(vCertifications.size()); // vID 0
 		sOut.writeInt(player.getCertificationsListUpdateCount(false));
 		for (int i = 0; i < vCertifications.size(); i++) {
-			String str = vCertifications.get(i);
+			String str = vCertifications.elementAt(i);
 			sOut.writeUTF(str);
 		}
 		sOut.writeInt(0); // vID 1 -- Experimentation / manufacturing schematic
@@ -1163,7 +1161,7 @@ public class PacketFactory {
 		sOut.writeInt(player.getFriendsListUpdateCount(false));
 		PlayerFriends f;
 		for (int i = 0; i < vFriendsList.size(); i++) {
-			f = vFriendsList.get(i);
+			f = vFriendsList.elementAt(i);
 			sOut.writeUTF(f.getName());
 		}
 
@@ -1171,7 +1169,7 @@ public class PacketFactory {
 		sOut.writeInt(vIgnoreList.size());
 		sOut.writeInt(player.getIgnoreListUpdateCount(false));
 		for (int i = 0; i < vIgnoreList.size(); i++) {
-			f = vFriendsList.get(i);
+			f = vFriendsList.elementAt(i);
 			sOut.writeUTF(f.getName());
 		}
 
@@ -2365,7 +2363,7 @@ public class PacketFactory {
 			// TOTAL 158 + Lengths
 		}
 		TangibleItem t = m.getTParentObject();
-		List<MissionObject> vML = t.getVMissionList();
+		Vector<MissionObject> vML = t.getVMissionList();
 		int iMissionKey = vML.indexOf(m);
 		if (iMissionKey < 0
 				|| iMissionKey >= (Constants.MAX_MISSION_BAG_ITEMS - 1)) {
@@ -2682,10 +2680,10 @@ public class PacketFactory {
 		dOut.setUpdateType(Constants.SERVER_UPDATE);
 		dOut.writeInt(Constants.AttributesList);
 		dOut.writeLong(theResource.getID());
-		List<Attribute> vList = theResource.getAttributes();
+		Vector<Attribute> vList = theResource.getAttributes();
 		dOut.writeInt(vList.size());
 		for (int i = 0; i < vList.size(); i++) {
-			Attribute a = vList.get(i);
+			Attribute a = vList.elementAt(i);
 			dOut.writeUTF(a.getAttributeName());
 			dOut.writeUTF16(a.getAttributeValue());
 		}
@@ -3270,7 +3268,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerMessage_RadialsResponse(
-			Player player, SOEObject target, List<RadialMenuItem> vRadials,
+			Player player, SOEObject target, Vector<RadialMenuItem> vRadials,
 			byte rCounter) throws IOException {
 
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
@@ -3290,7 +3288,7 @@ public class PacketFactory {
 		// actually telling "me" about the Radials of an object.
 		dOut.writeInt(vRadials.size());
 		for (byte i = 0; i < vRadials.size(); i++) {
-			RadialMenuItem r = vRadials.get(i);
+			RadialMenuItem r = vRadials.elementAt(i);
 			dOut.writeByte(r.getButtonNumber());
 			dOut.writeByte(r.getParentButton());
 			dOut.writeByte(r.getCommandID());
@@ -3307,7 +3305,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerMessage_RadialsResponse(
-			Player player, long targetID, List<RadialMenuItem> vRadials,
+			Player player, long targetID, Vector<RadialMenuItem> vRadials,
 			byte rCounter) throws IOException {
 
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
@@ -3327,7 +3325,7 @@ public class PacketFactory {
 		// actually telling "me" about the Radials of an object.
 		dOut.writeInt(vRadials.size());
 		for (int i = 0; i < vRadials.size(); i++) {
-			RadialMenuItem r = vRadials.get(i);
+			RadialMenuItem r = vRadials.elementAt(i);
 			dOut.writeByte(r.getButtonNumber());
 			dOut.writeByte(r.getParentButton());
 			dOut.writeByte(r.getCommandID());
@@ -3682,7 +3680,7 @@ public class PacketFactory {
 		case Constants.Group_ResetGroup:// 3
 		{
 			packetSize += 2;
-			List<SOEObject> vML = g.getGroupMembers();
+			Vector<SOEObject> vML = g.getGroupMembers();
 			for (int i = 0; i < vML.size(); i++) {
 				SOEObject o = vML.get(i);
 				if (o instanceof Player) {
@@ -4030,12 +4028,12 @@ public class PacketFactory {
 		dOut.writeLong(originator.getID());
 		dOut.writeInt(0);
 		dOut.writeLong(friend.getID());
-		List<PlayerFriends> v = originator.getFriendsList();
+		Vector<PlayerFriends> v = originator.getFriendsList();
 		String s = friend.getFirstName();
 		boolean bFound = false;
 		PlayerFriends f;
 		for (int i = 0; i < v.size() && !bFound; i++) {
-			f = v.get(i);
+			f = v.elementAt(i);
 			bFound = f.getName().equalsIgnoreCase(s);
 		}
 		dOut.writeBoolean(bFound);
@@ -4084,7 +4082,7 @@ public class PacketFactory {
 	protected static byte[] buildTravelPointListResponse(Player player,
 			int _PlanetID) throws IOException {
 
-		List<TravelDestination> vTd = player.getServer()
+		Vector<TravelDestination> vTd = player.getServer()
 				.getTravelDestinationsForPlanet(player, _PlanetID);
 		// this allows us to send 0 size lists for any planet
 		int ListSize = 0;
@@ -4353,16 +4351,16 @@ public class PacketFactory {
 		dOut.writeBoolean(false);
 		dOut.writeUTF16(message.getBody());
 		dOut.writeUTF16(message.getHeader());
-		List<Waypoint> v = message.getAttachments();
+		Vector<Waypoint> v = message.getAttachments();
 		if (v != null) {
 			int attachmentCount = 0;
 			for (int i = 0; i < v.size(); i++) {
-				Waypoint w = v.get(i);
+				Waypoint w = v.elementAt(i);
 				attachmentCount += 25 + w.getName().length();
 			}
 			dOut.writeInt(attachmentCount);
 			for (int i = 0; i < v.size(); i++) {
-				Waypoint w = v.get(i);
+				Waypoint w = v.elementAt(i);
 				dOut.writeShort(1);
 				dOut.writeByte(4);
 				dOut.writeInt(0xFFFFFFFD);
@@ -4459,7 +4457,7 @@ public class PacketFactory {
 
 	// Note: The SOEObject here will eventually become a TangibleItem
 	protected static byte[] buildResourceListForSurveyMessage(TangibleItem o,
-			List<SpawnedResourceData> vResources) throws IOException {
+			Vector<SpawnedResourceData> vResources) throws IOException {
 		int templateID = o.getTemplateID();
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -4470,7 +4468,7 @@ public class PacketFactory {
 		SpawnedResourceData resource = null;
 
 		for (int i = 0; i < vResources.size(); i++) {
-			resource = vResources.get(i);
+			resource = vResources.elementAt(i);
 			String sName = resource.getName();
 			String sIFFFileName = resource.getIffFileName();
 
@@ -4637,7 +4635,7 @@ public class PacketFactory {
 		dOut.setUpdateType(Constants.ACCOUNT_UPDATE);
 		dOut.writeInt(Constants.FriendListRequestResponse);
 		dOut.writeLong(player.getID());
-		List<PlayerFriends> vFriendsList = player.getFriendsList();
+		Vector<PlayerFriends> vFriendsList = player.getFriendsList();
 		dOut.writeInt(vFriendsList.size());
 		Iterator<PlayerFriends> itr = vFriendsList.iterator();
 		while (itr.hasNext()) {
@@ -4732,7 +4730,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildNPCConversationOptions(Player player,
-			List<DialogOption> vOptions) throws IOException {
+			Vector<DialogOption> vOptions) throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 		dOut.setSequence(0);
@@ -5002,7 +5000,7 @@ public class PacketFactory {
 		return dOut.getBuffer();
 	}
 
-	protected static byte[] buildChatroomList(List<ChatServer> vServers)
+	protected static byte[] buildChatroomList(Vector<ChatServer> vServers)
 			throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -5010,16 +5008,16 @@ public class PacketFactory {
 		dOut.setUpdateType(Constants.WORLD_UPDATE);
 		dOut.writeInt(vServers.size());
 		ChatServer s;
-		List<Chatroom> vRooms;
+		Vector<Chatroom> vRooms;
 		Chatroom r;
 		for (int i = 0; i < vServers.size(); i++) {
-			s = vServers.get(i);
+			s = vServers.elementAt(i);
 			dOut.writeInt(s.getID());
 			vRooms = s.getRooms();
 			dOut.writeInt(vRooms.size());
 			dOut.writeByte(1); // Unknown.
 			for (int j = 0; j < vRooms.size(); j++) {
-				r = vRooms.get(i);
+				r = vRooms.elementAt(i);
 				dOut.writeUTF(r.getRoomName());
 				dOut.writeUTF(Constants.GAME_NAME);
 				dOut.writeUTF(r.getCreator());
@@ -5028,15 +5026,15 @@ public class PacketFactory {
 				// in the room should be written here.
 				// If it isn't, then these 2 loops would go outside the "j"
 				// loop... or even outside the "i" loop.
-				List<String> vModerators = r.getModeratorList();
-				List<String> vUsers = r.getPlayersInRoom();
+				Vector<String> vModerators = r.getModeratorList();
+				Vector<String> vUsers = r.getPlayersInRoom();
 				dOut.writeInt(1);
 				for (int k = 0; k < vModerators.size(); k++) {
-					dOut.writeUTF(vModerators.get(k));
+					dOut.writeUTF(vModerators.elementAt(k));
 				}
 				dOut.writeInt(0);
 				for (int k = 0; k < vUsers.size(); k++) {
-					dOut.writeUTF(vUsers.get(i));
+					dOut.writeUTF(vUsers.elementAt(i));
 				}
 			}
 		}
@@ -5069,7 +5067,7 @@ public class PacketFactory {
 			int ByteCount;
 			ByteCount = 15; // count without names
 
-			List<PlayerFriends> vPlayerFriendsList = p.getFriendsList();
+			Vector<PlayerFriends> vPlayerFriendsList = p.getFriendsList();
 			Iterator<PlayerFriends> itr = vPlayerFriendsList.iterator();
 
 			while (itr.hasNext()) {
@@ -5418,7 +5416,7 @@ public class PacketFactory {
 		System.out.println("buildSurveyMessage called");
 		int iPlanetID = player.getPlanetID();
 		float fToolRadius = 0;
-		List<Float> vDensitiesAndLocations = null; // Note: Floats are in this
+		Vector<Float> vDensitiesAndLocations = null; // Note: Floats are in this
 														// vector in order by
 														// of: X coordinate, Y
 														// coordinate, density
@@ -5470,9 +5468,9 @@ public class PacketFactory {
 		float bestY = 0;
 		for (int i = 0; i < numberOfPoints; i++) {
 			j = i * 3;
-			float x = vDensitiesAndLocations.get(j);
-			float y = vDensitiesAndLocations.get(j + 1);
-			float density = vDensitiesAndLocations.get(j + 2) / 100f;
+			float x = vDensitiesAndLocations.elementAt(j);
+			float y = vDensitiesAndLocations.elementAt(j + 1);
+			float density = vDensitiesAndLocations.elementAt(j + 2) / 100f;
 			dOut.writeFloat(x);
 			dOut.writeFloat(0);
 			dOut.writeFloat(y);
@@ -5509,8 +5507,8 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildGetMapLocationsResponseMessage(
-			String sPlanetName, List<MapLocationData> vStaticLocations,
-			List<MapLocationData> vPlayerMadeLocations) throws IOException {
+			String sPlanetName, Vector<MapLocationData> vStaticLocations,
+			Vector<MapLocationData> vPlayerMadeLocations) throws IOException {
 
 		// vStaticLocations.clear();
 		// vPlayerMadeLocations.clear();
@@ -5524,7 +5522,7 @@ public class PacketFactory {
 		if (vStaticLocations != null) {
 			dOut.writeInt(vStaticLocations.size());
 			for (int i = 0; i < vStaticLocations.size(); i++) {
-				MapLocationData data = vStaticLocations.get(i);
+				MapLocationData data = vStaticLocations.elementAt(i);
 				dOut.writeLong(data.getObjectID());
 				dOut.writeUTF16(data.getName());
 				dOut.writeFloat(data.getCurrentX());
@@ -5543,7 +5541,7 @@ public class PacketFactory {
 		if (vPlayerMadeLocations != null) {
 			dOut.writeInt(vPlayerMadeLocations.size());
 			for (int i = 0; i < vPlayerMadeLocations.size(); i++) {
-				MapLocationData data = vPlayerMadeLocations.get(i);
+				MapLocationData data = vPlayerMadeLocations.elementAt(i);
 				dOut.writeLong(data.getObjectID());
 				dOut.writeUTF16(data.getName());
 				dOut.writeFloat(data.getCurrentX());
@@ -5911,7 +5909,7 @@ public class PacketFactory {
 	protected static byte[] buildFactionResponseMessage(Player p)
 			throws IOException {
 		// if (true) return null;
-		List<PlayerFactions> vFactionList = p.getFactionList();
+		Vector<PlayerFactions> vFactionList = p.getFactionList();
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 		dOut.setSequence(0);
@@ -5931,11 +5929,11 @@ public class PacketFactory {
 		} else {
 			for (int i = 0; i < vFactionList.size(); i++) {
 				dOut.writeInt(i + 1);
-				dOut.writeUTF(vFactionList.get(i).getFactionName());
+				dOut.writeUTF(vFactionList.elementAt(i).getFactionName());
 			}
 			for (int i = 0; i < vFactionList.size(); i++) {
 				dOut.writeInt(i + 1);
-				dOut.writeFloat(vFactionList.get(i).getFactionValue());
+				dOut.writeFloat(vFactionList.elementAt(i).getFactionValue());
 			}
 		}
 		dOut.flush();
@@ -6086,7 +6084,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildSUIUseTravelTicketList(Player p,
-			List<TravelTicket> ticketList) throws IOException {
+			Vector<TravelTicket> ticketList) throws IOException {
 
 		/*
 		 * @travel/travel: 1 no_shuttle_for_location There is no shuttle nearby
@@ -6672,13 +6670,13 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildSkillModsDelta(Player p,
-			List<SkillMods> mods, byte deltaType) throws IOException {
+			Vector<SkillMods> mods, byte deltaType) throws IOException {
 		if (mods == null || mods.isEmpty()) {
 			return null;
 		}
 		int packetSize = 13;
 		for (int i = 0; i < mods.size(); i++) {
-			packetSize += 11 + mods.get(i).getName().length();
+			packetSize += 11 + mods.elementAt(i).getName().length();
 		}
 
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
@@ -6699,7 +6697,7 @@ public class PacketFactory {
 		p.setSkillModsUpdateCounter(updateCounter);
 		dOut.writeInt(updateCounter); // 12
 		for (int i = 0; i < mods.size(); i++) {
-			SkillMods mod = mods.get(i);
+			SkillMods mod = mods.elementAt(i);
 			dOut.writeByte(deltaType); // 13
 			dOut.writeUTF(mod.getName()); // 15
 			dOut.writeInt(mod.getSkillModModdedValue()); // 19
@@ -6762,14 +6760,14 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildCertificationsDelta(PlayerItem p,
-			List<String> certification, byte updateType) throws IOException {
+			Vector<String> certification, byte updateType) throws IOException {
 		if (certification == null || certification.isEmpty()) {
 			return null;
 		}
 
 		int packetSize = 12;
 		for (int i = 0; i < certification.size(); i++) {
-			packetSize += (5 + certification.get(i).length());
+			packetSize += (5 + certification.elementAt(i).length());
 		}
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -6790,21 +6788,21 @@ public class PacketFactory {
 		for (int i = 0; i < certification.size(); i++) {
 			dOut.writeByte(updateType); // Is a 1 in the packet cap from Core 3?
 			dOut.writeShort(0); // Hmm? Why are you here?
-			dOut.writeUTF(certification.get(i));
+			dOut.writeUTF(certification.elementAt(i));
 		}
 		dOut.flush();
 		return dOut.getBuffer();
 	}
 
 	protected static byte[] buildCertificationsDelta(PlayerItem p,
-			List<String> certification) throws IOException {
+			Vector<String> certification) throws IOException {
 		if (certification == null || certification.isEmpty()) {
 			return null;
 		}
 
 		int packetSize = 15;
 		for (int i = 0; i < certification.size(); i++) {
-			packetSize += (2 + certification.get(i).length());
+			packetSize += (2 + certification.elementAt(i).length());
 		}
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -6825,14 +6823,14 @@ public class PacketFactory {
 		dOut.writeByte(3);
 		dOut.writeShort(certification.size());
 		for (int i = 0; i < certification.size(); i++) {
-			dOut.writeUTF(certification.get(i));
+			dOut.writeUTF(certification.elementAt(i));
 		}
 		dOut.flush();
 		return dOut.getBuffer();
 	}
 
 	protected static byte[] buildDraftSchematicsDelta(PlayerItem p,
-			List<CraftingSchematic> vSchematics, int updateType,
+			Vector<CraftingSchematic> vSchematics, int updateType,
 			boolean bResetList) throws IOException {
 		if (vSchematics == null || (vSchematics.isEmpty() && !bResetList)) {
 			return null;
@@ -7340,7 +7338,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildBaselineHINO7(Harvester s,
-			List<SpawnedResourceData> vSRD) throws IOException {
+			Vector<SpawnedResourceData> vSRD) throws IOException {
 
 		int iPacketSize = 74;
 		int iResourceCount = vSRD.size();
@@ -7526,7 +7524,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildDeltasMessageHINO7(Harvester s,
-			List<SpawnedResourceData> vSRD) throws IOException {
+			Vector<SpawnedResourceData> vSRD) throws IOException {
 
 		int iPacketSize = 66;
 		int iResourceCount = vSRD.size();
@@ -7698,7 +7696,7 @@ public class PacketFactory {
 		dOut.writeLong(s.getID());
 		dOut.writeInt(Constants.BaselinesTypes[Constants.BASELINES_HINO]);
 		dOut.writeByte(7);
-		dOut.writeInt(36);// this packet should always be 36 bytes WHY����
+		//dOut.writeInt(36);// this packet should always be 36 bytes WHY����
 		dOut.writeShort(3);// upd count 2
 		dOut.writeShort(0x0C);// 4
 		dOut.writeByte(s.getHarvesterUpdateCounter());// 5
@@ -7945,7 +7943,7 @@ public class PacketFactory {
 
 	protected final static byte[] buildObjectController_CraftingSchematicList(
 			Player player, TangibleItem item,
-			List<CraftingSchematic> schematics,
+			Vector<CraftingSchematic> schematics,
 			TangibleItem nearbyCraftingStation) throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
@@ -7970,7 +7968,7 @@ public class PacketFactory {
 				dOut.writeInt(schematics.size());
 				CraftingSchematic cs;
 				for (int i = 0; i < schematics.size(); i++) {
-					cs = schematics.get(i);
+					cs = schematics.elementAt(i);
 					// System.out.println("Schematic index " + i + " -- CRC: " +
 					// Integer.toHexString(cs.getCRC()));
 					dOut.writeInt(cs.getCRC()); // Could also be the CRC?
@@ -8518,7 +8516,7 @@ public class PacketFactory {
 		if (schematic == null) {
 			return null;
 		}
-		List<CraftingSchematicComponent> vComponents = schematic
+		Vector<CraftingSchematicComponent> vComponents = schematic
 				.getComponents();
 		if (vComponents == null) {
 			return null;
@@ -8545,7 +8543,7 @@ public class PacketFactory {
 				dOut.writeInt(vComponents.size());
 				for (int i = 0; i < vComponents.size(); i++) {
 					CraftingSchematicComponent component = vComponents
-							.get(i);
+							.elementAt(i);
 					dOut.writeUTF(component.getSTFFileName());
 					dOut.writeInt(0);
 					dOut.writeUTF(component.getSTFFileIdentifier());
@@ -8576,7 +8574,7 @@ public class PacketFactory {
 
 	protected static byte[] buildObjectController_DraftSchematicComponentMessage(
 			Player player, CraftingSchematic schematic,
-			List<CraftingSchematicComponent> vComponents) throws IOException {
+			Vector<CraftingSchematicComponent> vComponents) throws IOException {
 		if (schematic == null) {
 			return null;
 		}
@@ -8599,7 +8597,7 @@ public class PacketFactory {
 				dOut.writeInt(vComponents.size());
 				for (int i = 0; i < vComponents.size(); i++) {
 					CraftingSchematicComponent component = vComponents
-							.get(i);
+							.elementAt(i);
 					dOut.writeUTF(component.getSTFFileName());
 					dOut.writeInt(0);
 					dOut.writeUTF(component.getSTFFileIdentifier());
@@ -8631,7 +8629,7 @@ public class PacketFactory {
 
 	protected static byte[] buildObjectController_CraftingSchematicComponentMessage(
 			Player player, ManufacturingSchematic schematic,
-			List<CraftingSchematicComponent> vComponents,
+			Vector<CraftingSchematicComponent> vComponents,
 			TangibleItem craftingTool, TangibleItem itemBeingCrafted,
 			boolean bCanMakeFactorySchematic) throws IOException {
 		if (schematic == null || craftingTool == null
@@ -8657,7 +8655,7 @@ public class PacketFactory {
 				dOut.writeInt(vComponents.size());
 				for (int i = 0; i < vComponents.size(); i++) {
 					CraftingSchematicComponent component = vComponents
-							.get(i);
+							.elementAt(i);
 					dOut.writeUTF(component.getSTFFileName());
 					dOut.writeInt(0);
 					dOut.writeUTF(component.getSTFFileIdentifier());
@@ -8762,7 +8760,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerStartingLocationsWindow(
-			Player player, List<StartingLocation> vSL) throws IOException {
+			Player player, Vector<StartingLocation> vSL) throws IOException {
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
 		dOut.setOpcode(Constants.SOE_CHL_DATA_A);
 		dOut.setSequence(0);
@@ -8869,7 +8867,7 @@ public class PacketFactory {
 	}
 
 	protected static byte[] buildObjectControllerHarvesterResourceData(
-			Player p, Structure s, List<SpawnedResourceData> vSRD)
+			Player p, Structure s, Vector<SpawnedResourceData> vSRD)
 			throws IOException {
 
 		SOEOutputStream dOut = new SOEOutputStream(new ByteArrayOutputStream());
@@ -10031,11 +10029,11 @@ public class PacketFactory {
 				+ numUpdates - 1;
 		buff.writeInt(updateCount);
 		schematic.setSchematicAttributeUpdateCount(updateCount);
-		List<ManufacturingSchematicAttribute> vAttribs = schematic
+		Vector<ManufacturingSchematicAttribute> vAttribs = schematic
 				.getSchematicAttributes();
 
 		for (int i = 0; i < numUpdates; i++) {
-			ManufacturingSchematicAttribute attrib = vAttribs.get(i);
+			ManufacturingSchematicAttribute attrib = vAttribs.elementAt(i);
 			buff.writeByte(updateType);
 			buff.writeUTF(attrib.getAttributeName());
 			buff.writeInt(0);

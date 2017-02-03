@@ -1,6 +1,5 @@
 import java.io.IOException;
-import java.util.List;
-import java.util.ArrayList;
+import java.util.Vector;
 import java.util.Hashtable;
 
 /**
@@ -79,12 +78,12 @@ public class Shuttle extends NPC{
 	            {
 	            	setStance(null, Constants.STANCE_PRONE, true);
 	            	//System.out.println("Shuttle Taking Off ID " + this.getTicketID());
-                    List <Player>playerList = this.getServer().getPlayersAroundNPC(this);
+                    Vector <Player>playerList = this.getServer().getPlayersAroundNPC(this);
                     if(!playerList.isEmpty())
                     {
                         for(int i = 0; i < playerList.size(); i++)
                         {
-                        	Player player = playerList.get(i);
+                        	Player player = playerList.elementAt(i);
                         	//System.out.println("Send flyout to player with first name " + player.getFirstName());
                         	try{
                                 this.flyShuttle(player.getClient());
@@ -127,7 +126,7 @@ public class Shuttle extends NPC{
 	                
 	                if(TD!=null)
 	                {
-	                    List <Player>PlayerList = this.getServer().getPlayersAroundNPC(TD);                    
+	                    Vector <Player>PlayerList = this.getServer().getPlayersAroundNPC(TD);                    
 	                    if(PlayerList!=null && PlayerList.size() >= 1)
 	                    {
 	                        for(int i = 0; i < PlayerList.size(); i++)

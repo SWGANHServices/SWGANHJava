@@ -989,11 +989,13 @@ java.lang.Exception
 java.util.Vector
 java.awt.geom.Rectangle2D
 java.awt.geom.Rectangle2D$Float
+java.util.List
+java.util.ArrayList
 Grid
 ZoneServer
 DynamicLairSpawn
-SWGGui
 GridElement
+SWGGui
 java.lang.Object
 Lair
 java.lang.Exception
@@ -1650,6 +1652,10 @@ Constants$DELTAS_CREO4
 java.lang.Enum
 Constants
 [LConstants$DELTAS_CREO4;
+||:Experience
+java.lang.Object
+Experience
+java.io.Serializable
 ||:LoginZoneCommunicationThread
 java.lang.StringBuilder
 java.lang.System
@@ -1669,10 +1675,6 @@ java.lang.Math
 java.io.DataOutputStream
 java.lang.Object
 UnhandledOpcodeException
-||:Experience
-java.lang.Object
-Experience
-java.io.Serializable
 ||:ScriptAPI
 java.lang.StringBuilder
 Player

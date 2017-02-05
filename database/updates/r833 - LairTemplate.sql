@@ -1,6 +1,7 @@
 --
 -- Definition of table `lair_template`
 --
+use 'pwemu';
 
 DROP TABLE IF EXISTS `lair_template`;
 CREATE TABLE `lair_template` (

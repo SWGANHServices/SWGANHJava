@@ -1,4 +1,5 @@
-﻿insert into objectradialoptions values (2177, 2037216595, 1, 0, 7, null, 'Examine', 1, 0);
+﻿use 'pwemu';
+insert into objectradialoptions values (2177, 2037216595, 1, 0, 7, null, 'Examine', 1, 0);
 insert into objectradialoptions values (2178, 2037216595, 2, 0, 118, '@player_structure:management', 'Structure Management', 3, 0);
 insert into objectradialoptions values (2179, 2037216595, 3, 2, 70, '@player_structure:management_power', 'Deposit Power', 3, 0);
 insert into objectradialoptions values (2180, 2037216595, 4, 2, 50, '@player_structure:management_name_structure', 'Set Name', 3, 0);

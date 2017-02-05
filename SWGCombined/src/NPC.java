@@ -75,6 +75,7 @@ public class NPC extends Player {
 	 * @param lElapsedTimeMS  -- The time elapsed, in milliseconds, since the last time this function was called.
          * Will not be updated for terminals.
 	 */
+    @Override
 	public void update(long lElapsedTimeMS) {
         try {
 			if(!this.bIsTerminal)
@@ -925,7 +926,7 @@ public class NPC extends Player {
     }
     
     private void moveTowardsTarget(Player tarPlayer, long lElapsedTimeMS) throws Exception {
-		float currentX = getX();
+		float currentX1 = getX();
 		float currentY = getY();
 		float range = ZoneServer.getRangeBetweenObjects(this, tarPlayer);
 		// How far away are we?
@@ -944,7 +945,7 @@ public class NPC extends Player {
 		int octet = (int)(bearingToTargetDegrees / 45.0f);
 		// In trueDisplacement, x is always first, y is always second.
 		Point2D.Float trueDisplacement = PacketUtils.getDisplacement2D(xDisplacement, yDisplacement, octet);
-		setX(currentX + trueDisplacement.x);
+		setX(currentX1 + trueDisplacement.x);
 		setY(currentY + trueDisplacement.y);
 		setZ(getServer().getHeightAtCoordinates(getX(), getY(), getPlanetID()));
 		setMovementAngle(movementAngle);
@@ -955,7 +956,7 @@ public class NPC extends Player {
     
     // Same as moveTowardsTarget, except invert the true displacement variables.  Instead of adding them to the current position, subtract them.
     private void moveAwayFromTarget(Player tarPlayer, long lElapsedTimeMS) throws Exception {
-		float currentX = getX();
+		float currentX2 = getX();
 		float currentY = getY();
 		float range = ZoneServer.getRangeBetweenObjects(this, tarPlayer);
 		// How far away are we?
@@ -974,7 +975,7 @@ public class NPC extends Player {
 		int octet = (int)(bearingToTargetDegrees / 45.0f);
 		// In trueDisplacement, x is always first, y is always second.
 		Point2D.Float trueDisplacement = PacketUtils.getDisplacement2D(xDisplacement, yDisplacement, octet);
-		setX(currentX - trueDisplacement.x);
+		setX(currentX2 - trueDisplacement.x);
 		setY(currentY - trueDisplacement.y);
 		setZ(getServer().getHeightAtCoordinates(getX(), getY(), getPlanetID()));
 		setMovementAngle(movementAngle);

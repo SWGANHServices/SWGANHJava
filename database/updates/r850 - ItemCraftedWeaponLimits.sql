@@ -1,6 +1,7 @@
 ﻿--
 -- Definition of table `item_crafted_weapon_limits`
 --
+use 'pwemu';
 
 DROP TABLE IF EXISTS `item_crafted_weapon_limits`;
 CREATE TABLE `item_crafted_weapon_limits` (

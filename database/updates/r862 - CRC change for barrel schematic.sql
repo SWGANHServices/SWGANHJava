@@ -1,3 +1,4 @@
+use 'pwemu';
 UPDATE aaschematic
 SET schematicCRC='926910485'
 where schematicname='barrel'

@@ -68,6 +68,7 @@ public class NPCUpdateThread implements Runnable {
 	/**
 	 * The main loop of the NPC update thread.
 	 */
+    @Override
 	public void run() {
 		while (myThread != null) {
 			try {

@@ -1,6 +1,7 @@
 ﻿--
 -- Definition of table `inst_players`
 --
+use 'pwemu';
 
 DROP TABLE IF EXISTS `inst_players`;
 CREATE TABLE  `inst_players` (

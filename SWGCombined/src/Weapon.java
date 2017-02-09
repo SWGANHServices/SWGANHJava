@@ -25,9 +25,9 @@ public class Weapon extends TangibleItem{
 	private int iWoundChance;
 	private float fRefireDelay = DEF_REFIRE_DELAY;
 	private float fModifiedRefireDelay = fRefireDelay;
-    private int iHealthCost = 8;
-    private int iActionCost = 8;
-    private int iMindCost = 8;
+        private int iHealthCost = 8;
+        private int iActionCost = 8;
+        private int iMindCost = 8;
 	private boolean bIsPoweredUp = false;
 	private boolean bDefaultWeapon = false;
 	private int iStackSize;
@@ -63,6 +63,7 @@ public class Weapon extends TangibleItem{
          * @Override
 	 * @return The name.
 	 */
+    @Override
 	public String getName() {
 		return sWeaponName;
 	}
@@ -188,6 +189,7 @@ public class Weapon extends TangibleItem{
 			return iStackSize;
 		}
         
+    @Override
 	protected void useItemByCommandID(ZoneClient client, byte commandID) {
 		switch (commandID) {
 			case Constants.RADIAL_MENU_ITEM_EQUIP: {
@@ -259,6 +261,7 @@ public class Weapon extends TangibleItem{
 		return iArmorPiercingLevel;
 	}
 
+    @Override
 	public int experiment(int[] iExperimentalIndex, int[] numExperimentationPointsUsed, Player thePlayer) throws IOException{
 		// Massive function here.
 		

@@ -123,20 +123,20 @@ public class ItemTemplate {
 		return iCRC;
 	}
 
+        /**
+	 * Gets the skill id needed to use / equip this item successfully, if any.
+	 * @return The skill ID needed, or -1 if no skill is needed.
+	 */
+	public int getRequiredSkillID() {
+		return iRequiredSkillID;
+	}
+
 	/**
 	 * Sets the skill needed to use / equip this item successfully, if any.
 	 * @param id -- The skill ID needed to use items of this template.
 	 */
 	public void setRequiredSkillID(int id) {
 		iRequiredSkillID = id;
-	}
-
-	/**
-	 * Gets the skill id needed to use / equip this item successfully, if any.
-	 * @return The skill ID needed, or -1 if no skill is needed.
-	 */
-	public int getRequiredSkillID() {
-		return iRequiredSkillID;
 	}
 
 	/**

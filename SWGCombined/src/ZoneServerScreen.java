@@ -227,6 +227,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	private boolean bIsHoldingShift = false;
 	private boolean bIsHoldingAlt = false;
 	private boolean bIsHoldingCtrl = false;
+    @Override
 	public void keyPressed(KeyEvent arg0) {
 		pressedKeys[arg0.getKeyCode()] = true;
 		bIsHoldingShift = arg0.isShiftDown();
@@ -234,15 +235,18 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		bIsHoldingCtrl = arg0.isControlDown();
 	}
 
+    @Override
 	public void keyReleased(KeyEvent arg0) {
 		pressedKeys[arg0.getKeyCode()] = false;
 		
 	}
 
+    @Override
 	public void keyTyped(KeyEvent arg0) {
 
 	}
 	private boolean bDragging = false;
+    @Override
 	public void mouseDragged(MouseEvent m) {
 		// This, presumably, occurs if a mouse button is clicked, and the mouse moves.
 		bDragging = true;
@@ -265,6 +269,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	}
 	
 	private Point2D mousePoint;
+    @Override
 	public void mouseMoved(MouseEvent m) {
 		// This presumably happens if the mouse moves when a mouse button is NOT clicked.
 		mouseCursorX = m.getX();
@@ -282,6 +287,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		//System.out.println("Window location: x="+mouseCursorX+ ", y="+mouseCursorY);
 	}
 	
+    @Override
 	public void mouseClicked(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		// We clicked.
@@ -293,15 +299,18 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		//System.out.println("Click at x="+clickLocation.getX() + ", y="+(clickLocation.getY()) + ".  In-game location: x=" + gameClickLocation.getX() +", y=" + gameClickLocation.getY());
 	}
 
+    @Override
 	public void mouseEntered(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 
 	}
 
+    @Override
 	public void mouseExited(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 	}
 
+    @Override
 	public void mousePressed(MouseEvent arg0) {
 		// TODO Auto-generated method stub
 		
@@ -310,6 +319,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	}
 
 	private Rectangle2D dynamicLairRectangleSelection = null;
+    @Override
 	public void mouseReleased(MouseEvent arg0) {
 		
 		// TODO Auto-generated method stub

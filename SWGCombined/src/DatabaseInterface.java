@@ -371,6 +371,7 @@ public class DatabaseInterface implements Runnable {
 	 * includes a keep-alive with the database, and also executes any pending
 	 * Statements.
 	 */
+    @Override
 	public void run() {
 		lStartTimeMS = System.currentTimeMillis();
 		while (myThread != null) {
@@ -837,38 +838,28 @@ public class DatabaseInterface implements Runnable {
 												if (bEncryptPasswords) {
 													sPassword = PacketUtils.encryptPassword(sPassword);
 												}
-												buff
+												buff.append("Insert into `account` values (").append(iNewAccountID).append(", '").append(sUsername).append("', '").append(sPassword)
 														.append(
-																"Insert into `account` values (")
-														.append(iNewAccountID)
-														.append(", '")
-														.append(sUsername)
-														.append("', '")
-														.append(sPassword)
-														.append("',")
+																"',")
 														.append(iStationID)
+														.append(", ")
+														.append(data.getIsGM())
+														.append(", ")
+														.append(data.getIsBanned())
+														.append(", '")
+														.append(new Timestamp(lCurrentTime).toString())
 														.append(
-																", "
-																		+ data
-																				.getIsGM()
-																		+ ", "
-																		+ data
-																				.getIsBanned()
-																		+ ", '")
-														.append(
-																new Timestamp(
-																		lCurrentTime)
-																		.toString())
-														.append("', '")
+																"', '")
 														.append(
 																new Timestamp(
 																		lCurrentTime)
 																		.toString())
+														.append("', 1, ")
 														.append(
-																"', 1, "
-																		+ data
-																				.getIsDeveloper()
-																		+ ", 0);");
+																data
+																		.getIsDeveloper())
+														.append(
+																", 0);");
 
 												query = buff.toString();
 												s = conn.createStatement();

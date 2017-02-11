@@ -34,6 +34,7 @@ public class LoginZoneCommunicationThread implements Runnable {
 		myThread.start();
 	}
 	
+    @Override
 	public void run() {
 		lLastTimeMS = System.currentTimeMillis();
 		while (myThread != null) {

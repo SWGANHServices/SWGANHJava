@@ -15,8 +15,10 @@ import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
+import java.util.ArrayList;
 import java.util.Enumeration;
-import java.util.Vector;
+//import java.util.Vector;
+import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 
 import javax.swing.JFrame;
@@ -133,11 +135,11 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	//private int fontHeightDiv2;
 	//private int fontWidth;
 	//private int fontWidthDiv2;
-	private Vector<NPC>[] vCreaturesSortedByPlanet;
-	private Vector<SpawnedResourceData>[] vResourcesSortedByPlanet;
-	private Vector<Player>[] vPlayersSortedByPlanet;
-	private Vector<Structure>[] vStructuresSortedByPlanet;
-	private static Vector<LairTemplate>[] vLairTemplates;
+	private List<NPC>[] vCreaturesSortedByPlanet;
+	private List<SpawnedResourceData>[] vResourcesSortedByPlanet;
+	private List<Player>[] vPlayersSortedByPlanet;
+	private List<Structure>[] vStructuresSortedByPlanet;
+	private static List<LairTemplate>[] vLairTemplates;
 	private final static String loadingString = "Loading...";
 	
 	public ZoneServerScreen(ZoneServer server) {
@@ -201,17 +203,17 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		theFrame.addMouseListener(this);
 		theFrame.addMouseMotionListener(this);
 		if (vLairTemplates == null) {
-			vLairTemplates = new Vector[Constants.PlanetNames.length - 1];
-			vCreaturesSortedByPlanet = new Vector[Constants.PlanetNames.length - 1];
-			vPlayersSortedByPlanet = new Vector[Constants.PlanetNames.length - 1];
-			vResourcesSortedByPlanet = new Vector[Constants.PlanetNames.length - 1];
-			vStructuresSortedByPlanet = new Vector[Constants.PlanetNames.length - 1];
-			vLairSpawns = new Vector[Constants.PlanetNames.length - 1];
+			vLairTemplates = new List[Constants.PlanetNames.length - 1];
+			vCreaturesSortedByPlanet = new List[Constants.PlanetNames.length - 1];
+			vPlayersSortedByPlanet = new List[Constants.PlanetNames.length - 1];
+			vResourcesSortedByPlanet = new List[Constants.PlanetNames.length - 1];
+			vStructuresSortedByPlanet = new List[Constants.PlanetNames.length - 1];
+			vLairSpawns = new List[Constants.PlanetNames.length - 1];
 			for (int i = 0; i < vLairTemplates.length; i++) {
-				vLairTemplates[i] = new Vector<LairTemplate>();
-				vCreaturesSortedByPlanet[i] = new Vector<NPC>();
-				vPlayersSortedByPlanet[i] = new Vector<Player>();
-				vStructuresSortedByPlanet[i] = new Vector<Structure>();
+				vLairTemplates[i] = new ArrayList<LairTemplate>();
+				vCreaturesSortedByPlanet[i] = new ArrayList<NPC>();
+				vPlayersSortedByPlanet[i] = new ArrayList<Player>();
+				vStructuresSortedByPlanet[i] = new ArrayList<Structure>();
 				try {
 					vResourcesSortedByPlanet[i] = server.getResourceManager().getResourcesByPlanetID(i);
 				} catch (NullPointerException e) {
@@ -567,9 +569,9 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		if (bChangedPlanet || lairTemplateBubbleWidth == 0) {
 			iPlanetToView = (iPlanetToView + planetMaps.length) % planetMaps.length;
 			vLairSpawns[iPlanetToView] = server.getLairSpawnForPlanet(iPlanetToView);
-			Vector<LairTemplate> lairs = vLairTemplates[iPlanetToView];
+			List<LairTemplate> lairs = vLairTemplates[iPlanetToView];
 			for (int i = 0; i < lairs.size(); i++) {
-				LairTemplate lairTemplate = lairs.elementAt(i);
+				LairTemplate lairTemplate = lairs.get(i);
 				String sLairType = server.getTemplateData(lairTemplate.getIMob1Template()).getIFFFileName();
 				lairTemplateBubbleWidth = Math.max(
 						menuBubbleWidth, 
@@ -732,7 +734,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	private int iMaxNumDynamicLairsToSpawn = 1;
 	private int iMinNumPlayersToTriggerDynamicLairSpawn = 1;
 	private long lDynamicLairRespawnTimeMS = 5000;
-	private Vector<DynamicLairSpawn>[] vLairSpawns;
+	private List<DynamicLairSpawn>[] vLairSpawns;
 	private void updatePlaceDynamicSpawns() {
 		int gridMaxIndex = zoneServerGrid[iPlanetToView].getGridCount();
 		gridElementIndexX = (gridElementIndexX + gridMaxIndex) % gridMaxIndex;
@@ -819,7 +821,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 				g.fillRect(leftX, topY, gridDimension, gridDimension);
 			}
 			for (int i = 0; i < vLairSpawns[iPlanetToView].size(); i++) {
-				DynamicLairSpawn spawn = vLairSpawns[iPlanetToView].elementAt(i);
+				DynamicLairSpawn spawn = vLairSpawns[iPlanetToView].get(i);
 				if ((numFrames % 2) != 0) {
 					g.setColor(ColorManager.getColor(spawn.getColor()));
 					Rectangle2D rectangle = spawn.getBoundaries();
@@ -918,9 +920,9 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		if (numFrames % 10 == 0) {
 			for (int i = 0; i < vAllGridElements.length; i++) {
 				for (int j = 0; j < vAllGridElements[i].length; j++) {
-					Vector<Player> vCreaturesThisElement = vAllGridElements[i][j].getAllPlayersContained();
+					List<Player> vCreaturesThisElement = vAllGridElements[i][j].getAllPlayersContained();
 					for (int k = 0; k < vCreaturesThisElement.size(); k++) {
-						Player player = vCreaturesThisElement.elementAt(i);
+						Player player = vCreaturesThisElement.get(i);
 						if (!vPlayersSortedByPlanet[iPlanetToView].contains(player)) {
 							vPlayersSortedByPlanet[iPlanetToView].add(player);
 						}
@@ -1009,12 +1011,12 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 			int currentY;
 			int resourceRadiusDiv2;
 			for (int i = 0; i < vResourcesSortedByPlanet[iPlanetToView].size(); i++){
-				SpawnedResourceData resource = vResourcesSortedByPlanet[iPlanetToView].elementAt(i);
-				Vector<ResourceSpawnCoordinateData> vCoordinates = resource.getCoordinates();
+				SpawnedResourceData resource = vResourcesSortedByPlanet[iPlanetToView].get(i);
+				List<ResourceSpawnCoordinateData> vCoordinates = resource.getCoordinates();
 				Color drawColor = ColorManager.getColor(resource.getDrawColor());
 				
 				for (int j = 0; j < vCoordinates.size(); j++) {
-					ResourceSpawnCoordinateData coords = vCoordinates.elementAt(i);
+					ResourceSpawnCoordinateData coords = vCoordinates.get(i);
 					g.setColor(drawColor);
 					resourceRadius = (int)coords.getSpawnRadius();
 					resourceRadiusDiv2 = resourceRadius / 2;
@@ -1170,7 +1172,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		} else if (isKeyPressed(KeyEvent.VK_DOWN)) {
 			iMenuIndex++;
 		} else if (isKeyPressed(KeyEvent.VK_ENTER)) {
-			lairTemplate = vLairTemplates[iPlanetToView].elementAt(iMenuIndex);
+			lairTemplate = vLairTemplates[iPlanetToView].get(iMenuIndex);
 			changeState(STATE_PLACING_DYNAMIC_SPAWNS);
 			gridElementIndexX = 200;
 			gridElementIndexY = 200;
@@ -1181,7 +1183,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 	}
 	
 	private void drawChooseDynamicSpawn(Graphics2D g) {
-		Vector<LairTemplate> lairTemplatesThisPlanet = vLairTemplates[iPlanetToView];
+		List<LairTemplate> lairTemplatesThisPlanet = vLairTemplates[iPlanetToView];
 		g.setTransform(identity);
 		int currentX = 0;
 		int currentY = 0;
@@ -1197,7 +1199,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		for (int i = iFirstItem; i<= iLastItem; i++) {
 			
 			index = (lairTemplatesThisPlanet.size() + i) % lairTemplatesThisPlanet.size();
-			LairTemplate template = lairTemplatesThisPlanet.elementAt(index);
+			LairTemplate template = lairTemplatesThisPlanet.get(index);
 			ItemTemplate creatureTemplate = server.getTemplateData(template.getIMob1Template());
 			String sLairName = creatureTemplate.getIFFFileName();
 			iStringWidth = (int)getStringWidth(sLairName, font);
@@ -1450,7 +1452,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 		//float topY = (float)bounds.getY();
 		//float rightX = (float)(leftX + bounds.getWidth());
 		//float bottomY = (float)(topY + bounds.getHeight());
-		Vector<GridElement> vElementsInSpawn = zoneServerGrid[iPlanetToView].getAllContainedElements(bounds);
+		List<GridElement> vElementsInSpawn = zoneServerGrid[iPlanetToView].getAllContainedElements(bounds);
 		float numElements = vElementsInSpawn.size();
 		if (numElements == 0) {
 			

@@ -97,6 +97,7 @@ public class ServerSetup extends WindowAdapter implements Runnable, ActionListen
 		}
 	}
 
+    @Override
 	public void run() {
 
 		//Initialize the window.
@@ -665,6 +666,7 @@ public class ServerSetup extends WindowAdapter implements Runnable, ActionListen
 		}
 	}
 
+    @Override
 	public void actionPerformed(ActionEvent e) {
 		//Get the selected menu item's command.
 		String command = e.getActionCommand().toLowerCase();
@@ -722,24 +724,28 @@ public class ServerSetup extends WindowAdapter implements Runnable, ActionListen
 		}
 	}
 
+    @Override
 	public void changedUpdate(DocumentEvent e) {
 
 		//The current config is no longer saved.
 		isCurrentConfigSaved = false;
 	}
 
+    @Override
 	public void insertUpdate(DocumentEvent e) {
 
 		//The current config is no longer saved.
 		isCurrentConfigSaved = false;
 	}
 
+    @Override
 	public void removeUpdate(DocumentEvent e) {
 
 		//The current config is no longer saved.
 		isCurrentConfigSaved = false;
 	}
 
+    @Override
 	public void itemStateChanged(ItemEvent e) {
 
 		//The current config is no longer saved.
@@ -774,6 +780,7 @@ public class ServerSetup extends WindowAdapter implements Runnable, ActionListen
 		}
 	}
 
+    @Override
 	public void windowClosing(WindowEvent e) {
 
 		//Attempt to exit the JVM safely.
@@ -794,7 +801,7 @@ public class ServerSetup extends WindowAdapter implements Runnable, ActionListen
 	protected boolean isInputValid() {
 		//Instance variables.
 		boolean valid = true;
-		StringBuffer errorString = new StringBuffer();
+		StringBuilder errorString = new StringBuilder();
 
 		//Validate web path.
 		if(!isValidPath(currentWebPath)) {
@@ -1020,7 +1027,7 @@ public class ServerSetup extends WindowAdapter implements Runnable, ActionListen
 
 	protected String parsePasswordString(char[] fieldData) {
 		//Local instance variables.
-		StringBuffer buffer = new StringBuffer();
+		StringBuilder buffer = new StringBuilder();
 
 		for(char currentChar: fieldData) {
 			buffer.append(currentChar);

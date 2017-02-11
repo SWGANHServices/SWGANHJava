@@ -14,7 +14,7 @@ public final class Constants {
 	// | | Development Revision
 	// | | | Repository Revision
 	// | | | |
-private static String sSoftwareVersion = "Version 0.0.0.8";
+private static String sSoftwareVersion = "Version 0.0.0.9";
 
 	public static String getCurrentSoftwareVersion() {
 		return sSoftwareVersion;
@@ -543,7 +543,7 @@ private static String sSoftwareVersion = "Version 0.0.0.8";
 			"combat_brawler", "social_entertainer", "outdoors_scout",
 			"combat_marksman", "science_medic", };
 
-	protected final static int getStartingProfessionID(String sProfession) {
+	protected static int getStartingProfessionID(String sProfession) {
 		for (int i = 0; i < HAM_SPECIES.length; i++) {
 			if (sProfession.equals(HAM_SPECIES[i])) {
 				return i;

@@ -1392,7 +1392,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					// Terminal T = (Terminal)this;
 					addAttribute(new Attribute(
 							Constants.OBJECT_ATTRIBUTE_OWNER,
-							"Shards of the Force"));
+							"SWGANH Java Server"));
 					// addAttribute(new
 					// Attribute(Constants.OBJECT_ATTRIBUTE_CHALLENGE_LEVEL,
 					// "***\\#. " + T.getFullName() + " may not be attacked.");

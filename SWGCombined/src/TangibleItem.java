@@ -1140,7 +1140,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
                     //System.out.println("Terminal Rename requested To: " + newName);
                     if(newName.contains("\\#"))
                     {
-                        //\#FF0000Shards of the Force\#ffffff\#FF8C00 SWG Dev House\#FFFFFF
+                        //\obi  #FF0000Shards of the Force\#ffffff\#FF8C00 SWG Dev House\#FFFFFF
                         //System.out.println("Name Had Color Codes in it.");
                         int stlen = newName.length();
 

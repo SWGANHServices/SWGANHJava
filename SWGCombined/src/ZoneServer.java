@@ -2896,13 +2896,13 @@ public class ZoneServer implements Runnable {
 			//Java Script Goes Here
 			StatusData += "<html>\r\n";
 			StatusData += "<head>\r\n";
-			StatusData += "<title>Shards of the Force SWG Galaxy Cluster Status</title>\r\n";
+			StatusData += "<title>SWGANH Java Galaxy Cluster Status</title>\r\n";
 			StatusData += "<noscript>\r\n";
 			StatusData += "<meta http-equiv=\"Refresh\" content=\"60\">\r\n";
 			StatusData += "</noscript>\r\n";
 			StatusData += "<script language=\"JavaScript\" src = \"Status.js\">\r\n";
 			StatusScript += "<!--\r\n";
-			StatusScript += "//(C) 2008 Shards of the Force http://www.shardsoftheforce.co.cc\r\n";
+			StatusScript += "//(C) 2017 SWGANH Java http://www.swganh.com\r\n";
 			StatusScript += "//Server Status Java Script\r\n";
 			StatusScript += "//WARNING THIS IS LICENSED SOFTWARE\r\n";
 			StatusScript += "//Define Variables\r\n";

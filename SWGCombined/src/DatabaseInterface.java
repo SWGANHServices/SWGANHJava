@@ -1642,7 +1642,7 @@ public class DatabaseInterface implements Runnable {
 								"There were no galaxies defined. A default one is being defined using default values. Please edit the information afterwards and restart the server.",
 								"DatabaseInterface",
 								Constants.LOG_SEVERITY_CRITICAL, true, true);
-				query = "Insert Into `galaxy` (`name`,`ip_wan`,`ip_lan`,`zoneport`,`population`,`max_population`,`max_characters_per_server`,`Status`,`pingport`,`gmt_time_offset`,`max_characters_per_account`, `motd`) Values ('Shards of the Force SWG Galaxy','127.0.0.1','127.0.0.1','44463','0','3000','3000','2','44462','-5','8','Welcome to the Shards of the Force SWG Server')";
+				query = "Insert Into `galaxy` (`name`,`ip_wan`,`ip_lan`,`zoneport`,`population`,`max_population`,`max_characters_per_server`,`Status`,`pingport`,`gmt_time_offset`,`max_characters_per_account`, `motd`) Values ('SWGANH Java Galaxy','127.0.0.1','127.0.0.1','44463','0','3000','3000','2','44462','-5','8','Welcome to the SWGANH Java Server')";
 				d = conn.prepareStatement(query);
 				if (!d.execute()) {
 					d.close();

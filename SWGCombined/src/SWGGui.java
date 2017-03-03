@@ -79,38 +79,46 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 	private Config serverSettings;
 	private ServerSetup configManager;
 
+    @Override
 	public void mouseExited(MouseEvent m) {
 
 	}
 
+    @Override
 	public void mouseReleased(MouseEvent m){
 
 	}
 
+    @Override
 	public void mouseClicked(MouseEvent m) {
 		//Point clickLocation = m.getLocationOnScreen();
 
 	}
 
+    @Override
 	public void mousePressed(MouseEvent m) {
 		//Point clickLocation = m.getLocationOnScreen();
 
 	}
 
+    @Override
 	public void mouseEntered(MouseEvent m) {
 
 
 	}
+    @Override
 	public void keyPressed(KeyEvent arg0) {
 		bPressedAnything = true;
 		pressedKeys[arg0.getKeyCode()] = true;
 	}
 
+    @Override
 	public void keyReleased(KeyEvent arg0) {
 		pressedKeys[arg0.getKeyCode()] = false;
 
 	}
 
+    @Override
 	public void keyTyped(KeyEvent arg0) {
 	}
 
@@ -244,11 +252,11 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 		try {
 			if(!bUsingZoneServer)
 			{
-				spaceFrame = new JFrame( "Shards of the Force Pre-CU Login Server" );
+				spaceFrame = new JFrame( "SWGANH Java Pre-CU Login Server" );
 			}
 			else
 			{
-				spaceFrame = new JFrame( "Shards of the Force Pre-CU Server" );
+				spaceFrame = new JFrame( "SWGANH Java Pre-CU Server" );
 			}
 			spaceFrame.setSize(screenWidth, screenHeight);
 			spaceFrame.validate();
@@ -263,6 +271,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			spaceFrame.addKeyListener(this);
 			spaceFrame.addMouseListener(this);
 			splashImage = Toolkit.getDefaultToolkit().createImage("./images/splash.png");
+
 			pressedKeys = new boolean[(int)Character.MAX_VALUE+1];
 			DataLog.logEntry("GUI Constructor:  Construct DatabaseInterface","SWGGui",Constants.LOG_SEVERITY_INFO,true,true);
 			//System.out.println("GUI Constructor:  Construct DatabaseInterface");
@@ -434,11 +443,16 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 				currentY += fontHeight;
 				g.drawString("Players connected to Zone Server: " + zoneServer.getClientConnectionCount(), currentX, currentY);
 			}
-
+                        currentY += fontHeight;
+			g.drawString("", currentX, currentY); //created space between info pannel
+                        currentY += fontHeight;
+			g.drawString("Press Arrow keys (up & down) to scroll logged in Client ID's.", currentX, currentY);
 			currentY += fontHeight;
 			g.drawString("Press C to view zone data.", currentX, currentY);
 			currentY += fontHeight;
-			g.drawString("Press S to open server setup.", currentX, currentY);			
+			g.drawString("Press S to open server setup.", currentX, currentY);
+                        currentY += fontHeight;
+			g.drawString("Press Q to Shutdown server.", currentX, currentY);
 			currentX = 10;
 			//currentY += (fontHeight);
 
@@ -472,7 +486,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			if (bShuttingDown) {
 				currentY = screenHeightDiv2 + (screenHeightDiv2 / 2);
 				currentX = screenWidthDiv2 - 40;
-				g.drawString("Press a to abort shutdown.", currentX, currentY);
+				g.drawString("Press (a) to abort shutdown.", currentX, currentY);
 				currentY += fontHeight;
 				g.drawString("Time to shutdown: ", currentX, currentY);
 				currentY += fontHeight;
@@ -707,6 +721,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 	/**
 	 * The main thread loop.
 	 */
+    @Override
 	public void run() {
 		DataLog.logEntry("GUI running.","SWGGui",Constants.LOG_SEVERITY_INFO,true,true);
 		long lWaitTimeNano = 0;

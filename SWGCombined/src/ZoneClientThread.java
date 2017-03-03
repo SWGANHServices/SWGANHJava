@@ -65,6 +65,7 @@ public class ZoneClientThread implements Runnable {
 		return (myThread != null);
 	}
 
+    @Override
 	public void run() {
 		//System.out.println("Packet parser running.");
 		long lCurrentTimeMS = System.currentTimeMillis();
@@ -3181,26 +3182,8 @@ public class ZoneClientThread implements Runnable {
 						W.setOriginatingObject(player);
 						W.setWindowType(Constants.SUI_DEVELOPER_COMMAND_LIST);
 						String WindowTypeString = "handleSUI";
-						String WindowTitle = "Shards of the Force Developer Commands";
+						String WindowTitle = "SWGANH Java Developer Commands";
 						String WindowPromptContent = "";
-						WindowPromptContent += (" @travel  -  Opens a SUI Window with Travel Destinations to Choose From.\r\n");
-						WindowPromptContent += (" @warptoplayer [playername]  -  Warps us to the player name specified.\r\n");
-						WindowPromptContent += (" @warpplayertome [playername] -  Warps the player name specified to our location.\r\n");
-						WindowPromptContent += (" @warp [x] [y]  -  Warps us to the indicated coordinates within same planet.\r\n");
-						WindowPromptContent += (" @warp [x] [z] [y]  -  Warps us to the indicated coordinates within same planet.\r\n");
-						WindowPromptContent += (" @warp [x] [z] [y] [p] -  Warps us to the indicated coordinates within indicated planet.\r\n");
-						WindowPromptContent += (" @warp [x] [z] [y] [p] [cell] -  Warps us to the indicated coordinates within indicated planet and cell id.\r\n");
-						WindowPromptContent += (" @placeterminal - Opens a SUI Window of available terminals to place.\r\n");
-						WindowPromptContent += (" @placetrainer - Opens a SUI Window of available Skill Trainers to place.\r\n");
-						WindowPromptContent += (" @clearbadges - For Testing Badges, Removes all badges from your player.\r\n");
-						WindowPromptContent += (" @punchlist - Displays a list of items that require testing.\r\n");
-						WindowPromptContent += (" @addpunchitem - Adds a new Tester Punch List Item - Syntax: @addpunchitem [int Priority] [Item Text].\r\n");
-						WindowPromptContent += (" @removepunchitem - Removes a Tester Punch List Item - Syntax: @removepunchitem [int ItemID].\r\n");
-						WindowPromptContent += (" @bugreport - Inserts a new Bug Report into the bug database - Syntax: @bugreport [report text].\r\n");
-						WindowPromptContent += (" @spawnlair - Spawns a new lair based on a random template - Syntax: @spawnlair .\r\n");
-						WindowPromptContent += (" @spawnlair - Spawns a new lair based on the template chosen - Syntax: @spawnlair [templateID].\r\n");
-                        WindowPromptContent += (" @disablepacket - Disables Server Packet Logging.\r\n");
-                        WindowPromptContent += (" @enablepacket - Enables Server Packet Logging.\r\n");
 
 
 
@@ -4075,7 +4058,7 @@ public class ZoneClientThread implements Runnable {
 						W.setOriginatingObject(player);
 
 						String WindowTypeString = "handleSUI";
-						String WindowTitle = "Shards of the Force Tester Punch List";
+						String WindowTitle = "SWGANH Java Tester Punch List";
 						String WindowPromptContent = "";
 						Vector<String> vTPL = server.getTesterPunchList();
 
@@ -4237,7 +4220,7 @@ public class ZoneClientThread implements Runnable {
 					W.setOriginatingObject(player);
 
 					String WindowTypeString = "handleSUI";
-					String WindowTitle = "Shards of the Force Tester Commands";
+					String WindowTitle = "SWGANH Java Tester Commands";
 					String WindowPromptContent = " @punchlist - Brings up a list of items for players to test.\r\n";
 					WindowPromptContent += (" @bugreport - Inserts a new Bug Report into the bug database - Syntax: @bugreport [report text].\r\n");
 					WindowPromptContent += (" @ver - Display the current server version.\r\n");
@@ -4263,7 +4246,7 @@ public class ZoneClientThread implements Runnable {
 					W.setOriginatingObject(player);
 
 					String WindowTypeString = "handleSUI";
-					String WindowTitle = "Shards of the Force Tester Punch List";
+					String WindowTitle = "SWGANH Java Tester Punch List";
 					String WindowPromptContent = "";
 					Vector<String> vTPL = server.getTesterPunchList();
 

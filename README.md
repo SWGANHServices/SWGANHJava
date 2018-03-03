@@ -1,3 +1,4 @@
+# No Longer in Development
 Swganh
 =========================
 The Swganh Open Source Project's aim is to create a server emulator for the sandbox MMO Star Wars Galaxies at its pre-cu publish 14.1 

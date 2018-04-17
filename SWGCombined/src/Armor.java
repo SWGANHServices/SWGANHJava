@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
+
 /**
  * This is the Armor Class for Handling Armor Objects
  * @author Tomas Cruz
@@ -17,7 +18,7 @@ public class Armor extends TangibleItem {
     private int [] iMindEnc;
     
     private ArrayList<Integer> vEffectiveness;
-    private Hashtable<Integer,Integer> vSpecialEffectiveness;
+    private ConcurrentHashMap<Integer,Integer> vSpecialEffectiveness;
     
     public Armor(){
            iHealthEnc = new int [3];
@@ -35,7 +36,7 @@ public class Armor extends TangibleItem {
            
            
            vEffectiveness = new ArrayList<Integer>();
-           vSpecialEffectiveness = new Hashtable<Integer,Integer>();
+           vSpecialEffectiveness = new ConcurrentHashMap<Integer,Integer>();
            
            for(int i = 0; i < Constants.ARMOR_EFFECTIVENESS_STRINGS.length; i++)
            {
@@ -109,11 +110,11 @@ public class Armor extends TangibleItem {
     }   
   
 
-    public Hashtable<Integer, Integer> getVSpecialEffectiveness() {
+    public ConcurrentHashMap<Integer, Integer> getVSpecialEffectiveness() {
         return vSpecialEffectiveness;
     }
 
-    public void setVSpecialEffectiveness(Hashtable<Integer, Integer> vSpecialEffectiveness) {
+    public void setVSpecialEffectiveness(ConcurrentHashMap<Integer, Integer> vSpecialEffectiveness) {
         this.vSpecialEffectiveness = vSpecialEffectiveness;
     }
     

@@ -1,5 +1,5 @@
-import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -28,7 +28,7 @@ public class ResourceManager implements Runnable{
 	private SpawnedResourceData[] spawnedPool1LubricatingOil;
 	private ArrayList<SpawnedResourceData> spawnedPool2Resources;
 	private ArrayList<SpawnedResourceData> spawnedPool3Resources;
-	private Hashtable<Integer, ArrayList<SpawnedResourceData>> spawnedPool4ResourcesByPlanet;
+	private ConcurrentHashMap<Integer, ArrayList<SpawnedResourceData>> spawnedPool4ResourcesByPlanet;
 	private ArrayList<SpawnedResourceData> vAllDespawnedResources;
     private ArrayList<String> vAllResourceNames;
 	
@@ -43,7 +43,7 @@ public class ResourceManager implements Runnable{
 		spawnedPool1LubricatingOil = new SpawnedResourceData[2];
 		spawnedPool2Resources = new ArrayList<SpawnedResourceData>();
 		spawnedPool3Resources = new ArrayList<SpawnedResourceData>();
-		spawnedPool4ResourcesByPlanet = new Hashtable<Integer, ArrayList<SpawnedResourceData>>();
+		spawnedPool4ResourcesByPlanet = new ConcurrentHashMap<Integer, ArrayList<SpawnedResourceData>>();
 		// Note:  The Tutorial map is also a Planet, but it should have no resources spawned on it.  Thus the -1 in the loop.
 		for (int i = 0; i < Constants.PlanetNames.length - 1; i++) {
 			spawnedPool4ResourcesByPlanet.put(i, new ArrayList<SpawnedResourceData>());

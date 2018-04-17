@@ -1,6 +1,6 @@
 import java.io.IOException;
-import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Factory extends Structure {
 	public final static long serialVersionUID = 1l;
@@ -11,8 +11,8 @@ public class Factory extends Structure {
 	private boolean bIsRunning;
 	private long lTimeToNextObjectCreationMS;
 	private FactoryCrate lastItemCreated;
-	private Hashtable<Character, RadialMenuItem> vRadialsForAdmin;
-	private Hashtable<Character, RadialMenuItem> vRadialsForNonAdmin;
+	private ConcurrentHashMap<Character, RadialMenuItem> vRadialsForAdmin;
+	private ConcurrentHashMap<Character, RadialMenuItem> vRadialsForNonAdmin;
 	private byte iFactoryType = -1;
 
 	public Factory() {
@@ -105,11 +105,11 @@ public class Factory extends Structure {
 	 * 
 	 * @return The Radial Items.
 	 */
-	public Hashtable<Character, RadialMenuItem> getRadialMenus(ZoneClient c) {
+	public ConcurrentHashMap<Character, RadialMenuItem> getRadialMenus(ZoneClient c) {
 		Player player = c.getPlayer();
 		if (vRadialsForAdmin == null) {
-			vRadialsForAdmin = new Hashtable<Character, RadialMenuItem>();
-			vRadialsForNonAdmin = new Hashtable<Character, RadialMenuItem>();
+			vRadialsForAdmin = new ConcurrentHashMap<Character, RadialMenuItem>();
+			vRadialsForNonAdmin = new ConcurrentHashMap<Character, RadialMenuItem>();
 			ArrayList<RadialMenuItem> vRadial = c.getServer().getRadialMenusByCRC(
 					getCRC());
 			for (int i = 0; i < vRadial.size(); i++) {

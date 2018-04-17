@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * This class is used to spawn any shuttle that needs to move around and lan or take off at shuttle ports
@@ -308,9 +308,9 @@ public class Shuttle extends NPC{
      * @Override
      * @return
      */
-    public Hashtable<Character, RadialMenuItem> getRadialMenus(){
+    public ConcurrentHashMap<Character, RadialMenuItem> getRadialMenus(){
             RadialMenuItem I = new RadialMenuItem((byte)0x00,(byte)0x00,Constants.RADIAL_MENU_EXAMINE,(byte)0x03, "Examine");
-            Hashtable<Character, RadialMenuItem> retval = new Hashtable<Character, RadialMenuItem>();
+            ConcurrentHashMap<Character, RadialMenuItem> retval = new ConcurrentHashMap<Character, RadialMenuItem>();
             retval.put(Constants.RADIAL_MENU_EXAMINE, I);
             return retval;
     }

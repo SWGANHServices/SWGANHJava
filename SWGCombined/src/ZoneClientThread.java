@@ -11,7 +11,6 @@ import java.util.ArrayList;
 import java.util.Enumeration;
 import java.util.Iterator;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.Hashtable;
 import javax.script.ScriptException;
 
 public class ZoneClientThread implements Runnable {
@@ -2106,7 +2105,7 @@ public class ZoneClientThread implements Runnable {
 				if(ParentObject!=null)
 				{
 					// System.out.println("Player is in Cell:" + player.getCellID() + " Cell Template ID:" + ParentObject.getTemplateID() + " Class:" + ParentObject.getClass());
-					Hashtable<Long,SOEObject> htCellObjects = ParentObject.getCellObjects();
+					ConcurrentHashMap<Long,SOEObject> htCellObjects = ParentObject.getCellObjects();
 					if(htCellObjects.containsKey(lItemID))
 					{
 						itemForRadials = htCellObjects.get(lItemID);
@@ -13389,7 +13388,7 @@ public class ZoneClientThread implements Runnable {
 		try{
 			System.out.println("handleHarvesterDiscardHopper");
 			Harvester harvester = (Harvester)server.getObjectFromAllObjects(targetID);
-			Hashtable<Long, SOEObject> vResources = harvester.getOutputHopper();
+			ConcurrentHashMap<Long, SOEObject> vResources = harvester.getOutputHopper();
 			Enumeration<SOEObject> vResourceEnum = harvester.getOutputHopper().elements();
 			while (vResourceEnum.hasMoreElements()) {
 				server.removeObjectFromAllObjects(vResourceEnum.nextElement(), false);
@@ -14031,7 +14030,7 @@ public class ZoneClientThread implements Runnable {
 			if (cSchematic instanceof WeaponCraftingSchematic) {
 				// There's a whole bunch more attributes we need to add in to the TangibleItem
 				WeaponCraftingSchematic wSchematic = (WeaponCraftingSchematic)cSchematic;
-				Hashtable<Byte, Double[]> vCraftingLimits = wSchematic.getCraftingLimits();
+				ConcurrentHashMap<Byte, Double[]> vCraftingLimits = wSchematic.getCraftingLimits();
 				Weapon weapon = (Weapon)itemBeingCrafted;
 				float[] fCurrentExperimentalValues = schematic.getVID9CurrentExperimentalValueArray();
 				CraftingExperimentationAttribute[] vExperimentalAttributes = cSchematic.getAttributes();

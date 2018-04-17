@@ -15,7 +15,6 @@ import java.sql.Timestamp;
 import java.util.Arrays;
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.Random;
 import java.util.TreeSet;
@@ -48,13 +47,13 @@ public class DatabaseInterface implements Runnable {
 	private static Connection loginIntegrationConn;
 	private String sDatabaseAddress;
 	private int iDatabasePort = -1;
-	private static Hashtable<Integer, Skills> vSkillsListByIndex = null;
-	private static Hashtable<Integer, Skills> vSkillsListByCommandCRC = null;
-	private static Hashtable<Integer, RadialTemplateData> vRadialTemplateData;
+	private static ConcurrentHashMap<Integer, Skills> vSkillsListByIndex = null;
+	private static ConcurrentHashMap<Integer, Skills> vSkillsListByCommandCRC = null;
+	private static ConcurrentHashMap<Integer, RadialTemplateData> vRadialTemplateData;
 	private ArrayList<Player> vAllPlayers = null;
 	private static ArrayList<AccountData> vAccounts = null;
-	private static Hashtable<Integer, Experience> vExperienceTypes = null;
-	private static Hashtable<Integer, ItemTemplate> vItemTemplateData;
+	private static ConcurrentHashMap<Integer, Experience> vExperienceTypes = null;
+	private static ConcurrentHashMap<Integer, ItemTemplate> vItemTemplateData;
 	private Thread myThread;
 	private static ArrayList<DatabaseServerInfoContainer> vServerInfoContainer = null;
 	private SWGGui theGUI;
@@ -63,9 +62,9 @@ public class DatabaseInterface implements Runnable {
 	private static ArrayList<String> vCharacterNameFilterDeveloper; // 2
 	private static ArrayList<String> vCharacterNameFilterCanonical; // 4
 	private static ArrayList<String> vCharacterNameFilterNumber; // 11
-	private static Hashtable<Integer, ArrayList<POI>> vPOIsByPlanetID;
+	private static ConcurrentHashMap<Integer, ArrayList<POI>> vPOIsByPlanetID;
 	// private static HashMap<Integer, Vector<String>> vAllUsedCharacterNames;
-	private static Hashtable<Integer, ResourceTemplateData> vResourceTemplateData;
+	private static ConcurrentHashMap<Integer, ResourceTemplateData> vResourceTemplateData;
 	private final static long HEARTBEAT_DELAY_MS = 900000;
 	private long lHeartbeatTimerMS = HEARTBEAT_DELAY_MS;
 	private long lStartTimeMS = 0;
@@ -74,18 +73,18 @@ public class DatabaseInterface implements Runnable {
 	// private static ConcurrentHashMap<Long,SOEObject> chmAllWorldObjects;
 	private static boolean bEncryptPasswords;
 	// private static int iEncryptionKey;
-	private static Hashtable<Integer, MissionTemplate> vMissionTemplateData;
-	private static Hashtable<Integer, MissionCollateral> vMissionCollateralData;
+	private static ConcurrentHashMap<Integer, MissionTemplate> vMissionTemplateData;
+	private static ConcurrentHashMap<Integer, MissionCollateral> vMissionCollateralData;
 	private static ArrayList<DeedTemplate> vDeedTemplates;
 	private static HashMap<Integer, ArrayList<CraftingSchematic>> vSchematicsBySkillID;
 	private static CraftingSchematic[] vSchematicsByIndex;
 	private static HashMap<Integer, SignIndexData> vServerSignIndexData;
-	private static Hashtable<Integer, IFFData> vDecodedIFFData;
+	private static ConcurrentHashMap<Integer, IFFData> vDecodedIFFData;
 	// private static Hashtable<String, String> vResourceNameStrings;
 	private static ArrayList<Long> vRestrictedAccessCells;
 	private static ZoneServerRunOptions runOptions;
 	private static ArrayList<StartingLocation> vStartingLocations;
-	private static Hashtable<Integer, CombatAction> vSpecialAttacks;
+	private static ConcurrentHashMap<Integer, CombatAction> vSpecialAttacks;
 	private static LoginIntegration integrationData;
 	private int iZoneServerID = -1;
 	// private static Vector<DraftSchematicAttributeData>
@@ -103,16 +102,16 @@ public class DatabaseInterface implements Runnable {
 			vCharacterNameFilterDeveloper = new ArrayList<String>();
 			vCharacterNameFilterCanonical = new ArrayList<String>();
 			vCharacterNameFilterNumber = new ArrayList<String>();
-			vRadialTemplateData = new Hashtable<Integer, RadialTemplateData>();
+			vRadialTemplateData = new ConcurrentHashMap<Integer, RadialTemplateData>();
 			vSchematicsBySkillID = new HashMap<Integer, ArrayList<CraftingSchematic>>();
 			vRestrictedAccessCells = new ArrayList<Long>();
 			vSchematicsByIndex = null;
-			vPOIsByPlanetID = new Hashtable<Integer, ArrayList<POI>>();
-			vMissionTemplateData = new Hashtable<Integer, MissionTemplate>();
-			vMissionCollateralData = new Hashtable<Integer, MissionCollateral>();
+			vPOIsByPlanetID = new ConcurrentHashMap<Integer, ArrayList<POI>>();
+			vMissionTemplateData = new ConcurrentHashMap<Integer, MissionTemplate>();
+			vMissionCollateralData = new ConcurrentHashMap<Integer, MissionCollateral>();
 			vDeedTemplates = new ArrayList<DeedTemplate>();
 			vServerSignIndexData = new HashMap<Integer, SignIndexData>();
-			vDecodedIFFData = new Hashtable<Integer, IFFData>();
+			vDecodedIFFData = new ConcurrentHashMap<Integer, IFFData>();
 			sDatabaseAddress = dbaseAddress;
 			iDatabasePort = dbasePort;
 			sDatabaseUsername = sUsername;
@@ -122,7 +121,7 @@ public class DatabaseInterface implements Runnable {
 			// iEncryptionKey = intEncryptionKey;
 			// vResourceNameStrings = new Hashtable<String, String>();
 			vStartingLocations = new ArrayList<StartingLocation>();
-			vSpecialAttacks = new Hashtable<Integer, CombatAction>();
+			vSpecialAttacks = new ConcurrentHashMap<Integer, CombatAction>();
 			if (sDatabaseName == null) {
 				DataLog.logEntry(
 						"SHUTDOWN:Error: No Database Selected For Use.",
@@ -1263,7 +1262,7 @@ public class DatabaseInterface implements Runnable {
 	 * Loads the Experience strings from the database.
 	 */
 	private static void loadExperienceList() {
-		vExperienceTypes = new Hashtable<Integer, Experience>();
+		vExperienceTypes = new ConcurrentHashMap<Integer, Experience>();
 		Statement s = null;
 		ResultSet result = null;
 		try {
@@ -1303,7 +1302,7 @@ public class DatabaseInterface implements Runnable {
 	 * 
 	 * @return -- The Skill List.
 	 */
-	protected static Hashtable<Integer, Skills> getSkillList() {
+	protected static ConcurrentHashMap<Integer, Skills> getSkillList() {
 		if (vSkillsListByIndex == null) {
 			loadSkillList();
 		}
@@ -1324,8 +1323,8 @@ public class DatabaseInterface implements Runnable {
 	 * etc. etc.
 	 */
 	private static void loadSkillList() {
-		vSkillsListByIndex = new Hashtable<Integer, Skills>();
-		vSkillsListByCommandCRC = new Hashtable<Integer, Skills>();
+		vSkillsListByIndex = new ConcurrentHashMap<Integer, Skills>();
+		vSkillsListByCommandCRC = new ConcurrentHashMap<Integer, Skills>();
 		Statement s = null;
 		ResultSet result = null;
 		try {
@@ -2210,7 +2209,7 @@ public class DatabaseInterface implements Runnable {
 	 */
 	private static void loadItemTemplateData() {
 		try {
-			vItemTemplateData = new Hashtable<Integer, ItemTemplate>();
+			vItemTemplateData = new ConcurrentHashMap<Integer, ItemTemplate>();
 			vItemTemplateData.put(0, new ItemTemplate()); // Note: This is done
 			// to have the
 			// template ID's
@@ -2592,7 +2591,7 @@ public class DatabaseInterface implements Runnable {
 	 */
 	private static void loadResourceTemplateData() {
 
-		vResourceTemplateData = new Hashtable<Integer, ResourceTemplateData>();
+		vResourceTemplateData = new ConcurrentHashMap<Integer, ResourceTemplateData>();
 		try {
 			String statement = "Select * from `resourcecaps`;";
 
@@ -4012,8 +4011,8 @@ public class DatabaseInterface implements Runnable {
 	 * e.printStackTrace(); } }
 	 */
 
-	public Hashtable<Long, RadialMenuItem> getObjectRadials() {
-		Hashtable<Long, RadialMenuItem> retMap = new Hashtable<Long, RadialMenuItem>();
+	public ConcurrentHashMap<Long, RadialMenuItem> getObjectRadials() {
+		ConcurrentHashMap<Long, RadialMenuItem> retMap = new ConcurrentHashMap<Long, RadialMenuItem>();
 		String statement = "Select * from `objectradialoptions` ORDER BY `buttonnumber`;";
 		long id = 0;
 		System.out.println("Loading object radials.");
@@ -4047,13 +4046,13 @@ public class DatabaseInterface implements Runnable {
 		return retMap;
 	}
 
-	public Hashtable<Integer, RadialTemplateData> getServerRadials() {
+	public ConcurrentHashMap<Integer, RadialTemplateData> getServerRadials() {
 		return vRadialTemplateData;
 	}
 
-	public Hashtable<Integer, ArrayList<MapLocationData>> loadStaticMapLocations(
+	public ConcurrentHashMap<Integer, ArrayList<MapLocationData>> loadStaticMapLocations(
 			ZoneServer server) {
-		Hashtable<Integer, ArrayList<MapLocationData>> dataTable = new Hashtable<Integer, ArrayList<MapLocationData>>();
+		ConcurrentHashMap<Integer, ArrayList<MapLocationData>> dataTable = new ConcurrentHashMap<Integer, ArrayList<MapLocationData>>();
 		for (int i = 0; i < Constants.PlanetNames.length; i++) {
 			dataTable.put(i, new ArrayList<MapLocationData>());
 		}
@@ -4089,9 +4088,9 @@ public class DatabaseInterface implements Runnable {
 		return dataTable;
 	}
 
-	public Hashtable<Integer, ArrayList<MapLocationData>> loadPlayerMapLocations(
+	public ConcurrentHashMap<Integer, ArrayList<MapLocationData>> loadPlayerMapLocations(
 			ZoneServer server) {
-		Hashtable<Integer, ArrayList<MapLocationData>> dataTable = new Hashtable<Integer, ArrayList<MapLocationData>>();
+		ConcurrentHashMap<Integer, ArrayList<MapLocationData>> dataTable = new ConcurrentHashMap<Integer, ArrayList<MapLocationData>>();
 		for (int i = 0; i < Constants.PlanetNames.length; i++) {
 			dataTable.put(i, new ArrayList<MapLocationData>());
 		}
@@ -4740,7 +4739,7 @@ public class DatabaseInterface implements Runnable {
 		return retval;
 	}
 
-	protected Hashtable<Integer, ItemTemplate> getAllItemTemplateData() {
+	protected ConcurrentHashMap<Integer, ItemTemplate> getAllItemTemplateData() {
 		return vItemTemplateData;
 	}
 

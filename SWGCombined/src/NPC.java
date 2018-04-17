@@ -1,8 +1,8 @@
 import java.awt.geom.Point2D;
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The NPC class represents any non-player character present in the world.  This can include anything from 
@@ -40,8 +40,8 @@ public class NPC extends Player {
     private long lNextRoamTime;
     private int iArtificialIntelligenceType;
 	private transient boolean bIsSpawned = false;
-	private transient Hashtable<SOEObject, Integer> vCreatureHateList;
-	private transient Hashtable<SOEObject, Integer> vPlayerPeacedHateList;
+	private transient ConcurrentHashMap<SOEObject, Integer> vCreatureHateList;
+	private transient ConcurrentHashMap<SOEObject, Integer> vPlayerPeacedHateList;
 	// The faction CRC, in the case of NPCs, refers to what "species" the faction belongs to.
 	// For example, if the creature is a Piket, then iFactionCRC = PacketUtils.SWGCrc("piket");
 	// If the creature is an Imperial Surface Marshall, then iFactionCRC = Constants.FACTIONS[Constants.FACTION_IMPERIAL];
@@ -60,14 +60,14 @@ public class NPC extends Player {
 		iVehicleDamage = 0;
 		lVehicleDamageKK = 0;
         bIsWild = false;
-        vCreatureHateList = new Hashtable<SOEObject, Integer>();
-        vPlayerPeacedHateList = new Hashtable<SOEObject, Integer>();
+        vCreatureHateList = new ConcurrentHashMap<SOEObject, Integer>();
+        vPlayerPeacedHateList = new ConcurrentHashMap<SOEObject, Integer>();
 	}
 
 	public NPC() {
 		super(null);
-        vCreatureHateList = new Hashtable<SOEObject, Integer>();
-        vPlayerPeacedHateList = new Hashtable<SOEObject, Integer>();
+        vCreatureHateList = new ConcurrentHashMap<SOEObject, Integer>();
+        vPlayerPeacedHateList = new ConcurrentHashMap<SOEObject, Integer>();
 	}
 	
 	/**
@@ -836,7 +836,7 @@ public class NPC extends Player {
     protected void addToHateList(SOEObject o, int hateRating) {
     	int totalHate = hateRating;
     	if (vCreatureHateList == null) {
-    		vCreatureHateList = new Hashtable<SOEObject, Integer>();
+    		vCreatureHateList = new ConcurrentHashMap<SOEObject, Integer>();
     	}
     	System.out.println("Add to hate list.  Initial hate: " + hateRating);	
     	if (vCreatureHateList.containsKey(o)) {

@@ -4,7 +4,6 @@ import java.util.BitSet;
 import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.ArrayList;
-import java.util.Hashtable;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
 
@@ -183,7 +182,7 @@ public class Player extends SOEObject {
 	private transient byte forageType;
 	private transient LinkedList<CommandQueueItem> vCommandQueue;
 	private transient String sLastSuiWindowType;
-	private transient Hashtable<Integer, SOEObject> SUIListWindowObjectList;
+	private transient ConcurrentHashMap<Integer, SOEObject> SUIListWindowObjectList;
 	private transient ConcurrentHashMap<Integer, SUIWindow> PendingSUIWindowList;
 	private transient String[] sLastConversationMenu;
 	private transient ArrayList<DialogOption> vLastConversationMenuOptions;
@@ -340,7 +339,7 @@ public class Player extends SOEObject {
 		fBankCoordinates = new float[3];
 		fHouseCoordinates = new float[3];
 		LastSUIBox = 0;
-		SUIListWindowObjectList = new Hashtable<Integer, SOEObject>();
+		SUIListWindowObjectList = new ConcurrentHashMap<Integer, SOEObject>();
 		PendingSUIWindowList = new ConcurrentHashMap<Integer, SUIWindow>();
 		sLastConversationMenu = new String[7];
 		vLastConversationMenuOptions = new ArrayList<DialogOption>();
@@ -5643,7 +5642,7 @@ public class Player extends SOEObject {
 		if (SUIListWindowObjectList != null) {
 			SUIListWindowObjectList.put(i, o);
 		} else {
-			SUIListWindowObjectList = new Hashtable<Integer, SOEObject>();
+			SUIListWindowObjectList = new ConcurrentHashMap<Integer, SOEObject>();
 			SUIListWindowObjectList.put(i, o);
 		}
 

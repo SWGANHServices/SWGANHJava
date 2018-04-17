@@ -1,5 +1,5 @@
-import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  *
@@ -57,7 +57,7 @@ public final class CreaturePet extends NPC{
     private transient Waypoint currentPatrolPoint;
 
     private transient int iRadialCondition = 0;
-    private Hashtable<Character, RadialMenuItem> vRadials;
+    private ConcurrentHashMap<Character, RadialMenuItem> vRadials;
     private boolean isAnimal;
 
     /**
@@ -1095,15 +1095,14 @@ public final class CreaturePet extends NPC{
         return this.objectToFollow;
     }
 
-    @Override
-    public Hashtable<Character, RadialMenuItem> getRadialMenus(ZoneClient client){
+    public ConcurrentHashMap<Character, RadialMenuItem> getRadialMenus(ZoneClient client){
     
         try{
 
            // if(vRadials == null || vRadials.size() == 0)
             {
                 
-                Hashtable<Character, RadialMenuItem> retHash = new Hashtable<Character, RadialMenuItem>();
+                ConcurrentHashMap<Character, RadialMenuItem> retHash = new ConcurrentHashMap<Character, RadialMenuItem>();
                 //(byte ButtonNumber, byte ParentButton, char CommandID,byte ActionLocation, String ButtonText)
                 //examine
                 byte buttonID = 1;

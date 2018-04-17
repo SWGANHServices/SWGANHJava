@@ -1,6 +1,5 @@
 import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -24,7 +23,7 @@ public class GridElement {
 	//private float nearZ;
 	//private float farZ;
 	private GridElement[] vNearbyElements;
-	private Hashtable<Long, SOEObject> vObjects;
+	private ConcurrentHashMap<Long, SOEObject> vObjects;
 	public final static float length = 160.0f;
 	public final static float width = 160.0f;
 	private long lDrawColor;
@@ -42,7 +41,7 @@ public class GridElement {
 		//nearZ = z + (height / 2.0f);
 		//farZ = nearZ - height;
 		vNearbyElements = new GridElement[NUM_GRID_ELEMENTS_NEARBY];
-		vObjects = new Hashtable<Long, SOEObject>();
+		vObjects = new ConcurrentHashMap<Long, SOEObject>();
 		
 		vDynamicSpawnTemplates = new HashMap<Short,DynamicLairSpawn>();
 	}
@@ -136,7 +135,7 @@ public class GridElement {
 	}
 	
 	
-	public Hashtable<Long, SOEObject> getAllObjectContained() {
+	public ConcurrentHashMap<Long, SOEObject> getAllObjectContained() {
 		return vObjects;
 	}
 	

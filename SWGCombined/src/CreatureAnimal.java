@@ -1,6 +1,6 @@
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 
@@ -240,9 +240,9 @@ public final class CreatureAnimal extends NPC {
 		return milkResource;
 	}
 	
-	public Hashtable<Character, RadialMenuItem> getRadialMenus(ZoneClient c) {
+	public ConcurrentHashMap<Character, RadialMenuItem> getRadialMenus(ZoneClient c) {
 		Player player = c.getPlayer();
-		Hashtable<Character, RadialMenuItem> menus = super.getRadialMenus(c);
+		ConcurrentHashMap<Character, RadialMenuItem> menus = super.getRadialMenus(c);
 		// Make sure that our radial menu ID is 1 + the last one in the list.
 		int lowestRadialMenuID = 0;
 		Enumeration<RadialMenuItem> radialMenuEnum = menus.elements();

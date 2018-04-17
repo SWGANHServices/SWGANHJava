@@ -13,7 +13,6 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Iterator;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.ArrayList;
@@ -46,9 +45,9 @@ public class ZoneServer implements Runnable {
 	private long[] lCurrentWeatherMS;
 	private int iServerStatus = STATUS_OFFLINE;
 	private List<DatagramPacket> vPacketsToSend = null;
-	private Hashtable<String, Point2D> sStartingLocations;
-	private Hashtable<Integer, ArrayList<MapLocationData>> vStaticMapLocationsByPlanet;
-	private Hashtable<Integer, ArrayList<MapLocationData>> vPlayerMapLocationsByPlanet;
+	private ConcurrentHashMap<String, Point2D> sStartingLocations;
+	private ConcurrentHashMap<Integer, ArrayList<MapLocationData>> vStaticMapLocationsByPlanet;
+	private ConcurrentHashMap<Integer, ArrayList<MapLocationData>> vPlayerMapLocationsByPlanet;
 	private String sClusterName;
 	private Thread theThread;
 	private StructureUpdateThread structureThread;
@@ -61,10 +60,10 @@ public class ZoneServer implements Runnable {
 	private ConcurrentHashMap<Long, SOEObject> vAllSpawnedObjects;
 	private ConcurrentHashMap<Long, SOEObject> vNoBuildZoneBypassObjects;
 	private ConcurrentHashMap<Long, Structure> vPlayerStructures;
-	private Hashtable<Integer, CombatAction> vCombatActions; // To be
-	private Hashtable<Integer, Skills> vSkillsMasterList; // To be preloaded.
-	private Hashtable<Integer, NPCUpdateThread> vNPCUpdateThreads;
-	private Hashtable<Integer, Grid> coffeetree;
+	private ConcurrentHashMap<Integer, CombatAction> vCombatActions; // To be
+	private ConcurrentHashMap<Integer, Skills> vSkillsMasterList; // To be preloaded.
+	private ConcurrentHashMap<Integer, NPCUpdateThread> vNPCUpdateThreads;
+	private ConcurrentHashMap<Integer, Grid> coffeetree;
 	private DataOutputStream dOut = null;
 	private ArrayList<Terminal> ServerTerminals;
 	private SWGGui theGui;
@@ -84,8 +83,8 @@ public class ZoneServer implements Runnable {
 	private short[][][] iHeightMap;
 	private ResourceManager resourceManager;
 	private EmailServer eServer;
-	private Hashtable<Integer, RadialTemplateData> vServerRadials;
-	private Hashtable<Long, RadialMenuItem> chmServerObjectRadials;
+	private ConcurrentHashMap<Integer, RadialTemplateData> vServerRadials;
+	private ConcurrentHashMap<Long, RadialMenuItem> chmServerObjectRadials;
 	//private NPCSpawnManager[] npcSpawnManager;
 	private ArrayList<TravelDestination> vAllTravelDestinations;
 	public TicketPriceMatrix ServerTicketPriceList;
@@ -172,7 +171,7 @@ public class ZoneServer implements Runnable {
 		//System.out.println("Zone server initializing...");
 		setStatus(Constants.SERVER_STATUS_LOADING);
 		iServerStatus = Constants.SERVER_STATUS_LOADING;
-		coffeetree = new Hashtable<Integer, Grid>();
+		coffeetree = new ConcurrentHashMap<Integer, Grid>();
 		DataLog.logEntry("Set up planet positional grid.","ZoneServer()", Constants.LOG_SEVERITY_INFO, ZoneRunOptions.bLogToConsole, true);
 		//System.out.println("Set up planet positional grid.");
 		vLairSpawnsSortedByPlanet = new ArrayList[Constants.PlanetNames.length];
@@ -291,7 +290,7 @@ public class ZoneServer implements Runnable {
 		}
 
 		//vAllPlayers = dbInterface.loadPlayers(this);
-		vCombatActions = new Hashtable<Integer, CombatAction>();
+		vCombatActions = new ConcurrentHashMap<Integer, CombatAction>();
 		//vSkillsMasterList = dbInterface.getSkillList();
 
 		pingServer = new PingServer(port - 1);
@@ -314,7 +313,7 @@ public class ZoneServer implements Runnable {
 		chmServerObjectRadials = dbInterface.getObjectRadials();
 		vStaticMapLocationsByPlanet = dbInterface.loadStaticMapLocations(this);
 		vPlayerMapLocationsByPlanet = dbInterface.loadPlayerMapLocations(this);
-		vNPCUpdateThreads = new Hashtable<Integer, NPCUpdateThread>();
+		vNPCUpdateThreads = new ConcurrentHashMap<Integer, NPCUpdateThread>();
 		//npcSpawnManager = new NPCSpawnManager[Constants.PlanetNames.length];
 		for (int i = 0; i < Constants.PlanetNames.length - 1; i++) {
 			NPCUpdateThread updateThread = new NPCUpdateThread(this, i);
@@ -375,7 +374,7 @@ public class ZoneServer implements Runnable {
 			Structure s = sEnum.nextElement();
 			s.setServer(this);
 			addObjectToAllObjects(s,true, false);
-			Hashtable<Long,Cell> vCL = s.getCellsInBuilding();
+			ConcurrentHashMap<Long,Cell> vCL = s.getCellsInBuilding();
 			Enumeration<Cell> cEnum = vCL.elements();
 			//System.out.println("Loading " + vCL.size() + " Cells");
 			while(cEnum.hasMoreElements())
@@ -818,7 +817,7 @@ public class ZoneServer implements Runnable {
 		return vSkillsMasterList.get(i);
 	}
 
-	protected Hashtable<Integer, Skills> getAllSkillsAvailable() {
+	protected ConcurrentHashMap<Integer, Skills> getAllSkillsAvailable() {
 		return vSkillsMasterList;
 	}
 
@@ -2302,7 +2301,7 @@ public class ZoneServer implements Runnable {
 	}
 
 	// vServerRadials
-	public Hashtable<Integer, RadialTemplateData> getServerRadialOptions() {
+	public ConcurrentHashMap<Integer, RadialTemplateData> getServerRadialOptions() {
 		return vServerRadials;
 	}
 
@@ -2836,7 +2835,7 @@ public class ZoneServer implements Runnable {
 	}
 
 	protected void spawnTerminal(ArrayList<Terminal> V, boolean debug){
-		Hashtable<Long,Terminal> TL = new Hashtable<Long,Terminal>();
+		ConcurrentHashMap<Long,Terminal> TL = new ConcurrentHashMap<Long,Terminal>();
 
 		if (!V.isEmpty()) {
 			for (int i = 0; i < V.size(); i++) {

@@ -1,15 +1,18 @@
-import java.util.Hashtable;
+
+import java.util.concurrent.ConcurrentHashMap;
+
+
 
 public class WeaponCraftingSchematic extends CraftingSchematic {
 	public final static long serialVersionUID = 1l;
 	private int requiredSkillIDForCraftedItem;
-	private Hashtable<Byte, Double[]> craftingExperimentationAttributeLimits;
+	private ConcurrentHashMap<Byte, Double[]> craftingExperimentationAttributeLimits;
 	private int iWeaponType;
 	
 	
 	public WeaponCraftingSchematic() {
 		super();
-		craftingExperimentationAttributeLimits = new Hashtable<Byte, Double[]>();
+		craftingExperimentationAttributeLimits = new ConcurrentHashMap<Byte, Double[]>();
 	}
 	
 	public void setCraftedWeaponRequiredSkillID(int skillID) {
@@ -28,7 +31,7 @@ public class WeaponCraftingSchematic extends CraftingSchematic {
 		return craftingExperimentationAttributeLimits.get(id);
 	}
 	
-	public Hashtable<Byte, Double[]> getCraftingLimits() {
+	public ConcurrentHashMap<Byte, Double[]> getCraftingLimits() {
 		return craftingExperimentationAttributeLimits;
 	}
 

@@ -1,12 +1,13 @@
 import java.awt.Color;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 
 
 
 public class ColorManager {
 	
-	private static Hashtable<Long, Color> vColorMap;
+	private static ConcurrentHashMap<Long, Color> vColorMap;
 	private static int iGradientSize;
 	private static boolean bInitialize = false;
 	/** 
@@ -20,7 +21,7 @@ public class ColorManager {
 		
 		iGradientSize = gradient;
 		int iNumColors = (iGradientSize * iGradientSize * iGradientSize * 2);
-		vColorMap = new Hashtable<Long, Color>(iNumColors);
+		vColorMap = new ConcurrentHashMap<Long, Color>(iNumColors);
 		Color color = null;
 		long colorKey = 0;
 		int iAlpha = 0;
@@ -66,14 +67,14 @@ public class ColorManager {
             long r = ((color >> 24) & 0xff);
             long g = ((color >> 16) & 0xff);
             long b = ((color >> 8)  & 0xff);
-            long a = ((color >> 0) & 0xff);
-
-            a = (a / 255) * 255;
+//          long a = ((color >> 0) & 0xff);
+            
+//          a = (a / 255) * 255;
             r = (r / iGradientSize) * iGradientSize;
             g = (g / iGradientSize) * iGradientSize;
             b = (b / iGradientSize) * iGradientSize;
             
-            color = (r << 24) | (g << 16) | (b << 8) | a;
+            color = (r << 24) | (g << 16) | (b << 8)/* | a */;
            // System.out.println("Nearest match: 0x" + Long.toHexString(color));
             c = vColorMap.get(color);
         //}

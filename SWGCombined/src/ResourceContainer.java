@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The Resource Container is an extension of a Tangible Item that holds data specific to Resources.
@@ -47,7 +47,7 @@ public class ResourceContainer extends TangibleItem {
 			// Can't happen here
 		}
 		resourceType = resourceToCopy.getResourceType();
-		Hashtable<Integer, Attribute> vCopiedAttributes = resourceToCopy.getAttributeList(null);
+		ConcurrentHashMap<Integer, Attribute> vCopiedAttributes = resourceToCopy.getAttributeList(null);
 		Enumeration<Attribute> vCopiedAttributesItr = vCopiedAttributes.elements();
 		while (vCopiedAttributesItr.hasMoreElements()) {
 			Attribute a = vCopiedAttributesItr.nextElement();
@@ -89,7 +89,7 @@ public class ResourceContainer extends TangibleItem {
 			// D'oph!
 		}
 		resourceType = resourceToCopy.getResourceType();
-		Hashtable<Integer, Attribute> vCopiedAttributes = resourceToCopy.getAttributeList(null);
+		ConcurrentHashMap<Integer, Attribute> vCopiedAttributes = resourceToCopy.getAttributeList(null);
 		Enumeration<Attribute> vCopiedAttributesItr = vCopiedAttributes.elements();
 		while (vCopiedAttributesItr.hasMoreElements()) {
 			Attribute a = vCopiedAttributesItr.nextElement();

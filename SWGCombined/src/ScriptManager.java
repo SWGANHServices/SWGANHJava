@@ -1,10 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
-import java.util.Hashtable;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 import javax.script.Compilable;
 import javax.script.CompiledScript;
 import javax.script.ScriptContext;
@@ -24,10 +24,10 @@ import javax.script.SimpleScriptContext;
  * 
  */
 public class ScriptManager {
-	private static Hashtable<Long, Integer> cItemScripts;
-	private static Hashtable<Integer, Integer> cSystemScripts;
+	private static ConcurrentHashMap<Long, Integer> cItemScripts;
+	private static ConcurrentHashMap<Integer, Integer> cSystemScripts;
 	private static ArrayList<File> vScriptFiles;
-	private static Hashtable<Integer, CompiledScript> cCompiledScripts;
+	private static ConcurrentHashMap<Integer, CompiledScript> cCompiledScripts;
 	private ScriptEngine engine;
 	private ZoneServer server;
 	private ItemScriptAPI itemScriptAPI;
@@ -42,10 +42,10 @@ public class ScriptManager {
 	 */
 	public ScriptManager(ZoneServer z, String dir) {
 		server = z;
-		cItemScripts = new Hashtable<Long, Integer>();
-		cSystemScripts = new Hashtable<Integer, Integer>();
+		cItemScripts = new ConcurrentHashMap<Long, Integer>();
+		cSystemScripts = new ConcurrentHashMap<Integer, Integer>();
 		vScriptFiles = new ArrayList<File>();
-		cCompiledScripts = new Hashtable<Integer, CompiledScript>();
+		cCompiledScripts = new ConcurrentHashMap<Integer, CompiledScript>();
 		itemScriptAPI = new ItemScriptAPI(server);
 		scriptAPI = new ScriptAPI(server);
 		ScriptEngineManager factory = new ScriptEngineManager();
@@ -353,7 +353,7 @@ public class ScriptManager {
 	 * Parse item scripts. The information is taken from the database.
 	 * @param itemTemplate The collection of item template information from the database.
 	 */
-	protected void parseItemScripts(Hashtable<Integer, ItemTemplate> itemTemplate) {
+	protected void parseItemScripts(ConcurrentHashMap<Integer, ItemTemplate> itemTemplate) {
 		Enumeration<ItemTemplate> templateData = itemTemplate.elements();
 		
 		//If scripts are enabled.

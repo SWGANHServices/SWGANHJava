@@ -1,8 +1,8 @@
 import java.io.IOException;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 public class Harvester extends Structure {
@@ -25,7 +25,7 @@ public class Harvester extends Structure {
     private int iTotalResourcesInHopper;
     private ResourceContainer theResource;
     private transient int iTicks = 0;
-    private Hashtable<Long, SOEObject> vOutputHopper;
+    private ConcurrentHashMap<Long, SOEObject> vOutputHopper;
     private ArrayList<SpawnedResourceData> vResourcesAvailable;
     private byte iHarvesterType;
 
@@ -34,7 +34,7 @@ public class Harvester extends Structure {
 	 */
 	public Harvester() {
 		super();
-		vOutputHopper = new Hashtable<Long, SOEObject>();
+		vOutputHopper = new ConcurrentHashMap<Long, SOEObject>();
 	}
 
 	/**
@@ -43,7 +43,7 @@ public class Harvester extends Structure {
 	 */
 	public Harvester(String sName, long deedID) {
 		super(sName, deedID);		
-		vOutputHopper = new Hashtable<Long, SOEObject>();
+		vOutputHopper = new ConcurrentHashMap<Long, SOEObject>();
 	}
 
     public Harvester(int iDeedTemplateID, long deedID,Deed d, float x, float y, float z, int planetid, float oW, float oS, int iFacingDirection, String sOwnerName,long lStructureOwnerID, ZoneServer server) throws IOException {
@@ -107,7 +107,7 @@ public class Harvester extends Structure {
             {                       
             	
             	setIFFFileName(iT.getIFFFileName());
-                vOutputHopper = new Hashtable<Long, SOEObject>();
+                vOutputHopper = new ConcurrentHashMap<Long, SOEObject>();
                 this.setIOutputHopperSize(d.getIOutputHopperSize() * 100);
                 this.setBaseExtractionRateMS(d.getIExtractionRate());
                 this.setIsBuilding(true);                       
@@ -553,7 +553,7 @@ public class Harvester extends Structure {
     public ArrayList<SpawnedResourceData> getResourcesAvailable() {
     	return vResourcesAvailable;
     }
-    public Hashtable<Long, SOEObject> getOutputHopper() {
+    public ConcurrentHashMap<Long, SOEObject> getOutputHopper() {
     	return vOutputHopper;
     }
     

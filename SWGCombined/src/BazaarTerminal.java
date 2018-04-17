@@ -1,8 +1,10 @@
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
+
+
 
 public class BazaarTerminal extends Terminal {
 	public final static long serialVersionUID = 1l;
-	private Hashtable<Long, TangibleItem> vItemsForSaleThisTerminal;
+	private ConcurrentHashMap<Long, TangibleItem> vItemsForSaleThisTerminal;
 	private String sPacketName;
 	
 	public BazaarTerminal() {
@@ -21,7 +23,7 @@ public class BazaarTerminal extends Terminal {
 		vItemsForSaleThisTerminal.put(t.getID(), t);
 	}
 	
-	protected Hashtable<Long, TangibleItem> getAllSaleItems() {
+	protected ConcurrentHashMap<Long, TangibleItem> getAllSaleItems() {
 		return vItemsForSaleThisTerminal;
 	}
 	

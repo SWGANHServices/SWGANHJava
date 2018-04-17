@@ -1,4 +1,3 @@
-import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
@@ -2045,7 +2044,7 @@ public class Terminal extends NPC {
                 boolean hascredits = true;
                 boolean hasskillpoints = true;
                 Skills RequestedSkill = c.getServer().getSkillFromName(PreviousMenuOptions.get(iSelection).getStringSTF());
-                Hashtable<Integer, PlayerExperience> XP = player.getPlayData().getExperienceList();
+                ConcurrentHashMap<Integer, PlayerExperience> XP = player.getPlayData().getExperienceList();
                 //PlayerExperience SkillXP = null;
                 System.out.println("Requisite Skill Count for " + PreviousMenuOptions.get(iSelection).getStringSTF() + " is: " + iRequisiteSkills.length);
                 for(int r = 0; r < iRequisiteSkills.length; r++)

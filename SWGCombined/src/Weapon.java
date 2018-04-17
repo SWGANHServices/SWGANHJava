@@ -1,6 +1,6 @@
 import java.io.IOException;
 import java.util.Arrays;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
 
 
 /**
@@ -352,7 +352,7 @@ public class Weapon extends TangibleItem{
 			}
 			//System.out.println("Crafting experimentation -- amount of experimental points actually used: " + percentageIncrease + " percent.");
 			
-			Hashtable<Byte, Double[]> vCraftingLimits = schematic.getCraftingLimits();
+			ConcurrentHashMap<Byte, Double[]> vCraftingLimits = schematic.getCraftingLimits();
 			// Each crafting limit will (hopefully) correspond and be affected in some way by each experimental attribute.  vExperimentalAttributes and fCurrentExperimentalValues needs must be in the same order;
 			CraftingExperimentationAttribute[] vExperimentalAttributes = schematic.getAttributes(); // This is a pointer.  Whatever is updated here is also updated in the ManufacturingSchematic.
 			float[] fCurrentExperimentalValues = manuSchematic.getVID9CurrentExperimentalValueArray(); // This is a pointer.  Whatever is updated here is also updated in the ManufacturingSchematic.
@@ -388,7 +388,7 @@ public class Weapon extends TangibleItem{
 		}
 	}
 
-	protected void calculateAttribute(String sAttributeName, float fExperimentalValue, Hashtable<Byte, Double[]> vCraftingLimits, ZoneClient client) throws IOException {
+	protected void calculateAttribute(String sAttributeName, float fExperimentalValue, ConcurrentHashMap<Byte, Double[]> vCraftingLimits, ZoneClient client) throws IOException {
 		Attribute theAttribute = null;
 		Double[] theRange = null;
 		// Direction:  true = higher is better, false = lower is better.

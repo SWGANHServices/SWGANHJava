@@ -5,9 +5,9 @@ import java.io.Serializable;
 import java.net.DatagramPacket;
 import java.net.SocketAddress;
 import java.util.Arrays;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.ArrayList;
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
  * The ZoneClient class contains all of the information about an active session to the ZoneServer.
@@ -26,7 +26,7 @@ public class ZoneClient implements Serializable{
 	private Player player;
 	private int iCRCSeed = 0;
 	private boolean bIsLD;
-	private Hashtable<Short, byte[]> packetsWaitingAcknowledgement;
+	private ConcurrentHashMap<Short, byte[]> packetsWaitingAcknowledgement;
 	private LinkedList<byte[]> packetQueue;
 	private int packetSize;
 	private short iClientTicks;
@@ -70,7 +70,7 @@ public class ZoneClient implements Serializable{
 		this.packetSize = packetSize;
 		myServer = player.getServer();
 		incomingPacketsToParse = new LinkedList<byte[]>();
-		packetsWaitingAcknowledgement = new Hashtable<Short, byte[]>();
+		packetsWaitingAcknowledgement = new ConcurrentHashMap<Short, byte[]>();
 		updateThread = new ZoneClientThread(myServer, this);
                 clientReady = false;
                 iEmailSequence = 0;
@@ -93,7 +93,7 @@ public class ZoneClient implements Serializable{
 		this.packetSize = packetSize;
 		myServer = server;
 		incomingPacketsToParse = new LinkedList<byte[]>();
-		packetsWaitingAcknowledgement = new Hashtable<Short, byte[]>();
+		packetsWaitingAcknowledgement = new ConcurrentHashMap<Short, byte[]>();
 		updateThread = new ZoneClientThread(myServer, this);
                 clientReady = false;
                 iEmailSequence = 0;

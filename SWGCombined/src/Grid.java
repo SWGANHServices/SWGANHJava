@@ -1,7 +1,6 @@
 import java.awt.Polygon;
 import java.awt.geom.Rectangle2D;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -165,7 +164,7 @@ public class Grid {
 			for (int i = 0; i < theGrid.length; i++) {
 				for(int j = 0; j < theGrid[i].length; j++) {
 					theShapes[i][j] = new Polygon();
-					Hashtable<Long, SOEObject> vAllObjects = theGrid[i][j].getAllObjectContained();
+					ConcurrentHashMap<Long, SOEObject> vAllObjects = theGrid[i][j].getAllObjectContained();
 					Enumeration<SOEObject> vAllObjectsEnum = vAllObjects.elements();
 					while (vAllObjectsEnum.hasMoreElements()) {
 						SOEObject o = vAllObjectsEnum.nextElement();

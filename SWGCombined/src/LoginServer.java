@@ -1,13 +1,10 @@
-import java.io.ByteArrayInputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
 import java.net.SocketAddress;
 import java.net.SocketTimeoutException;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Enumeration;
-import java.util.Hashtable;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -25,7 +22,7 @@ public class LoginServer implements Runnable{
 	private Thread myThread;
 	protected final static int MAX_PACKET_SIZE = 496;
 	protected final static int MAX_PACKET_SIZE_BEFORE_COMPRESSION_NEEDED = 149;
-	private Hashtable<SocketAddress, LoginClient> activeClientHash;
+	private ConcurrentHashMap<SocketAddress, LoginClient> activeClientHash;
 	private ArrayList<LoginClient> activeClientList;
 	private boolean bAutoAccountRegistration = true; // To be read from the config file.
 	private ConcurrentLinkedQueue<DatagramPacket> packetQueue;
@@ -37,7 +34,7 @@ public class LoginServer implements Runnable{
 	private SWGGui gui;
 	private DatabaseInterface db;
 	private LoginServerZoneTransciever zoneTransciever;
-	private Hashtable<Integer, LoginZoneCommunicationThread> zoneCommunicationThreads;
+	private ConcurrentHashMap<Integer, LoginZoneCommunicationThread> zoneCommunicationThreads;
 	private static ZoneServer zoneServer; // This can be static, since the GUI only ever has 1 Zone Server.
 	private final static long STATUS_UPDATE_PERIOD_MS = 60000;
 	private long lStatusUpdateTimeMS = STATUS_UPDATE_PERIOD_MS;
@@ -55,7 +52,7 @@ public class LoginServer implements Runnable{
 		} catch (Exception e) {
 			System.out.println("Login server unable to listen for zone connections...");
 		}
-		zoneCommunicationThreads = new Hashtable<Integer, LoginZoneCommunicationThread>();
+		zoneCommunicationThreads = new ConcurrentHashMap<Integer, LoginZoneCommunicationThread>();
 		this.gui = gui;
 		//zoneServer = gui.getZoneServer();
 		db = gui.getDB();
@@ -93,7 +90,7 @@ public class LoginServer implements Runnable{
 	 */
     public void start() {
     	System.out.println("LoginServer start");
-		activeClientHash = new Hashtable<SocketAddress, LoginClient>();
+		activeClientHash = new ConcurrentHashMap<SocketAddress, LoginClient>();
 		activeClientList = new ArrayList<LoginClient>();
 		//clientCharacterList = new Vector<Player>();
 		//packetsBeingParsed = new Vector<SOEInputStream>();

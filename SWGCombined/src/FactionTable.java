@@ -1,16 +1,17 @@
 import java.util.Enumeration;
-import java.util.Hashtable;
+import java.util.concurrent.ConcurrentHashMap;
+
 
 
 public class FactionTable {
 	private int iFactionID;
-	private Hashtable<Integer, FactionTable> vOpposingFactions;
-	private Hashtable<Integer, FactionTable> vFriendlyFactions;
+	private ConcurrentHashMap<Integer, FactionTable> vOpposingFactions;
+	private ConcurrentHashMap<Integer, FactionTable> vFriendlyFactions;
 
 	public FactionTable(int factionID) {
 		iFactionID = factionID;
-		vOpposingFactions = new Hashtable<Integer, FactionTable>();
-		vFriendlyFactions = new Hashtable<Integer, FactionTable>();
+		vOpposingFactions = new ConcurrentHashMap<Integer, FactionTable>();
+		vFriendlyFactions = new ConcurrentHashMap<Integer, FactionTable>();
 	}
 	
 	protected int getFactionID() {

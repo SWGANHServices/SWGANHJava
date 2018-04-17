@@ -1,7 +1,8 @@
 import java.io.IOException;
-import java.util.Hashtable;
+
 import java.util.ArrayList;
 import java.util.Enumeration;
+import java.util.concurrent.ConcurrentHashMap;
 /**
  * The Structure class represents Buildings in the SWG game.
  * @author Darryl
@@ -10,7 +11,7 @@ import java.util.Enumeration;
 public class Structure extends TangibleItem {
 	public final static long serialVersionUID = 1;
 	private String sIFFName;
-	private Hashtable<Long, Cell> cellsInBuilding;
+	private ConcurrentHashMap<Long, Cell> cellsInBuilding;
     private long deedID;        
     private int iCellCount;
     private Terminal structureSign;
@@ -68,7 +69,7 @@ public class Structure extends TangibleItem {
 	public Structure() {
 		super();
 		sIFFName = "";
-		cellsInBuilding = new Hashtable<Long, Cell>();
+		cellsInBuilding = new ConcurrentHashMap<Long, Cell>();
         //world structures need admin lists too for restricting access to them and not to cause null pointers hehe.
         vAdminList = new ArrayList<Long>();
         vEnterList = new ArrayList<Long>();
@@ -82,7 +83,7 @@ public class Structure extends TangibleItem {
 	 */
 	public Structure(String sName, long deedID) {
 		super();		
-		cellsInBuilding = new Hashtable<Long, Cell>();
+		cellsInBuilding = new ConcurrentHashMap<Long, Cell>();
         this.deedID = deedID;                
         sIFFName = sName;
         //world structures need admin lists too for restricting access to them and not to cause null pointers hehe.
@@ -95,7 +96,7 @@ public class Structure extends TangibleItem {
         public Structure(int iDeedTemplateID, long deedID,Deed d, float x, float y, float z, int planetid, float oW, float oS, int iFacingDirection, String sOwnerName,long lStructureOwnerID, ZoneServer server) throws IOException {
                 super();
                 this.server = server;
-                cellsInBuilding = new Hashtable<Long, Cell>();
+                cellsInBuilding = new ConcurrentHashMap<Long, Cell>();
                 this.deedID = deedID;
                 DeedTemplate dT = DatabaseInterface.getDeedTemplateByID(d.getDeedTemplateID());
                 
@@ -825,7 +826,7 @@ public class Structure extends TangibleItem {
             System.out.println("Sign Coordinates corrected.");
         }
 
-        public Hashtable<Long, Cell> getCellsInBuilding() {
+        public ConcurrentHashMap<Long, Cell> getCellsInBuilding() {
             return cellsInBuilding;
         }
 
@@ -1700,7 +1701,7 @@ public class Structure extends TangibleItem {
         public void updateStructureCellPermissions(ZoneClient client){
             try{
                 ArrayList<Player> vPL = client.getServer().getPlayersAroundObject(this,true);
-                Hashtable<Long,Cell> vCells = this.getCellsInBuilding();
+                ConcurrentHashMap<Long,Cell> vCells = this.getCellsInBuilding();
                 for(int i = 0; i < vPL.size();i++)
                 {
                     Player p = vPL.get(i);

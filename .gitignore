@@ -36,3 +36,6 @@ SWGCombined/build/built-jar.properties
 /SWGCombined/dist/
 *.properties
 *.dat
+*.class
+*.class
+*.properties

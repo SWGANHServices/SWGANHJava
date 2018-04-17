@@ -1,4 +1,4 @@
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Container class for a Chatroom object.
@@ -9,8 +9,8 @@ public class Chatroom {
 	private String sRoomName;
 	private String sCreatorName;
 	private String sRoomDescription;
-	private Vector<String> vModerators;
-	private Vector<String> vPlayersInRoom;
+	private ArrayList<String> vModerators;
+	private ArrayList<String> vPlayersInRoom;
 	private ChatServer vMyServer;
 	/**
 	 * Constructs a ChatRoom on the given ChatServer, with a given name, creator, and description. 
@@ -54,7 +54,7 @@ public class Chatroom {
 	 * Get the list of the names of the Moderators for this ChatRoom
 	 * @return The Moderator name list.
 	 */
-	public Vector<String> getModeratorList() {
+	public ArrayList<String> getModeratorList() {
 		return vModerators;
 	}
 	
@@ -62,7 +62,7 @@ public class Chatroom {
 	 * Get the list of the names of the Players in this ChatRoom.
 	 * @return The Player name list.
 	 */
-	public Vector<String> getPlayersInRoom() {
+	public ArrayList<String> getPlayersInRoom() {
 		return vPlayersInRoom;
 	}
 	

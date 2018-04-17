@@ -335,6 +335,7 @@ public final class TutorialObject extends Structure {
         return owner;
     }
 
+    @Override
     public void setOwner(Player owner) {
         this.owner = owner;
     }
@@ -435,7 +436,7 @@ public final class TutorialObject extends Structure {
         {
             //Full Tutorial
             //Cell 1 Items
-            /**
+            /*
              * Entrance Imperial Officer.
              * Templates to be used:
              * 4463, 1, 'object/mobile/shared_dressed_imperial_officer_f.iff', 'human_base_female', -1, , '', , 1458378929, 0, 'npc_name', 0, '', '', '', '', -1, -1, 'noScript.js', 0, 0, '-1'

@@ -1,5 +1,5 @@
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 /**
@@ -12,7 +12,7 @@ public class ResourceManager implements Runnable{
 	private ZoneServer myServer;
 	private DatabaseInterface dbInterface = null;
 	//private SWGGui SWGGui = null;
-	private Vector<SpawnedResourceData> vAllSpawnedResources;
+	private ArrayList<SpawnedResourceData> vAllSpawnedResources;
 	private SpawnedResourceData spawnedPool1Steel;
 	private SpawnedResourceData spawnedPool1Copper;
 	private SpawnedResourceData spawnedPool1Aluminum;
@@ -26,11 +26,11 @@ public class ResourceManager implements Runnable{
 	private SpawnedResourceData spawnedPool1LiquidPetrochemical;
 	private SpawnedResourceData[] spawnedPool1Polymer;
 	private SpawnedResourceData[] spawnedPool1LubricatingOil;
-	private Vector<SpawnedResourceData> spawnedPool2Resources;
-	private Vector<SpawnedResourceData> spawnedPool3Resources;
-	private Hashtable<Integer, Vector<SpawnedResourceData>> spawnedPool4ResourcesByPlanet;
-	private Vector<SpawnedResourceData> vAllDespawnedResources;
-    private Vector<String> vAllResourceNames;
+	private ArrayList<SpawnedResourceData> spawnedPool2Resources;
+	private ArrayList<SpawnedResourceData> spawnedPool3Resources;
+	private Hashtable<Integer, ArrayList<SpawnedResourceData>> spawnedPool4ResourcesByPlanet;
+	private ArrayList<SpawnedResourceData> vAllDespawnedResources;
+    private ArrayList<String> vAllResourceNames;
 	
 	private int iGeneratedResourceCount;
 	
@@ -38,15 +38,15 @@ public class ResourceManager implements Runnable{
 		myServer = server;
 		dbInterface = null;
 		vAllSpawnedResources = null;
-                vAllResourceNames = new Vector<String>();
+                vAllResourceNames = new ArrayList<String>();
 		spawnedPool1Polymer = new SpawnedResourceData[2];
 		spawnedPool1LubricatingOil = new SpawnedResourceData[2];
-		spawnedPool2Resources = new Vector<SpawnedResourceData>();
-		spawnedPool3Resources = new Vector<SpawnedResourceData>();
-		spawnedPool4ResourcesByPlanet = new Hashtable<Integer, Vector<SpawnedResourceData>>();
+		spawnedPool2Resources = new ArrayList<SpawnedResourceData>();
+		spawnedPool3Resources = new ArrayList<SpawnedResourceData>();
+		spawnedPool4ResourcesByPlanet = new Hashtable<Integer, ArrayList<SpawnedResourceData>>();
 		// Note:  The Tutorial map is also a Planet, but it should have no resources spawned on it.  Thus the -1 in the loop.
 		for (int i = 0; i < Constants.PlanetNames.length - 1; i++) {
-			spawnedPool4ResourcesByPlanet.put(i, new Vector<SpawnedResourceData>());
+			spawnedPool4ResourcesByPlanet.put(i, new ArrayList<SpawnedResourceData>());
 		}
 		myThread = new Thread(this);
 		myThread.setName("Resorce Manager thread");
@@ -60,7 +60,7 @@ public class ResourceManager implements Runnable{
 	public void initialize() {
 		bInitialized = true;
 		//SWGGui = myServer.getGUI();
-		vAllDespawnedResources = new Vector<SpawnedResourceData>();
+		vAllDespawnedResources = new ArrayList<SpawnedResourceData>();
 		vAllSpawnedResources = dbInterface.loadResources(myServer.getServerID());
 		if (vAllSpawnedResources.isEmpty()) {
 			generateResourceTable();
@@ -84,7 +84,7 @@ public class ResourceManager implements Runnable{
 	
 	private void loadResourceTableIntoPointers() {
 		for (int i = 0; i < vAllSpawnedResources.size(); i++) {
-			SpawnedResourceData vResource = vAllSpawnedResources.elementAt(i);
+			SpawnedResourceData vResource = vAllSpawnedResources.get(i);
 			//System.out.println("Resource " + vResource.getName() + ", a type of " + vResource.getResourceClass() + " " + vResource.getResourceType() + ".  Spawned? " + vResource.isSpawned());
 			if (vResource.isSpawned()) {
 				int iPool = vResource.getPool();
@@ -157,6 +157,7 @@ public class ResourceManager implements Runnable{
 
 	}
 	
+    @Override
 	public void run() {
 		dbInterface = myServer.getGUI().getDB();
 		while (myThread != null) {
@@ -171,7 +172,7 @@ public class ResourceManager implements Runnable{
 				lCurrentTimeMS = System.currentTimeMillis();
 				// This loop will despawn old resources and spawn new replacement resources for them.
 				for (int i = 0; i < vAllSpawnedResources.size(); i++) {
-					SpawnedResourceData resource = vAllSpawnedResources.elementAt(i);
+					SpawnedResourceData resource = vAllSpawnedResources.get(i);
 					if (resource.getLDespawnTimeMS() < lCurrentTimeMS) {
 						if (resource.isSpawned()) {
 							resource.setIsSpawned(false);
@@ -524,9 +525,9 @@ public class ResourceManager implements Runnable{
 	protected void generateResourceListForSurveyMessage(ZoneClient client, TangibleItem item) {
 		try {
 			int templateID = item.getTemplateID();
-			Vector<SpawnedResourceData> vResources = getResourceListForTool(templateID, client.getPlayer().getPlanetID());
+			ArrayList<SpawnedResourceData> vResources = getResourceListForTool(templateID, client.getPlayer().getPlanetID());
 			for (int i = 0; i < vResources.size(); i++) {
-				SpawnedResourceData data = vResources.elementAt(i);
+				SpawnedResourceData data = vResources.get(i);
 				if (!data.isSpawned()) {
 					vResources.remove(i);
 					i--;
@@ -540,7 +541,7 @@ public class ResourceManager implements Runnable{
 	}
 	
 	
-	protected Vector<SpawnedResourceData> getResourceListForTool(int iResourceToolTemplateID, int iPlanetID) {
+	protected ArrayList<SpawnedResourceData> getResourceListForTool(int iResourceToolTemplateID, int iPlanetID) {
 	
 		switch (iResourceToolTemplateID) {
 			case 14037: {
@@ -576,44 +577,44 @@ public class ResourceManager implements Runnable{
 	}
 
 
-	private Vector<SpawnedResourceData> getWindEnergyResourceList(int iPlanetID) {
-		Vector<SpawnedResourceData> resourceListToReturn = new Vector<SpawnedResourceData>();
-		Vector<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private ArrayList<SpawnedResourceData> getWindEnergyResourceList(int iPlanetID) {
+		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
-			if (resourcesOnPlanet.elementAt(i).getType() == Constants.RESOURCE_TYPE_ENERGY_WIND_CORELLIAN + iPlanetID) {
-				resourceListToReturn.add(resourcesOnPlanet.elementAt(i));
+			if (resourcesOnPlanet.get(i).getType() == Constants.RESOURCE_TYPE_ENERGY_WIND_CORELLIAN + iPlanetID) {
+				resourceListToReturn.add(resourcesOnPlanet.get(i));
 			}
 		}
 		return resourceListToReturn;
 	}
 	
-	private Vector<SpawnedResourceData> getSolarEnergyResourceList(int iPlanetID) {
-		Vector<SpawnedResourceData> resourceListToReturn = new Vector<SpawnedResourceData>();
-		Vector<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private ArrayList<SpawnedResourceData> getSolarEnergyResourceList(int iPlanetID) {
+		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
-			if (resourcesOnPlanet.elementAt(i).getType() == Constants.RESOURCE_TYPE_ENERGY_SOLAR_CORELLIAN + iPlanetID) {
-				resourceListToReturn.add(resourcesOnPlanet.elementAt(i));
+			if (resourcesOnPlanet.get(i).getType() == Constants.RESOURCE_TYPE_ENERGY_SOLAR_CORELLIAN + iPlanetID) {
+				resourceListToReturn.add(resourcesOnPlanet.get(i));
 			}
 		}
 		return resourceListToReturn;
 	}
 	
-	private Vector<SpawnedResourceData> getWaterVaporResourceList(int iPlanetID) {
-		Vector<SpawnedResourceData> resourceListToReturn = new Vector<SpawnedResourceData>();
-		Vector<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private ArrayList<SpawnedResourceData> getWaterVaporResourceList(int iPlanetID) {
+		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
-			if (resourcesOnPlanet.elementAt(i).getType() == Constants.RESOURCE_TYPE_WATER_CORELLIAN + iPlanetID) {
-				resourceListToReturn.add(resourcesOnPlanet.elementAt(i));
+			if (resourcesOnPlanet.get(i).getType() == Constants.RESOURCE_TYPE_WATER_CORELLIAN + iPlanetID) {
+				resourceListToReturn.add(resourcesOnPlanet.get(i));
 			}
 		}
 		return resourceListToReturn;
 	}
 	
-	private Vector<SpawnedResourceData> getWoodResourceList(int iPlanetID) {
-		Vector<SpawnedResourceData> resourceListToReturn = new Vector<SpawnedResourceData>();
-		Vector<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+	private ArrayList<SpawnedResourceData> getWoodResourceList(int iPlanetID) {
+		ArrayList<SpawnedResourceData> resourceListToReturn = new ArrayList<SpawnedResourceData>();
+		ArrayList<SpawnedResourceData> resourcesOnPlanet = spawnedPool4ResourcesByPlanet.get(iPlanetID);
 		for (int i = 0; i < resourcesOnPlanet.size(); i++) {
-			SpawnedResourceData resource = resourcesOnPlanet.elementAt(i);
+			SpawnedResourceData resource = resourcesOnPlanet.get(i);
 			int iType = resource.getType();
 			System.out.println("Planetary resource " + resource.getName() + ", type: " + resource.getResourceType() + " on planet " + resource.getPlanetID());
 			if ((iType <= Constants.RESOURCE_TYPE_TUBERS_YAVINIAN) && (iType >= Constants.RESOURCE_TYPE_WOOD_CONIFER_CORELLIAN) && (resource.getPlanetID() == iPlanetID)) {
@@ -624,10 +625,10 @@ public class ResourceManager implements Runnable{
 		return resourceListToReturn;
 	}
 	
-	private Vector<SpawnedResourceData> getGasResourceList(int iPlanetID) {
-		Vector<SpawnedResourceData> vGasResources = new Vector<SpawnedResourceData>();
+	private ArrayList<SpawnedResourceData> getGasResourceList(int iPlanetID) {
+		ArrayList<SpawnedResourceData> vGasResources = new ArrayList<SpawnedResourceData>();
 		for (int i = 0; i < spawnedPool2Resources.size(); i++) {
-			SpawnedResourceData theResource = spawnedPool2Resources.elementAt(i);
+			SpawnedResourceData theResource = spawnedPool2Resources.get(i);
 			int iResourceType = theResource.getType();
 			if (iResourceType >= Constants.RESOURCE_START_GAS_INERT && iResourceType <= Constants.RESOURCE_END_GAS_REACTIVE) {
 				int[] iPlanets = theResource.getAllSpawnedPlanets();
@@ -641,7 +642,7 @@ public class ResourceManager implements Runnable{
 			}
 		}
 		for (int i = 0; i < spawnedPool3Resources.size(); i++) {
-			SpawnedResourceData theResource = spawnedPool3Resources.elementAt(i);
+			SpawnedResourceData theResource = spawnedPool3Resources.get(i);
 			int iResourceType = theResource.getType();
 			if (iResourceType == Constants.RESOURCE_TYPE_JTL_GAS_REACTIVE_UNSTABLE_ORGANOMETALLIC) {
 				int[] iPlanets = theResource.getAllSpawnedPlanets();
@@ -657,10 +658,10 @@ public class ResourceManager implements Runnable{
 		return vGasResources;
 	}
 	
-	private Vector<SpawnedResourceData> getMineralResourceList(int iPlanetID) {
-		Vector<SpawnedResourceData> vResourcesToReturn = new Vector<SpawnedResourceData>();
+	private ArrayList<SpawnedResourceData> getMineralResourceList(int iPlanetID) {
+		ArrayList<SpawnedResourceData> vResourcesToReturn = new ArrayList<SpawnedResourceData>();
 		for (int i = 0; i < vAllSpawnedResources.size(); i++) {
-			SpawnedResourceData theResource = vAllSpawnedResources.elementAt(i);
+			SpawnedResourceData theResource = vAllSpawnedResources.get(i);
 			int iResourceType = theResource.getType();
 			if (((iResourceType >= Constants.RESOURCE_START_ALUMINUM) && (iResourceType <= Constants.RESOURCE_END_UNKNOWN)) 
 					|| ((iResourceType >= Constants.RESOURCE_START_JTL)
@@ -691,8 +692,8 @@ public class ResourceManager implements Runnable{
 		return vResourcesToReturn;
 	}
 	
-	private Vector<SpawnedResourceData> getPetrochemicalResourceList(int iPlanetID) {
-		Vector<SpawnedResourceData> vResourcesToReturn = new Vector<SpawnedResourceData>();
+	private ArrayList<SpawnedResourceData> getPetrochemicalResourceList(int iPlanetID) {
+		ArrayList<SpawnedResourceData> vResourcesToReturn = new ArrayList<SpawnedResourceData>();
 		if(spawnedPool1LubricatingOil != null)
         {
             for (int i = 0; i < spawnedPool1LubricatingOil.length; i++) {
@@ -736,9 +737,9 @@ public class ResourceManager implements Runnable{
         
         if(spawnedPool4ResourcesByPlanet != null)
         {
-            Vector<SpawnedResourceData> vPlanetResources = spawnedPool4ResourcesByPlanet.get(iPlanetID);
+            ArrayList<SpawnedResourceData> vPlanetResources = spawnedPool4ResourcesByPlanet.get(iPlanetID);
             for (int i = 0; i < vPlanetResources.size(); i++) {
-                SpawnedResourceData theResource = vPlanetResources.elementAt(i);
+                SpawnedResourceData theResource = vPlanetResources.get(i);
                 int iResourceType = theResource.getType();
                 if (iResourceType == (Constants.RESOURCE_TYPE_FIBERPLAST_CORELLIAN + iPlanetID)) {
                     vResourcesToReturn.add(theResource);
@@ -751,13 +752,13 @@ public class ResourceManager implements Runnable{
 	
 	protected SpawnedResourceData getResourceByName(String sName) {
 		for (int i = 0; i < vAllSpawnedResources.size(); i++) {
-			SpawnedResourceData theResource = vAllSpawnedResources.elementAt(i);
+			SpawnedResourceData theResource = vAllSpawnedResources.get(i);
 			if (theResource.getName().equals(sName)) {
 				return theResource;
 			}
 		}
 		for (int i = 0; i < vAllDespawnedResources.size(); i++) {
-			SpawnedResourceData theResource = vAllDespawnedResources.elementAt(i);
+			SpawnedResourceData theResource = vAllDespawnedResources.get(i);
 			if (theResource.getName().equals(sName)) {
 				return theResource;
 			}
@@ -766,13 +767,13 @@ public class ResourceManager implements Runnable{
 	}
 	protected SpawnedResourceData getResourceByID(long objectID) {
 		for (int i = 0; i < vAllSpawnedResources.size(); i++) {
-			SpawnedResourceData theResource = vAllSpawnedResources.elementAt(i);
+			SpawnedResourceData theResource = vAllSpawnedResources.get(i);
 			if (theResource.getID() == objectID) {
 				return theResource;
 			}
 		}
 		for (int i = 0; i < vAllDespawnedResources.size(); i++) {
-			SpawnedResourceData theResource = vAllDespawnedResources.elementAt(i);
+			SpawnedResourceData theResource = vAllDespawnedResources.get(i);
 			if (theResource.getID() == objectID) {
 				return theResource;
 			}
@@ -815,18 +816,18 @@ public class ResourceManager implements Runnable{
 		return (int)amount;
 	}
 	
-	protected Vector<SpawnedResourceData> getResourcesByPlanetID(int iPlanetID) throws NullPointerException {
-		Vector<SpawnedResourceData> toReturn = new Vector<SpawnedResourceData>();
+	protected ArrayList<SpawnedResourceData> getResourcesByPlanetID(int iPlanetID) throws NullPointerException {
+		ArrayList<SpawnedResourceData> toReturn = new ArrayList<SpawnedResourceData>();
 		toReturn.addAll(spawnedPool4ResourcesByPlanet.get(iPlanetID));
 		for (int i = 0; i < spawnedPool2Resources.size(); i++) {
-			SpawnedResourceData resource = spawnedPool2Resources.elementAt(i);
+			SpawnedResourceData resource = spawnedPool2Resources.get(i);
 			if (resource.getIsSpawnedOnPlanet(iPlanetID)) {
 				toReturn.add(resource);
 			}
 		}
 		
 		for (int i = 0; i < spawnedPool3Resources.size(); i++) {
-			SpawnedResourceData resource = spawnedPool3Resources.elementAt(i);
+			SpawnedResourceData resource = spawnedPool3Resources.get(i);
 			if (resource.getIsSpawnedOnPlanet(iPlanetID)) {
 				toReturn.add(resource);
 			}

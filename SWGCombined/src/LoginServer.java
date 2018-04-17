@@ -8,7 +8,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.Enumeration;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
@@ -26,11 +26,11 @@ public class LoginServer implements Runnable{
 	protected final static int MAX_PACKET_SIZE = 496;
 	protected final static int MAX_PACKET_SIZE_BEFORE_COMPRESSION_NEEDED = 149;
 	private Hashtable<SocketAddress, LoginClient> activeClientHash;
-	private Vector<LoginClient> activeClientList;
+	private ArrayList<LoginClient> activeClientList;
 	private boolean bAutoAccountRegistration = true; // To be read from the config file.
 	private ConcurrentLinkedQueue<DatagramPacket> packetQueue;
-	private Vector<Player> clientCharacterList;
-	private Vector<AccountData> clientAccountList;
+	private ArrayList<Player> clientCharacterList;
+	private ArrayList<AccountData> clientAccountList;
 	///public final static String SynchronizationObject = "";
 	protected final static String sLoginServerString = "LoginServer:29411";
 	private final static int socketTimeout = 10;
@@ -72,7 +72,7 @@ public class LoginServer implements Runnable{
 	        dataSocket.setSoTimeout(socketTimeout);
             //sHostName = dataSocket.getInetAddress().getLocalHost().getHostName();
 	        sHostName = InetAddress.getLocalHost().getHostName();
-	        outgoingPackets = new Vector<byte[]>();
+	        outgoingPackets = new ArrayList<byte[]>();
 		} catch (Exception e) {
 			System.out.println("Unable to create database connection: " + e.toString());
 			e.printStackTrace();
@@ -94,7 +94,7 @@ public class LoginServer implements Runnable{
     public void start() {
     	System.out.println("LoginServer start");
 		activeClientHash = new Hashtable<SocketAddress, LoginClient>();
-		activeClientList = new Vector<LoginClient>();
+		activeClientList = new ArrayList<LoginClient>();
 		//clientCharacterList = new Vector<Player>();
 		//packetsBeingParsed = new Vector<SOEInputStream>();
 		packetQueue = new ConcurrentLinkedQueue<DatagramPacket>();
@@ -111,7 +111,7 @@ public class LoginServer implements Runnable{
 		dataSocket.close();
 	}
 	
-	public Vector<byte[]> outgoingPackets;
+	public ArrayList<byte[]> outgoingPackets;
 	//public Vector<byte[]> incomingPackets;
 
 	private long lLastUpdateTimeMS;
@@ -166,7 +166,7 @@ public class LoginServer implements Runnable{
 				try {
 					//System.out.println("Number of active clients: " + activeClientList.size()); 
 					for (int i = 0; i < activeClientList.size(); i++) {
-						LoginClient client = activeClientList.elementAt(i);
+						LoginClient client = activeClientList.get(i);
 						if (!client.bIsValid()) {
 							//System.out.println("LoginServer: Should remove this client, as it has received a disconnect.");
 							activeClientList.remove(client);
@@ -279,7 +279,7 @@ public class LoginServer implements Runnable{
 	 * Get the first packet from the outgoing packet queue.
 	 */
 	public void removeFirstPacket() {
-		outgoingPackets.removeElementAt(0);
+		outgoingPackets.remove(0);
 	}
 	
 	/*
@@ -309,7 +309,7 @@ public class LoginServer implements Runnable{
 		if(DatabaseInterface.getLoginType() == 0)
         {
             for (int i = 0; i < clientAccountList.size(); i++) {
-                AccountData account = clientAccountList.elementAt(i);
+                AccountData account = clientAccountList.get(i);
                 //System.out.println("Account " + i + " username: "+ account.getUsername() + ", password: " + account.getPassword());
                 // Important lesson.  Commented if statement demonstrates how NOT to compare pointers.
                 // if (account.username == username && account.password == password) {
@@ -328,7 +328,7 @@ public class LoginServer implements Runnable{
                         //System.out.println("Username & Password match!");
                         // If we make it past the Zone Server check, check the Login Server for active.
                         for (int j = 0; j < activeClientList.size(); j++) {
-                            LoginClient client = activeClientList.elementAt(j);
+                            LoginClient client = activeClientList.get(j);
                             if (client.getAccountID() == account.getAccountID()) {
                                 if (client.getHasLoggedIn()) {
                                     return Constants.ACCOUNT_CREATION_ALREADY_ACTIVE;  // Account already active.
@@ -355,7 +355,7 @@ public class LoginServer implements Runnable{
             //System.out.println("Authenticating vBulletin User");
             for (int i = 0; i < clientAccountList.size(); i++)
             {
-                AccountData account = clientAccountList.elementAt(i);
+                AccountData account = clientAccountList.get(i);
                 //System.out.println("Account " + i + " username: "+ account.getUsername() + ", password: " + account.getPassword());
                 // Important lesson.  Commented if statement demonstrates how NOT to compare pointers.
                 // if (account.username == username && account.password == password) {
@@ -399,7 +399,7 @@ public class LoginServer implements Runnable{
                         // If we make it past the Zone Server check, check the Login Server for active.
                         for (int j = 0; j < activeClientList.size(); j++)
                         {
-                            LoginClient client = activeClientList.elementAt(j);
+                            LoginClient client = activeClientList.get(j);
                             if (client.getAccountID() == account.getAccountID())
                             {
                                 if (client.getHasLoggedIn())
@@ -455,10 +455,10 @@ public class LoginServer implements Runnable{
 	 * @param accountID -- The Account ID.
 	 * @return A Vector containing all Players belonging to the Account ID.
 	 */
-	protected Vector<Player> getCharacterListForAccount(long accountID) {
-		Vector<Player> list = new Vector<Player>();
+	protected ArrayList<Player> getCharacterListForAccount(long accountID) {
+		ArrayList<Player> list = new ArrayList<Player>();
 		for (int i = 0; i < clientCharacterList.size(); i++) {
-			Player character = clientCharacterList.elementAt(i);
+			Player character = clientCharacterList.get(i);
 			if ((character != null) && (character.getAccountID() == accountID) && !character.isDeleted()) {
 				list.add(character);
 			}
@@ -466,10 +466,10 @@ public class LoginServer implements Runnable{
 		return list;
 	}
 
-	protected Vector<Player> getCharacterListForServer(int serverID) {
-		Vector<Player> toReturn = new Vector<Player>();
+	protected ArrayList<Player> getCharacterListForServer(int serverID) {
+		ArrayList<Player> toReturn = new ArrayList<Player>();
 		for (int i = 0; i < clientCharacterList.size(); i++) {
-			Player player = clientCharacterList.elementAt(i);
+			Player player = clientCharacterList.get(i);
 			if (player.getServerID() == serverID) {
 				toReturn.add(player);
 			}
@@ -481,14 +481,14 @@ public class LoginServer implements Runnable{
 		int iServerID = server.getServerID();
 		ConcurrentHashMap<Long, Player> map = new ConcurrentHashMap<Long, Player>();
 		for (int j = 0; j < clientCharacterList.size(); j++) {
-			Player player = clientCharacterList.elementAt(j);
+			Player player = clientCharacterList.get(j);
 			if (player != null && (player.getServerID() == iServerID)) {
                 player.fixPlayerCluster(server.getClusterName());
                 player.setOnlineStatus(false);
-				Vector<TangibleItem> vAllPlayerItems = player.getInventoryItems();
+				ArrayList<TangibleItem> vAllPlayerItems = player.getInventoryItems();
 
 				for (int i = 0; i < vAllPlayerItems.size(); i++) {
-					TangibleItem item = vAllPlayerItems.elementAt(i);
+					TangibleItem item = vAllPlayerItems.get(i);
 					server.addObjectToAllObjects(item, false,false);
 					if (!player.getInventory().getLinkedObjects().contains(item)) {
 						player.getInventory().addLinkedObject(item);
@@ -503,14 +503,14 @@ public class LoginServer implements Runnable{
 					}*/
 
 				}
-				Vector<Waypoint> vPlayerWaypoints = player.getPlayData().getWaypoints();
+				ArrayList<Waypoint> vPlayerWaypoints = player.getPlayData().getWaypoints();
 				for (int i = 0; i < vPlayerWaypoints.size(); i++) {
-					Waypoint w = vPlayerWaypoints.elementAt(i);
+					Waypoint w = vPlayerWaypoints.get(i);
 					server.addObjectToAllObjects(w, false,false);
 				}
-				Vector<IntangibleObject> vAllDatapadObjects = player.getDatapad().getIntangibleObjects();
+				ArrayList<IntangibleObject> vAllDatapadObjects = player.getDatapad().getIntangibleObjects();
 				for (int i = 0; i < vAllDatapadObjects.size(); i++) {
-					server.addObjectToAllObjects(vAllDatapadObjects.elementAt(i), false,false);
+					server.addObjectToAllObjects(vAllDatapadObjects.get(i), false,false);
 				}
 				server.addObjectToAllObjects(player.getBank(), false,false);
 				server.addObjectToAllObjects(player.getDatapad(), false,false);
@@ -521,7 +521,7 @@ public class LoginServer implements Runnable{
 				server.addObjectToAllObjects(player.getInventory(), false,false);				
 				map.put(player.getID(), player);
                 TangibleItem DataPad = player.getDatapad();
-                Vector<IntangibleObject> vItnos = DataPad.getIntangibleObjects();
+                ArrayList<IntangibleObject> vItnos = DataPad.getIntangibleObjects();
                 for(int i = 0; i < vItnos.size(); i++)
                 {
                     IntangibleObject itno = vItnos.get(i);
@@ -546,7 +546,7 @@ public class LoginServer implements Runnable{
 	
 	public AccountData getAccountData(int iAccountID) {
 		for (int i = 0; i < clientAccountList.size(); i++) {
-			AccountData account = clientAccountList.elementAt(i);
+			AccountData account = clientAccountList.get(i);
 			if (account.getAccountID() == iAccountID) {
 				return account;
 			}
@@ -615,7 +615,7 @@ public class LoginServer implements Runnable{
     protected void sendUpdateServerStatus() {
     	for (int i = 0; i < activeClientList.size(); i++) {
     		
-    		activeClientList.elementAt(i).sendLoginClusterStatus();
+    		activeClientList.get(i).sendLoginClusterStatus();
     	}
     }
     

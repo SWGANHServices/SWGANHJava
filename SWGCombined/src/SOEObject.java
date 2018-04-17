@@ -1,6 +1,6 @@
 import java.io.Serializable;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.awt.geom.Point2D;
 
 /**
@@ -45,7 +45,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	private long lCellID = 0;
 	// private transient byte[][] baselinePackets;
 	// private boolean bIsWorldObject = false;
-	private Vector<SOEObject> vEquippedItems;
+	private ArrayList<SOEObject> vEquippedItems;
 	private int slotID = 0;
 	private int iTemplateID = 0;
 	private int iConditionFlag = 0;
@@ -73,9 +73,9 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	private transient int iMovementUpdateCounter = 0;
 	// private transient boolean bIsInCombat = false;
 
-	private transient Vector<ZoneClient> vSynchListeners;
+	private transient ArrayList<ZoneClient> vSynchListeners;
 
-	private transient Vector<CreaturePet> vPetsFollowingObject;
+	private transient ArrayList<CreaturePet> vPetsFollowingObject;
 
 	private boolean bCanBePickedUp;
 
@@ -109,7 +109,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 		objectID = -1;
 		vAttributes = new Hashtable<Integer, Attribute>();
 		vRadials = new Hashtable<Character, RadialMenuItem>();
-		vEquippedItems = new Vector<SOEObject>();
+		vEquippedItems = new ArrayList<SOEObject>();
 		iRadialCondition =  Constants.RADIAL_CONDITION.NORMAL.ordinal();
 		bCanBePickedUp = true;
 		// ScriptObject = new Script();
@@ -131,7 +131,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 		STFFileName = STFName;
 		sSTFFileIdentifier = objectName;
 		this.objectID = objectID;
-		vEquippedItems = new Vector<SOEObject>();
+		vEquippedItems = new ArrayList<SOEObject>();
 		vAttributes = new Hashtable<Integer, Attribute>();
 		iRadialCondition  = Constants.RADIAL_CONDITION.NORMAL.ordinal();
 		bCanBePickedUp = true;
@@ -399,7 +399,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 		// System.out.println("SOEObject()getAttributeList() for " +
 		// this.getClass().getName());
-		Hashtable<Integer, Attribute> retVector = new Hashtable<Integer, Attribute>();
+		Hashtable<Integer, Attribute> retArrayList = new Hashtable<Integer, Attribute>();
 
 		if (vAttributes == null || vAttributes.isEmpty()) {
 			// Attribute(String sName, String sValue)
@@ -1178,7 +1178,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 											.getSocketsLeft()));
 						}
 
-						Vector<SkillModifier> vSKM = T.getSkillModifiers();
+						ArrayList<SkillModifier> vSKM = T.getSkillModifiers();
 						if (vSKM.size() >= 1) {
 							addAttribute(new Attribute(
 									Constants.OBJECT_ATTRIBUTE_ATTRIBMODS, ""));
@@ -1484,8 +1484,8 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 			}
 		}
-		if (retVector.size() != 0) {
-			return retVector;
+		if (retArrayList.size() != 0) {
+			return retArrayList;
 		}
 		return vAttributes;
 	}
@@ -1528,7 +1528,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 			iRadialCondition = 0;
 		}
 		Hashtable<Character, RadialMenuItem> retHash = new Hashtable<Character, RadialMenuItem>();
-		Vector<RadialMenuItem> V = c.getServer().getRadialMenusByCRC(
+		ArrayList<RadialMenuItem> V = c.getServer().getRadialMenusByCRC(
 				this.getCRC());
 		int retcount = 0;
 		System.out.println("Searching for Radials for Item With CRC: " +  this.getCRC() + " RadialCondition " + Constants.RADIAL_CONDITION_STR[iRadialCondition]);
@@ -1851,7 +1851,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	 */
 	public void setEquippedItemInSlot(SOEObject object, byte slotID) {
 		if (vEquippedItems == null) {
-			vEquippedItems = new Vector<SOEObject>();
+			vEquippedItems = new ArrayList<SOEObject>();
 		}
 		vEquippedItems.add(object);
 	}
@@ -1879,7 +1879,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	 */
 	public boolean isSlotTaken(byte slot) {
 		for (int i = 0; i < vEquippedItems.size(); i++) {
-			if (vEquippedItems.elementAt(i).getSlotID() == slot) {
+			if (vEquippedItems.get(i).getSlotID() == slot) {
 				return true;
 			}
 		}
@@ -1894,10 +1894,11 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 	 * @return The object in the slot ID, or null of no object is equipped
 	 *         there.
 	 */
+
 	public SOEObject getObjectInSlot(byte slot) {
 		for (int i = 0; i < vEquippedItems.size(); i++) {
-			if (vEquippedItems.elementAt(i).getSlotID() == slot) {
-				return vEquippedItems.elementAt(i);
+			if (vEquippedItems.get(i).getSlotID() == slot) {
+				return vEquippedItems.get(i);
 			}
 		}
 		return null;
@@ -2239,7 +2240,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 	protected void updateAngle(ZoneClient c) {
 		try {
-			Vector<Player> PL = c.getServer().getPlayersAroundObject(
+			ArrayList<Player> PL = c.getServer().getPlayersAroundObject(
 					(SOEObject) this, false);
 			SOEObject Parent = c.getServer().getObjectFromAllObjects(
 					this.getCellID());
@@ -2364,7 +2365,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 	protected void addSynchListener(ZoneClient client) {
 		if (vSynchListeners == null) {
-			vSynchListeners = new Vector<ZoneClient>();
+			vSynchListeners = new ArrayList<ZoneClient>();
 		}
 		if (!vSynchListeners.contains(client)) {
 			vSynchListeners.add(client);
@@ -2373,7 +2374,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 	protected void removeSynchListener(ZoneClient client) {
 		if (vSynchListeners == null) {
-			vSynchListeners = new Vector<ZoneClient>();
+			vSynchListeners = new ArrayList<ZoneClient>();
 		}
 		if (vSynchListeners.contains(client)) {
 			vSynchListeners.remove(client);
@@ -2382,7 +2383,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 	protected void addPetFollowingObject(CreaturePet pet) {
 		if (vPetsFollowingObject == null) {
-			vPetsFollowingObject = new Vector<CreaturePet>();
+			vPetsFollowingObject = new ArrayList<CreaturePet>();
 		}
 		if (!vPetsFollowingObject.contains(pet)) {
 			vPetsFollowingObject.add(pet);
@@ -2391,16 +2392,16 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 	protected void removePetFollowingObject(CreaturePet pet) {
 		if (vPetsFollowingObject == null) {
-			vPetsFollowingObject = new Vector<CreaturePet>();
+			vPetsFollowingObject = new ArrayList<CreaturePet>();
 		}
 		if (vPetsFollowingObject.contains(pet)) {
 			vPetsFollowingObject.remove(pet);
 		}
 	}
 
-	protected Vector<CreaturePet> getPetsFollowingObject() {
+	protected ArrayList<CreaturePet> getPetsFollowingObject() {
 		if (vPetsFollowingObject == null) {
-			vPetsFollowingObject = new Vector<CreaturePet>();
+			vPetsFollowingObject = new ArrayList<CreaturePet>();
 		}
 		return vPetsFollowingObject;
 	}

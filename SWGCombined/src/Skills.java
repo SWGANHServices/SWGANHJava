@@ -1,4 +1,4 @@
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  * Container class for Skills.  A skill has required money costs to learn, required experience values to learn, etc. etc.
@@ -18,8 +18,8 @@ public class Skills {
 	private int iSkillCapXP = -1;
 	private int[] iSkillSpeciesSpecificID;
 	private int iNumRequiredSkills = 0;
-	private Vector<SkillMods> vSkillMods;
-	private Vector<String> vCertificationsList;
+	private ArrayList<SkillMods> vSkillMods;
+	private ArrayList<String> vCertificationsList;
     //private String sRequisiteSkills;
 	private boolean bIsNoviceSkill = false;
 	private boolean bIsProfessionSkill = false;
@@ -31,8 +31,8 @@ public class Skills {
 	 */
 	public Skills() {
 		iRequiredSkillID = new int[MAX_PREREQ_SKILLS];
-		vSkillMods = new Vector<SkillMods>();
-		vCertificationsList = new Vector<String>();
+		vSkillMods = new ArrayList<SkillMods>();
+		vCertificationsList = new ArrayList<String>();
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public class Skills {
 	 */
 	public SkillMods getSkillMod(String sMod) {
 		for (int i =0; i < vSkillMods.size(); i++) {
-			SkillMods mod = vSkillMods.elementAt(i);
+			SkillMods mod = vSkillMods.get(i);
 			if (mod.getName().equalsIgnoreCase(sMod)) {
 				return mod;
 			}
@@ -224,7 +224,7 @@ public class Skills {
 	 * Gets all of the Skill Modifiers granted by this Skill.
 	 * @return The Skill Modifiers.
 	 */
-	public Vector<SkillMods> getAllSkillMods() {
+	public ArrayList<SkillMods> getAllSkillMods() {
 		return vSkillMods;
 	}
 	
@@ -236,7 +236,7 @@ public class Skills {
 		return vCertificationsList.contains(sCertification);
 	}
 	
-	public Vector<String> getCertificationList() {
+	public ArrayList<String> getCertificationList() {
 		return vCertificationsList;
 	}
         

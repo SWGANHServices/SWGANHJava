@@ -1,5 +1,5 @@
 import java.net.SocketAddress;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -50,7 +50,7 @@ public class EmailServer implements Runnable {
 
 	public ConcurrentLinkedQueue<ZoneClient> qClearSentEmails;
 
-	public Vector<SWGEmail> vSentEmails;
+	public ArrayList<SWGEmail> vSentEmails;
 
 	public Player SystemPlayer;
 
@@ -137,7 +137,7 @@ public class EmailServer implements Runnable {
 																		// of
 																		// Integers?
 		qClearSentEmails = new ConcurrentLinkedQueue<ZoneClient>();
-		vSentEmails = new Vector<SWGEmail>();
+		vSentEmails = new ArrayList<SWGEmail>();
 
 		while (myThread != null) {
 			try {
@@ -168,14 +168,14 @@ public class EmailServer implements Runnable {
 							// retrieve email from db
 							// SWGEmail E = DB CALL GOES HERE
 							long lPlayerID = client.getPlayer().getID();
-							Vector<SWGEmail> vAllClientEmails = dbInterface
+							ArrayList<SWGEmail> vAllClientEmails = dbInterface
 									.getAllEmailsForPlayer(lPlayerID, client
 											.getPlayer().getServerID());
 							// System.out.println("Client Has " +
 							// vAllClientEmails.size() + " in his Mailbox.");
 							boolean bHeadsUpSent = false;
 							for (int i = 0; i < vAllClientEmails.size(); i++) {
-								SWGEmail E = vAllClientEmails.elementAt(i);
+								SWGEmail E = vAllClientEmails.get(i);
 								// System.out.println("Sending Email at
 								// Position: " + i);
 								if (!E.getDeleteFlag()) {
@@ -391,7 +391,7 @@ public class EmailServer implements Runnable {
 						long lPlayerID = qClearSentEmails.element().getPlayer()
 								.getID();
 						for (int i = 0; i < vSentEmails.size(); i++) {
-							if (vSentEmails.elementAt(0).getRecipientID() == lPlayerID) {
+							if (vSentEmails.get(0).getRecipientID() == lPlayerID) {
 								vSentEmails.remove(0);
 								i = 0;
 							}
@@ -415,7 +415,7 @@ public class EmailServer implements Runnable {
 						ZoneClient client = CL.elements().nextElement();
 						if (client != null && client.getClientReadyStatus()) {
 
-							Vector<SWGEmail> EV = dbInterface
+							ArrayList<SWGEmail> EV = dbInterface
 									.getNewEmailsForPlayer(client.getPlayer()
 											.getID(), client.getServer()
 											.getServerID());
@@ -426,14 +426,14 @@ public class EmailServer implements Runnable {
 							int m = 0;
 							while (EV.size() != 0) {
 								boolean bHeadsUpSent = false;
-								if (!EV.elementAt(m).isRead()) {
+								if (!EV.get(m).isRead()) {
 									// System.out.println("MTA Processing Unread
 									// Email ID: " +
 									// EV.elementAt(m).getEmailID() );
-									SWGEmail NE = EV.elementAt(m);
+									SWGEmail NE = EV.get(m);
 									boolean eFound = false;
 									for (int f = 0; f < vSentEmails.size(); f++) {
-										SWGEmail TE = vSentEmails.elementAt(f);
+										SWGEmail TE = vSentEmails.get(f);
 										// System.out.println("Iterating Sent
 										// Emails: " + f + " : ID: " +
 										// TE.getEmailID() + " : NE ID: " +
@@ -478,7 +478,7 @@ public class EmailServer implements Runnable {
 											// list.");
 											DataLogObject E = new DataLogObject(
 													"EmailServer::EmailThread::MTA",
-													"Error Ocurred while delivering a new message to a player. Could not add the new message to the SentMails Vector.",
+													"Error Ocurred while delivering a new message to a player. Could not add the new message to the SentMails ArrayList.",
 													Constants.LOG_SEVERITY_CRITICAL);
 											DataLog.qServerLog.add(E);
 										}

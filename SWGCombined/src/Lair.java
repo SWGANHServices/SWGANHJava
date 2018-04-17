@@ -1,4 +1,4 @@
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
 /**
@@ -51,7 +51,7 @@ public final class Lair extends NPC{
     //private Vector<TangibleItem> EquipmentList;
     //private Vector<TangibleItem> PropList;
     private ConcurrentHashMap<Long,NPC> vSpawnedChildren;
-    private Vector<SOEObject> vHateList;
+    private ArrayList<SOEObject> vHateList;
     //private Vector<TangibleItem> LootList;
     private LairTemplate myLairTemplate;
     
@@ -120,11 +120,11 @@ public final class Lair extends NPC{
         EquipmentList.add(t);
     }
     */
-    protected Vector<SOEObject> getHateList() {
+    protected ArrayList<SOEObject> getHateList() {
         return vHateList;
     }
 
-    protected void setHateList(Vector<SOEObject> HateList) {
+    protected void setHateList(ArrayList<SOEObject> HateList) {
         this.vHateList = HateList;
     }
 /*
@@ -475,7 +475,7 @@ public final class Lair extends NPC{
      */
     public void setLairRandomTemplate(int planetID, boolean bSetSpecific){
         
-        Vector<LairTemplate> vLairSelections = server.getLairTemplatesForPlanet(planetID, bSetSpecific);  
+        ArrayList<LairTemplate> vLairSelections = server.getLairTemplatesForPlanet(planetID, bSetSpecific);
         int it = 0;
         while(myLairTemplate == null && it < vLairSelections.size())
         {
@@ -507,7 +507,7 @@ public final class Lair extends NPC{
                     //EquipmentList = new Vector<TangibleItem>();
                     //PropList = new Vector<TangibleItem>();
                     vSpawnedChildren = new ConcurrentHashMap<Long,NPC>();
-                    vHateList = new Vector<SOEObject>();
+                    vHateList = new ArrayList<SOEObject>();
                     //LootList = new Vector<TangibleItem>();
                     bIsLairSpawned = false;            
                     //iLairId = -1;            
@@ -545,7 +545,7 @@ public final class Lair extends NPC{
                     /* This HAS TO BE LAST!!!!!*/            
                     bIsLairSpawned = true;
                     //System.out.println("Lair Spawned " + bIsLairSpawned );
-                     Vector<Player> vPL = server.getPlayersAroundNPC(this);
+                     ArrayList<Player> vPL = server.getPlayersAroundNPC(this);
                     if(!vPL.isEmpty())
                     {
                         for(int c =0; c < vPL.size();c++)
@@ -570,7 +570,7 @@ public final class Lair extends NPC{
                     //adult spawn
         			int maxPerWave = getIMaxPerWave();
                     int maxChildrenForLair = getIMaxChildren();
-                    Vector<SpawnedResourceData> vResourcesThisPlanet = server.getResourceManager().getResourcesByPlanetID(getPlanetID());
+                    ArrayList<SpawnedResourceData> vResourcesThisPlanet = server.getResourceManager().getResourcesByPlanetID(getPlanetID());
                     for(int i = 0; i < maxPerWave; i++)
                     {
                         //System.out.println("Spawn Number " + i + "of " + getIMaxPerWave());
@@ -590,7 +590,7 @@ public final class Lair extends NPC{
                             boolean bFound = false;
                             if (boneType != -1) {
                             	for (int j = 0; j < vResourcesThisPlanet.size() && !bFound; j++) {
-                            		SpawnedResourceData data = vResourcesThisPlanet.elementAt(j);
+                            		SpawnedResourceData data = vResourcesThisPlanet.get(j);
                             		if (data.getIGenericResourceIndex() == (boneType + getPlanetID())) {
                             			// Found it.
                             			bFound = true;
@@ -601,7 +601,7 @@ public final class Lair extends NPC{
                             bFound = false;
                             if (hideType != -1) {
                             	for (int j = 0; j < vResourcesThisPlanet.size() && !bFound; j++) {
-                            		SpawnedResourceData data = vResourcesThisPlanet.elementAt(j);
+                            		SpawnedResourceData data = vResourcesThisPlanet.get(j);
                             		if (data.getIGenericResourceIndex() == (hideType + getPlanetID())) {
                             			// Found it.
                             			bFound = true;
@@ -613,7 +613,7 @@ public final class Lair extends NPC{
                             bFound = false;
                             if (meatType != -1) {
                             	for (int j = 0; j < vResourcesThisPlanet.size() && !bFound; j++) {
-                            		SpawnedResourceData data = vResourcesThisPlanet.elementAt(j);
+                            		SpawnedResourceData data = vResourcesThisPlanet.get(j);
                             		if (data.getIGenericResourceIndex() == (meatType + getPlanetID())) {
                             			// Found it.
                             			bFound = true;
@@ -624,7 +624,7 @@ public final class Lair extends NPC{
                             bFound = false;
                             if (milkType != -1) {
                             	for (int j = 0; j < vResourcesThisPlanet.size() && !bFound; j++) {
-                            		SpawnedResourceData data = vResourcesThisPlanet.elementAt(j);
+                            		SpawnedResourceData data = vResourcesThisPlanet.get(j);
                             		if (data.getIGenericResourceIndex() == (milkType + getPlanetID())) {
                             			// Found it.
                             			bFound = true;
@@ -771,7 +771,7 @@ public final class Lair extends NPC{
                                 }   
                                 server.addObjectToAllObjects(LairChild,true,false);
                                 iDefenderCount = vSpawnedChildren.size();
-                                Vector<Player> vPL = server.getPlayersAroundNPC(this);
+                                ArrayList<Player> vPL = server.getPlayersAroundNPC(this);
                                 if(!vPL.isEmpty())
                                 {
                                     for(int c =0; c < vPL.size();c++)
@@ -911,7 +911,7 @@ public final class Lair extends NPC{
                                 server.addObjectToAllObjects(LairChild,true,false);
                                 iDefenderCount = vSpawnedChildren.size();
                                 
-                                Vector<Player> vPL = server.getPlayersAroundNPC(this);
+                                ArrayList<Player> vPL = server.getPlayersAroundNPC(this);
                                 if(!vPL.isEmpty())
                                 {
                                     for(int c =0; c < vPL.size();c++)

@@ -1,5 +1,5 @@
 import java.io.IOException;
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 public class MedicalItem extends TangibleItem {
@@ -159,7 +159,7 @@ public class MedicalItem extends TangibleItem {
 		long targetID = player.getTargetID();
 		try {
 			
-			Vector<Player> vPlayersInRange = null;
+			ArrayList<Player> vPlayersInRange = null;
 			if (targetID == 0) {
 				vPlayersInRange = client.getServer().getPlayersAroundObject(this, false, AREA_HEAL_RADIUS);
 			} else {
@@ -174,7 +174,7 @@ public class MedicalItem extends TangibleItem {
 			if (vPlayersInRange != null) {
 				if (!vPlayersInRange.isEmpty()) {
 					for (int i = 0; i < vPlayersInRange.size(); i++) {
-						Player tarPlayer= vPlayersInRange.elementAt(i);
+						Player tarPlayer= vPlayersInRange.get(i);
 						tarPlayer.applyDisease(this);
 					}
 				}
@@ -233,7 +233,7 @@ public class MedicalItem extends TangibleItem {
 		long targetID = player.getTargetID();
 		int totalDamageHealed = 0;
 		try {
-			Vector<Player> vPlayersInRange = null;
+			ArrayList<Player> vPlayersInRange = null;
 			if (targetID == 0) {
 				// Heal objects around the player.
 				vPlayersInRange = client.getServer().getPlayersAroundObject(player, true, AREA_HEAL_RADIUS);
@@ -249,7 +249,7 @@ public class MedicalItem extends TangibleItem {
 			if (vPlayersInRange != null) {
 				if (!vPlayersInRange.isEmpty()) {
 					for (int i = 0; i < vPlayersInRange.size(); i++) {
-						Player tarPlayer= vPlayersInRange.elementAt(i);
+						Player tarPlayer= vPlayersInRange.get(i);
 						totalDamageHealed += tarPlayer.healDamage(this);
 					}
 				}
@@ -291,7 +291,7 @@ public class MedicalItem extends TangibleItem {
 		long targetID = player.getTargetID();
 		try {
 			
-			Vector<Player> vPlayersInRange = null;
+			ArrayList<Player> vPlayersInRange = null;
 			if (targetID == 0) {
 				vPlayersInRange = client.getServer().getPlayersAroundObject(this, false, AREA_HEAL_RADIUS);
 			} else {
@@ -306,7 +306,7 @@ public class MedicalItem extends TangibleItem {
 			if (vPlayersInRange != null) {
 				if (!vPlayersInRange.isEmpty()) {
 					for (int i = 0; i < vPlayersInRange.size(); i++) {
-						Player tarPlayer= vPlayersInRange.elementAt(i);
+						Player tarPlayer= vPlayersInRange.get(i);
 						if (tarPlayer.getID() != player.getID()) {
 							tarPlayer.applyPoison(this);
 						}
@@ -344,7 +344,7 @@ public class MedicalItem extends TangibleItem {
 	private void handleHealAreaWounds(ZoneClient client, Player player) {
 		long targetID = player.getTargetID();
 		try {
-			Vector<Player> vPlayersInRange = null;
+			ArrayList<Player> vPlayersInRange = null;
 			if (targetID == 0) {
 				// Heal objects around the player.
 				vPlayersInRange = client.getServer().getPlayersAroundObject(player, true, AREA_HEAL_RADIUS);
@@ -360,7 +360,7 @@ public class MedicalItem extends TangibleItem {
 			if (vPlayersInRange != null) {
 				if (!vPlayersInRange.isEmpty()) {
 					for (int i = 0; i < vPlayersInRange.size(); i++) {
-						Player tarPlayer= vPlayersInRange.elementAt(i);
+						Player tarPlayer= vPlayersInRange.get(i);
 						tarPlayer.healWounds(this);
 					}
 				}

@@ -1,5 +1,5 @@
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
 
 /**
  *
@@ -41,14 +41,14 @@ public final class CreaturePet extends NPC{
     private Player master;
     private transient byte trainCommandID;
     private transient boolean isInTrainingMode;
-    private transient Vector<Waypoint> vPatrolPoints;
+    private transient ArrayList<Waypoint> vPatrolPoints;
     private int eatLevel;
     private long lPetStomachTick;
     private boolean bCanGrow;
     private boolean bFullGrown;
     private float growthLevel;
     private long lGrowthTick;
-    private Vector<Byte> vTrainedCommands;
+    private ArrayList<Byte> vTrainedCommands;
     private IntangibleObject datapadControlIcon;
     private transient SOEObject objectToFollow;
     private transient boolean isOnPatrol;
@@ -325,7 +325,7 @@ public final class CreaturePet extends NPC{
                 byte commandIndex = (byte)(getTrainCommandID() - (byte)142);
                 if(this.getVTrainedCommands() == null)
                 {
-                    this.vTrainedCommands = new Vector<Byte>();
+                    this.vTrainedCommands = new ArrayList<Byte>();
                 }
                 if(SWGGui.getRandomInt(0,iCommandSkillRelation[commandIndex]) == 0)
                 {
@@ -957,7 +957,7 @@ public final class CreaturePet extends NPC{
         try{
             if(vPatrolPoints == null)
             {
-                vPatrolPoints = new Vector<Waypoint>();
+                vPatrolPoints = new ArrayList<Waypoint>();
             }
             boolean patrolPointExists = false;
             for(int i = 0 ; i < vPatrolPoints.size();i++)
@@ -988,7 +988,7 @@ public final class CreaturePet extends NPC{
         try{
             if(vPatrolPoints == null)
             {
-                vPatrolPoints = new Vector<Waypoint>();
+                vPatrolPoints = new ArrayList<Waypoint>();
             }
             vPatrolPoints.clear();
             client.insertPacket(PacketFactory.buildChatSystemMessage("pet/pet_menu","patrol_removed"));
@@ -999,7 +999,7 @@ public final class CreaturePet extends NPC{
 
     private void sendPacketToRange(byte [] packet){
         try{
-            Vector<Player> vPL = master.getServer().getPlayersAroundNPC(this);
+            ArrayList<Player> vPL = master.getServer().getPlayersAroundNPC(this);
             for(int i = 0; i < vPL.size(); i++)
             {
                 Player p = vPL.get(i);
@@ -1012,7 +1012,7 @@ public final class CreaturePet extends NPC{
 
     private void petSpeak(String spoken){
          try{
-            Vector<Player> vPL = master.getServer().getPlayersAroundNPC(this);
+            ArrayList<Player> vPL = master.getServer().getPlayersAroundNPC(this);
             for(int i = 0; i < vPL.size(); i++)
             {
                 Player p = vPL.get(i);
@@ -1047,10 +1047,10 @@ public final class CreaturePet extends NPC{
         this.bFullGrown = bFullGrown;
     }
 
-    public Vector<Byte> getVTrainedCommands() {
+    public ArrayList<Byte> getVTrainedCommands() {
         if(vTrainedCommands == null)
         {
-            vTrainedCommands = new Vector<Byte>();
+            vTrainedCommands = new ArrayList<Byte>();
         }
         return vTrainedCommands;
     }

@@ -1,5 +1,5 @@
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
 
@@ -150,7 +150,7 @@ public class Terminal extends NPC {
                     // This code appears to be stuck in a continuous loop on MrAgent's server.  
                     // NPC's shouldn't be spending their time watching players dancing or singing.
                     if (false) {
-	                    Vector<Player> vPLe = getServer().getPlayersAroundNPC(this);
+	                    ArrayList<Player> vPLe = getServer().getPlayersAroundNPC(this);
 	                    int iEntertaining = 0;
 	                    for(int i = 0; i < vPLe.size(); i++)
 	                    {
@@ -203,7 +203,7 @@ public class Terminal extends NPC {
                         case 181:
                         case 120:
                         {
-                            Vector<Player> vPL = getServer().getPlayersAroundNPC(this);
+                            ArrayList<Player> vPL = getServer().getPlayersAroundNPC(this);
                             if(vPL!=null && !vPL.isEmpty())
                             {
                                 if(ZoneServer.getRangeBetweenObjects(this, vPL.get(0)) <= 6)
@@ -224,7 +224,7 @@ public class Terminal extends NPC {
                         case 140:
                         case 21:
                         {
-                            Vector<Player> vPL = this.getServer().getPlayersAroundNPC(this);
+                            ArrayList<Player> vPL = this.getServer().getPlayersAroundNPC(this);
                             if(vPL!=null && vPL.size() !=0 )
                             {
                                 if(ZoneServer.getRangeBetweenObjects(this, vPL.get(0)) <= 6)
@@ -256,7 +256,7 @@ public class Terminal extends NPC {
                         case 26:
                         case 54:
                          {
-                           Vector<Player> vPL = this.getServer().getPlayersAroundNPC(this);
+                           ArrayList<Player> vPL = this.getServer().getPlayersAroundNPC(this);
                             if(vPL!=null && vPL.size() !=0 )
                             {
                                 if(ZoneServer.getRangeBetweenObjects(this, vPL.get(0)) <= 6)
@@ -286,7 +286,7 @@ public class Terminal extends NPC {
                         case 96:
                         case 185:
                          {
-                            Vector<Player> vPL = this.getServer().getPlayersAroundNPC(this);
+                            ArrayList<Player> vPL = this.getServer().getPlayersAroundNPC(this);
                             if(vPL!=null && vPL.size() !=0 )
                             {
                                 if(ZoneServer.getRangeBetweenObjects(this, vPL.get(0)) <= 6)
@@ -326,7 +326,7 @@ public class Terminal extends NPC {
                         case 77:
                         case 88:
                         {
-                           Vector<Player> vPL = this.getServer().getPlayersAroundNPC(this);
+                           ArrayList<Player> vPL = this.getServer().getPlayersAroundNPC(this);
                             if(vPL!=null && vPL.size() !=0 )
                             {
                                 if(ZoneServer.getRangeBetweenObjects(this, vPL.get(0)) <= 6)
@@ -358,7 +358,7 @@ public class Terminal extends NPC {
                         case 184:
                         case 114:
                         {
-                            Vector<Player> vPL = this.getServer().getPlayersAroundNPC(this);
+                            ArrayList<Player> vPL = this.getServer().getPlayersAroundNPC(this);
                             if(vPL!=null && vPL.size() !=0 )
                             {
                                 if(ZoneServer.getRangeBetweenObjects(this, vPL.get(0)) <= 6)
@@ -463,8 +463,8 @@ public class Terminal extends NPC {
                 try{      
                     
                     System.out.println("Ticket Droid Use Selected");
-                    Vector<TangibleItem> iL = client.getPlayer().getInventoryItems();
-                    Vector<SOEObject> ttL = new Vector<SOEObject>();
+                    ArrayList<TangibleItem> iL = client.getPlayer().getInventoryItems();
+                    ArrayList<SOEObject> ttL = new ArrayList<SOEObject>();
                     int TicketCount = 0;
                     for(int i =0; i < iL.size(); i++)
                     {
@@ -931,7 +931,7 @@ public class Terminal extends NPC {
                         this.updateAngle(c);
                         
                         System.out.println("Skill Trainer Dialog Requested for " + this.getFullName() + " TemplateID: " + this.getTemplateID());
-                        Vector<DialogOption> DO = new Vector<DialogOption>();
+                        ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                         DialogOption O = new DialogOption(true,"skill_teacher","opt1_1");//What skills can I learn right now?
                         DO.add(O);
                         O = new DialogOption(true,"skill_teacher","opt1_2");//What skills will I be able to learn next?
@@ -1828,7 +1828,7 @@ public class Terminal extends NPC {
         
     }
     
-    private void sendSkillTrainerDialog(ZoneClient c, String ConversationSTFFile,String ConversationSTFString , String ArgumentSTFFile , String ArgumentSTFStringName, String ArgumentInt, int Counter ,String NonDialog ,Vector<DialogOption> DO ,int LastListIndex){
+    private void sendSkillTrainerDialog(ZoneClient c, String ConversationSTFFile,String ConversationSTFString , String ArgumentSTFFile , String ArgumentSTFStringName, String ArgumentInt, int Counter ,String NonDialog ,ArrayList<DialogOption> DO ,int LastListIndex){
         
         String [] M = new String[7];                        
         M[0] = ConversationSTFFile;
@@ -1861,8 +1861,8 @@ public class Terminal extends NPC {
         String TrainerMainMenu = MainMenu;
         
         String [] PreviousConversationMenu = player.getLastConversationMenu();
-        Vector<DialogOption> PreviousMenuOptions = player.getLastConversationMenuOptions();
-        Vector<DialogOption> DO = new Vector<DialogOption>();
+        ArrayList<DialogOption> PreviousMenuOptions = player.getLastConversationMenuOptions();
+        ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
         DialogOption O;
         int iSelection = Integer.parseInt(Selections[0]);
         String ConversationSTFFile = "skill_teacher";
@@ -2419,7 +2419,7 @@ public class Terminal extends NPC {
               
                 case Constants.TERMINAL_TYPES_MISSION_GENERAL:
                 {
-                    Vector<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
+                    ArrayList<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
                    // System.out.println("General Mission terminal Refresh Requested"); 
                     
                     //System.out.println("Templates Retrieved for this Terminal: " + myMt.size());
@@ -2430,7 +2430,7 @@ public class Terminal extends NPC {
                     
                     int lastMissiontype = -1;
                     
-                    Vector<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
+                    ArrayList<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
                     if(vML!=null && !vML.isEmpty())
                     {                       
                         client.getPlayer().getMissionBag().clearMissionObjectRefreshList();                        
@@ -2613,11 +2613,11 @@ public class Terminal extends NPC {
                 case Constants.TERMINAL_TYPES_TERMINAL_MISSION_ARTISAN: //case Constants.TERMINAL_TYPES_MISSION_CRAFTER:
                 {
                     
-                    Vector<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
+                    ArrayList<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
                    // System.out.println("Crafter/Artisan Mission terminal Refresh Requested");                    
                     //System.out.println("Templates Retrieved for this Terminal: " + myMt.size());                                       
                     int lastMissiontype = -1;                    
-                    Vector<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
+                    ArrayList<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
                     if(vML!=null && !vML.isEmpty())
                     {                       
                         client.getPlayer().getMissionBag().clearMissionObjectRefreshList();                        
@@ -2757,11 +2757,11 @@ public class Terminal extends NPC {
                 case Constants.TERMINAL_TYPES_MISSION_EXPLORER://case Constants.TERMINAL_TYPES_TERMINAL_MISSION_SCOUT:                
                 {
                     
-                    Vector<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
+                    ArrayList<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
                     //System.out.println("Explorer/Scout Mission terminal Refresh Requested");
                     //System.out.println("Templates Retrieved for this Terminal: " + myMt.size());                                       
                     int lastMissiontype = -1;                    
-                    Vector<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
+                    ArrayList<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
                     if(vML!=null && !vML.isEmpty())
                     {
                         client.getPlayer().getMissionBag().clearMissionObjectRefreshList();                        
@@ -2900,11 +2900,11 @@ public class Terminal extends NPC {
                 }                
                 case Constants.TERMINAL_TYPES_TERMINAL_MISSION_ENTERTAINER: //case Constants.TERMINAL_TYPES_MISSION_ENTERTAINER:
                 {                    
-                    Vector<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
+                    ArrayList<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
                    // System.out.println("Entertainer Mission terminal Refresh Requested Type: " + iTerminalType );
                     //System.out.println("Templates Retrieved for this Terminal: " + myMt.size());                                       
                     int lastMissiontype = -1;                    
-                    Vector<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
+                    ArrayList<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
                     if(vML!=null && !vML.isEmpty())
                     {
                         client.getPlayer().getMissionBag().clearMissionObjectRefreshList();                        
@@ -2965,7 +2965,7 @@ public class Terminal extends NPC {
                             m.setMissionTargetDisplayString("@mission/mission_generic:dancer");
                             //lets choose an entertainer collateral, this is where the mission coordinates are.
                             
-                            Vector<MissionCollateral> vMC = getServer().getMissionCollateralVector(mT.getMissionID(),m.getMissionPlanetID());
+                            ArrayList<MissionCollateral> vMC = getServer().getMissionCollateralArrayList(mT.getMissionID(),m.getMissionPlanetID());
                             if(vMC != null && !vMC.isEmpty())
                             {
                                 MissionCollateral mC = vMC.get(SWGGui.getRandomInt(0,vMC.size()));
@@ -3028,14 +3028,14 @@ public class Terminal extends NPC {
                     
                     if(client.getPlayer().getPlayData().hasSkill(528))//bounty hunter novice
                     {
-                        Vector<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
+                        ArrayList<MissionTemplate> myMt = getServer().getMissionTemplates(iTerminalType, getPlanetID());
                        // System.out.println("BH Mission terminal Refresh Requested");
                        // System.out.println("Templates Retrieved for this Terminal: " + myMt.size());
                      
                         
                         int iPlayerFaction = client.getPlayer().getFactionCRC();
                         
-                        Vector<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
+                        ArrayList<MissionObject> vML = client.getPlayer().getMissionBag().getVMissionList();
                         if(vML!=null && !vML.isEmpty())
                         {                       
                             client.getPlayer().getMissionBag().clearMissionObjectRefreshList();                        
@@ -4101,7 +4101,7 @@ public class Terminal extends NPC {
                     String ArgumentInt = "0";
                     int Counter = 0;
                     String NonDialog = "";
-                    Vector<DialogOption> DO = new Vector<DialogOption>();
+                    ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                     DialogOption o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_1");
                     DO.add(o);
                     o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_2");
@@ -4148,7 +4148,7 @@ public class Terminal extends NPC {
                         String ArgumentInt = "0";
                         int Counter = 0;
                         String NonDialog = "";
-                        Vector<DialogOption> DO = new Vector<DialogOption>();
+                        ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                         DialogOption o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_agree");
                         DO.add(o);
                         o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_3");
@@ -4166,7 +4166,7 @@ public class Terminal extends NPC {
                         String ArgumentInt = "0";
                         int Counter = 0;
                         String NonDialog = "";
-                        Vector<DialogOption> DO = new Vector<DialogOption>();
+                        ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                         DialogOption o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_agree");
                         DO.add(o);
                         int LastListIndex = 0;
@@ -4204,7 +4204,7 @@ public class Terminal extends NPC {
                     String ArgumentInt = "0";
                     int Counter = 0;
                     String NonDialog = "";
-                    Vector<DialogOption> DO = new Vector<DialogOption>();
+                    ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                     DialogOption o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_1");
                     DO.add(o);
                     o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_2");
@@ -4222,7 +4222,7 @@ public class Terminal extends NPC {
                     String ArgumentInt = "0";
                     int Counter = 0;
                     String NonDialog = "";
-                    Vector<DialogOption> DO = new Vector<DialogOption>();
+                    ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                     DialogOption o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_agree");
                     DO.add(o);
                     int LastListIndex = 0;
@@ -4245,7 +4245,7 @@ public class Terminal extends NPC {
                     String ArgumentInt = "0";
                     int Counter = 0;
                     String NonDialog = "";
-                    Vector<DialogOption> DO = new Vector<DialogOption>();
+                    ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                     DialogOption o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_1");
                     DO.add(o);
                     o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_2");
@@ -4269,7 +4269,7 @@ public class Terminal extends NPC {
                     String ArgumentInt = "0";
                     int Counter = 0;
                     String NonDialog = "";
-                    Vector<DialogOption> DO = new Vector<DialogOption>();
+                    ArrayList<DialogOption> DO = new ArrayList<DialogOption>();
                     DialogOption o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_1");
                     DO.add(o);
                     o = new DialogOption(true, "newbie_tutorial/newbie_convo", "convo_1_reply_2");

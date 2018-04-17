@@ -753,7 +753,7 @@ public class Deed extends TangibleItem {
                 {
                     if(client.getPlayer().hasSkill(DatabaseInterface.getTemplateDataByID(this.getTemplateID()).getRequiredSkillID()))
                     {
-                        Vector<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(client.getPlayer());
+                        ArrayList<SOEObject> vNearbyObjects = server.getWorldObjectsAroundObject(client.getPlayer());
                         boolean hasClearance = true;
                         for(int i = 0; i < vNearbyObjects.size();i++)
                         {

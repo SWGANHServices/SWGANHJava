@@ -3,7 +3,8 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.util.Hashtable;
 import java.util.Enumeration;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.Iterator;
 import javax.script.Compilable;
 import javax.script.CompiledScript;
 import javax.script.ScriptContext;
@@ -25,7 +26,7 @@ import javax.script.SimpleScriptContext;
 public class ScriptManager {
 	private static Hashtable<Long, Integer> cItemScripts;
 	private static Hashtable<Integer, Integer> cSystemScripts;
-	private static Vector<File> vScriptFiles;
+	private static ArrayList<File> vScriptFiles;
 	private static Hashtable<Integer, CompiledScript> cCompiledScripts;
 	private ScriptEngine engine;
 	private ZoneServer server;
@@ -43,7 +44,7 @@ public class ScriptManager {
 		server = z;
 		cItemScripts = new Hashtable<Long, Integer>();
 		cSystemScripts = new Hashtable<Integer, Integer>();
-		vScriptFiles = new Vector<File>();
+		vScriptFiles = new ArrayList<File>();
 		cCompiledScripts = new Hashtable<Integer, CompiledScript>();
 		itemScriptAPI = new ItemScriptAPI(server);
 		scriptAPI = new ScriptAPI(server);
@@ -266,12 +267,12 @@ public class ScriptManager {
 	 */
 	private void compileScriptFiles() {
 		//Instance variables.
-		Enumeration<File> iterator = vScriptFiles.elements();
+		Iterator<File> iterator = vScriptFiles.iterator();
 		Compilable ide = (Compilable) engine;
 		
 		//Continue compiling until we have scripts.
-		while(iterator.hasMoreElements()) {
-			File currentFile = iterator.nextElement();
+		while(iterator.hasNext()) {
+			File currentFile = iterator.next();
 			int currentFileID = getFileID(currentFile.getAbsolutePath());	//Get the ID of file we're compiling, and use it to store the file in the collection.
 			
 			//If the file is valid.

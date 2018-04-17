@@ -1,10 +1,10 @@
 import java.io.IOException;
 import java.util.Hashtable;
-import java.util.Vector;
+import java.util.ArrayList;
 
 public class Factory extends Structure {
 	public final static long serialVersionUID = 1l;
-	private Vector<Long> vHopperAccessList;
+	private ArrayList<Long> vHopperAccessList;
 	private ManufacturingSchematic currentSchematic;
 	private TangibleItem tInputHopper;
 	private TangibleItem tOutputHopper;
@@ -78,7 +78,7 @@ public class Factory extends Structure {
 			tOutputHopper.setMaxCondition(1, false);
 			getServer().addObjectToAllObjects(tOutputHopper, false, false);
 			tOutputHopper.addBitToPVPStatus(Constants.PVP_STATUS_IS_ITEM);
-			vHopperAccessList = new Vector<Long>();
+			vHopperAccessList = new ArrayList<Long>();
 		} catch (Exception e) {
 			System.out
 					.println("Error initializing input / output hoppers for factory: "
@@ -110,10 +110,10 @@ public class Factory extends Structure {
 		if (vRadialsForAdmin == null) {
 			vRadialsForAdmin = new Hashtable<Character, RadialMenuItem>();
 			vRadialsForNonAdmin = new Hashtable<Character, RadialMenuItem>();
-			Vector<RadialMenuItem> vRadial = c.getServer().getRadialMenusByCRC(
+			ArrayList<RadialMenuItem> vRadial = c.getServer().getRadialMenusByCRC(
 					getCRC());
 			for (int i = 0; i < vRadial.size(); i++) {
-				RadialMenuItem item = vRadial.elementAt(i);
+				RadialMenuItem item = vRadial.get(i);
 				if (item.getActionLocation() == 1) {
 					vRadialsForNonAdmin.put(item.getCommandID(), item);
 				}
@@ -155,8 +155,8 @@ public class Factory extends Structure {
 				return;
 			}
 			Player player = client.getPlayer();
-			Vector<TangibleItem> vInputHopper = tInputHopper.getLinkedObjects();
-			Vector<TangibleItem> vOutputHopper = tOutputHopper
+			ArrayList<TangibleItem> vInputHopper = tInputHopper.getLinkedObjects();
+			ArrayList<TangibleItem> vOutputHopper = tOutputHopper
 					.getLinkedObjects();
 			switch (commandID) {
 			case Constants.RADIAL_MENU_EXAMINE: {
@@ -171,7 +171,7 @@ public class Factory extends Structure {
 			case Constants.RADIAL_MENU_ADMIN_SERVER_MENU3: {// Manage power.
 				if (isAdmin(player.getID())) {
 					int iPowerOnHand = 0;
-					Vector<ResourceContainer> vRCList = new Vector<ResourceContainer>();
+					ArrayList<ResourceContainer> vRCList = new ArrayList<ResourceContainer>();
 					for (int i = 0; i < client.getPlayer().getInventoryItems()
 							.size(); i++) {
 						TangibleItem o = client.getPlayer().getInventoryItems()
@@ -453,7 +453,7 @@ public class Factory extends Structure {
 				} else {
 					if (!vInputHopper.isEmpty()) {
 						for (int i = 0; i < vInputHopper.size(); i++) {
-							player.spawnItem(vInputHopper.elementAt(i));
+							player.spawnItem(vInputHopper.get(i));
 						}
 					}
 					client.insertPacket(PacketFactory.buildOpenContainerMessage(
@@ -468,7 +468,7 @@ public class Factory extends Structure {
 				} else {
 					if (!vOutputHopper.isEmpty()) {
 						for (int i = 0; i < vOutputHopper.size(); i++) {
-							player.spawnItem(vOutputHopper.elementAt(i));
+							player.spawnItem(vOutputHopper.get(i));
 						}
 					}
 					client.insertPacket(PacketFactory.buildOpenContainerMessage(
@@ -496,7 +496,7 @@ public class Factory extends Structure {
 					DataListPrompt = "Current schematic installed: "
 							+ currentSchematic.getCraftedName();
 				}
-				Vector<ManufacturingSchematic> vSchematics = player.getSchematicsForFactory(iFactoryType);
+				ArrayList<ManufacturingSchematic> vSchematics = player.getSchematicsForFactory(iFactoryType);
 				int listSize = vSchematics.size();
 				if (currentSchematic != null) {
 					listSize += 1;
@@ -504,7 +504,7 @@ public class Factory extends Structure {
 				String sList[] = new String[listSize];
 				if (!vSchematics.isEmpty()) {
 					for (int i = 0; i < vSchematics.size(); i++) {
-						sList[i] = vSchematics.elementAt(i).getCraftedName();
+						sList[i] = vSchematics.get(i).getCraftedName();
 					}
 				}
 				if (currentSchematic != null) {
@@ -601,8 +601,8 @@ public class Factory extends Structure {
 				long[] vSerialsOfComponents = currentSchematic.getComponentSerials();
 				CraftingSchematic schematic= currentSchematic.getCraftingSchematic();
 				schematic.clearFactoryItemForCrafting();
-				Vector<CraftingSchematicComponent> vComponents = schematic.getComponents();
-				Vector<TangibleItem> vInputHopper= tInputHopper.getLinkedObjects();
+				ArrayList<CraftingSchematicComponent> vComponents = schematic.getComponents();
+				ArrayList<TangibleItem> vInputHopper= tInputHopper.getLinkedObjects();
 				// For each component in the list:  Is it an optional component, a required component, or a resource?
 				// If it's an optional component, must they all be identical, or similar?
 				// If it's an identical component, is it in the factory, and must they all be identical, or similar?
@@ -611,7 +611,7 @@ public class Factory extends Structure {
 				// TODO:  Sort stuff in the ingredient hopper by serial number.
 				for (int i = 0; i < vSerialsOfComponents.length; i++) {
 					long lSerial = vSerialsOfComponents[i];
-					CraftingSchematicComponent component = vComponents.elementAt(i);
+					CraftingSchematicComponent component = vComponents.get(i);
 					int quantityNeeded = component.getComponentQuantity();
 					System.out.println("Search for serial " + lSerial + " for component " + i + ", quantity needed: " + quantityNeeded);
 					if (component != null) {
@@ -622,7 +622,7 @@ public class Factory extends Structure {
 								int quantityFound = 0;
 								boolean bFoundResource = false;
 								for (int j = 0; j < vInputHopper.size(); j++) {
-									TangibleItem item = vInputHopper.elementAt(i);
+									TangibleItem item = vInputHopper.get(i);
 									if (item instanceof ResourceContainer) {
 										ResourceContainer container = (ResourceContainer)item;
 										long lResourceSpawnID = container.getResourceSpawnID();
@@ -655,7 +655,7 @@ public class Factory extends Structure {
 									// Find the item or items with this serial number in the input hopper, find out if we have enough to make the next item for the current factory crate.
 									// Short-circuit as soon as we have found "enough" items.
 									for (int j = 0; j < vInputHopper.size() && (numFound < quantityNeeded); j++) {
-										TangibleItem item = vInputHopper.elementAt(i);
+										TangibleItem item = vInputHopper.get(i);
 										if (item instanceof FactoryCrate) {
 											FactoryCrate crate = (FactoryCrate) item;
 											int crateQuantity = crate.getQuantity();
@@ -690,7 +690,7 @@ public class Factory extends Structure {
 									String stfFileIdentifier = component.getSTFFileIdentifier();
 									
 									for (int j = 0; j < vInputHopper.size() && (numFound < quantityNeeded); j++) {
-										TangibleItem item = vInputHopper.elementAt(i);
+										TangibleItem item = vInputHopper.get(i);
 										if (item instanceof FactoryCrate) {
 											FactoryCrate crate = (FactoryCrate) item;
 											int crateQuantity = crate.getQuantity();

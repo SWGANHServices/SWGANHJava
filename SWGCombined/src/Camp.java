@@ -1,4 +1,4 @@
-import java.util.Vector;
+import java.util.ArrayList;
 
 
 /**
@@ -21,11 +21,11 @@ public final class Camp extends TangibleItem {
     private Terminal adminTerminal;
     private Player campOwner;
     private long lAbandonTimer;
-    Vector<Long> vCampVisitors;
-    Vector<Long> vGreetedVisitors;
+    ArrayList<Long> vCampVisitors;
+    ArrayList<Long> vGreetedVisitors;
     private boolean  bPropsMade;
     private long lProbBuildTimer;
-    private Vector<SOEObject> vCampPropList;
+    private ArrayList<SOEObject> vCampPropList;
     public Camp(){
         super();
         setTemplateID(iDefaultTemplateID);
@@ -37,8 +37,8 @@ public final class Camp extends TangibleItem {
         this.setPVPStatus(Constants.PVP_STATUS_IS_ITEM);
         //lCampHeartbeat = 2000;
         this.setBSendsEquipedState(false);
-        vCampVisitors = new Vector<Long>();
-        vGreetedVisitors = new Vector<Long>();
+        vCampVisitors = new ArrayList<Long>();
+        vGreetedVisitors = new ArrayList<Long>();
         lAbandonTimer = 0;
         bPropsMade = false;
         lProbBuildTimer = 2500;
@@ -62,8 +62,8 @@ public final class Camp extends TangibleItem {
         this.setPVPStatus(Constants.PVP_STATUS_IS_NORMAL_NON_ATTACKABLE);
         //lCampHeartbeat = 2000;
         this.setBSendsEquipedState(false);
-        vCampVisitors = new Vector<Long>();
-        vGreetedVisitors = new Vector<Long>();
+        vCampVisitors = new ArrayList<Long>();
+        vGreetedVisitors = new ArrayList<Long>();
         lAbandonTimer = 0;
         bPropsMade = false;
         lProbBuildTimer = 2500;
@@ -91,7 +91,7 @@ public final class Camp extends TangibleItem {
             {
                 this.lTimeToLive-=lElapsedTime;
             }
-            Vector<Player> vPL = server.getPlayersAroundObject(this,false);
+            ArrayList<Player> vPL = server.getPlayersAroundObject(this,false);
             for(int i = 0; i < vPL.size(); i++)
             {
                 Player p = vPL.get(i);
@@ -231,7 +231,7 @@ public final class Camp extends TangibleItem {
 
     protected void makeProps(ZoneServer server){
         try{
-            vCampPropList = new Vector<SOEObject>();
+            vCampPropList = new ArrayList<SOEObject>();
             for(int i =0; i < dT.getICampPropTemplateID().length;i++)
             {
                 ItemTemplate iT = DatabaseInterface.getTemplateDataByID(dT.getICampPropTemplateID()[i]);
@@ -295,7 +295,7 @@ public final class Camp extends TangibleItem {
                     vCampPropList.add(prop);
                 }
             }
-            Vector<Player> vPL = server.getPlayersAroundObject(this, false);
+            ArrayList<Player> vPL = server.getPlayersAroundObject(this, false);
             for(int i = 0; i < vPL.size();i++)
             {
                 Player p = vPL.get(i);
@@ -326,7 +326,7 @@ public final class Camp extends TangibleItem {
             }
             
             campOwner.setCurrentCampObject(null);
-            Vector<Player> vPL = server.getPlayersAroundObject(this, false);
+            ArrayList<Player> vPL = server.getPlayersAroundObject(this, false);
             for(int i = 0; i < vPL.size();i++)
             {
                 Player p = vPL.get(i);

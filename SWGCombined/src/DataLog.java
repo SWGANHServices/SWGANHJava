@@ -56,6 +56,7 @@ public class DataLog implements Runnable {
 	   log = new DataLog();
        lLoopYieldTime = 10000;
    }
+    @Override
    public void run(){
        lLoopYieldTime = 10000;
        try {
@@ -87,7 +88,7 @@ public class DataLog implements Runnable {
                    
        } catch (Exception e) {
            System.out.println("Exception while opening Log Files: " + e.toString());
-           e.printStackTrace();
+           e.printStackTrace(System.out);
        }
 
 
@@ -109,7 +110,7 @@ public class DataLog implements Runnable {
                 {
                     DataLogObject L = null;
                     try{
-                        L = qPacketLog.get(0);//TODO: chack size ? Obi
+                        L = qPacketLog.get(zPort);//TODO: cheack is this right?? Obi
                     }catch(Exception qe){
                         if(qe instanceof java.util.NoSuchElementException)
                         {
@@ -337,7 +338,7 @@ public class DataLog implements Runnable {
                 
            } catch (Exception e) {
                 System.out.println("Error in DataLog.run: " + e.toString());
-                e.printStackTrace();
+                e.printStackTrace(System.out);
            }
            
        }
@@ -418,7 +419,7 @@ public class DataLog implements Runnable {
            }
            System.out.println("------------------STACK TRACE END------------------");
            System.out.flush();
-           e.printStackTrace();
+           e.printStackTrace(System.out);
        }
        if(bLogToFile){
            if(qServerLog!=null)

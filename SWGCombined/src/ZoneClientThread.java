@@ -242,7 +242,7 @@ public class ZoneClientThread implements Runnable {
 						//DataLog.logPacket(L);
 					} catch (Exception ee)  {
 						System.out.println(new Timestamp(System.currentTimeMillis()).toString() + " -- Error handling SOE_CHL_DATA_A packet: " + ee.toString() );
-						ee.printStackTrace();
+						ee.printStackTrace(System.out);
 
 					}
 				} else {
@@ -262,7 +262,7 @@ public class ZoneClientThread implements Runnable {
 						DataLog.logPacket(L);
 					} catch (Exception ee)  {
 						System.out.println(new Timestamp(System.currentTimeMillis()).toString() + " -- Error handling SOE_CHL_DATA_A packet: " + ee.toString() );
-						ee.printStackTrace();
+						ee.printStackTrace(System.out);
 					}
 				} else {
 					System.out.println("Client sends us an out of order packet with sequence " + Integer.toHexString(sequence));
@@ -338,7 +338,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		} catch (Exception e) {
 			System.out.println("Error handling incoming SWG packet: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		//System.out.println("Handled.");
 	}
@@ -359,7 +359,7 @@ public class ZoneClientThread implements Runnable {
 		} catch (IOException e) {
 			// Well... I guess nobody can connect.
 			System.out.println("Error handling SessionRequest: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -372,13 +372,13 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(bOut.toByteArray());
 		} catch (NullPointerException e) {
 			System.out.println("Error:  Received ping from a null player???" + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		} catch (IOException ee) {
 			System.out.println("Error building ping response: " + ee.toString());
-			ee.printStackTrace();
+			ee.printStackTrace(System.out);
 		} catch (Exception eee) {
 			System.out.println("Error appending CRC to packet: " + eee.toString());
-			eee.printStackTrace();
+			eee.printStackTrace(System.out);
 		}
 	}
 
@@ -395,7 +395,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(PacketFactory.buildNetStatusResponse(client));
 		} catch (Exception e) {
 			System.out.println("Error receiving net status request: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -620,7 +620,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		} catch (Exception e) {
 			System.out.println("Error handling DATA_A_MULTI_PKT: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -758,7 +758,7 @@ public class ZoneClientThread implements Runnable {
 				handleSelectCharacter(dIn);
 			} catch (Exception e) {
 				System.out.println("Error in handleSelectCharacter: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 			break;
 		}
@@ -815,7 +815,7 @@ public class ZoneClientThread implements Runnable {
 
 			}catch(Exception e){
 				System.out.println("Exception in handleWorldUpdate Trade_ClientAddItemToTradeWindow " + e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 			break;
 		}
@@ -1156,7 +1156,7 @@ public class ZoneClientThread implements Runnable {
 			server.addObjectToAllObjects(player, true,false);
 		} catch (Exception e) {
 			System.out.println("handleSelectCharacter explosion: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -1662,7 +1662,7 @@ public class ZoneClientThread implements Runnable {
 			System.out.println("Exploded creating new character: " + e.toString());
 			System.out.println("Error details follow:");
 			System.out.println("Character name: " + sCharacterName);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -4207,7 +4207,7 @@ public class ZoneClientThread implements Runnable {
 					}
 				} catch(Exception eee) {
 					System.out.println("Uncaught exception in ZoneClientThread.handleSpatialChat() Admin Command:" + eee.toString());
-					eee.printStackTrace();
+					eee.printStackTrace(System.out);
 				}
 			}
 			
@@ -6526,7 +6526,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		}catch(Exception e){
 			System.out.println("Exception caught in handleRequestCoreSample " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -6824,7 +6824,7 @@ public class ZoneClientThread implements Runnable {
 
 		}catch(Exception e){
 			System.out.println("Exception Caught in ZoneClientThread.handleTransferItemArmor " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -7121,9 +7121,9 @@ public class ZoneClientThread implements Runnable {
 				} catch (IOException ee) {
 					System.out.println("Unable to spawn player to a client, and unable to inform client of issue: ");
 					System.out.println(ee.toString());
-					ee.printStackTrace();
+					ee.printStackTrace(System.out);
 					System.out.println("Caused by: " + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			}
 		}
@@ -7198,7 +7198,7 @@ public class ZoneClientThread implements Runnable {
 					try{
 						client.insertPacket(PacketFactory.buildChatSystemMessage(PF.getName() + " is already your friend."));
 					} catch (IOException e) {
-						e.printStackTrace();
+						e.printStackTrace(System.out);
 					}
 					return;
 				}
@@ -7545,12 +7545,12 @@ public class ZoneClientThread implements Runnable {
 		}
 		catch (IOException e) {
 			System.out.println("IOException in ClientSendEmailRequest: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			client.insertPacket(PacketFactory.buildChatSystemMessage("Unable to Send Email to Recipient."));
 		}
 		catch (Exception e){
 			System.out.println("Exception in ClientSendEmailRequest: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			client.insertPacket(PacketFactory.buildChatSystemMessage("Unable to Send Email to Recipient."));
 		}
 	}
@@ -7883,7 +7883,7 @@ public class ZoneClientThread implements Runnable {
 
 		}catch(Exception e) {
 			System.out.println("Exception in handlePlanetTravelListRequest: " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 	}
@@ -10140,7 +10140,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		}catch(Exception e){
 			System.out.println("Exception in: handleSuiEventNotification " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -10191,7 +10191,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		}catch(Exception e){
 			System.out.println("Exception caught in handleEjectRequest " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -10210,7 +10210,7 @@ public class ZoneClientThread implements Runnable {
 
 		}catch(Exception e){
 			System.out.println("Exception caught in handleUnstickRequest " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -10421,7 +10421,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		}catch(Exception e){
 			System.out.println("Eception caught in handleMoveItem " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	protected void handleRotateItem(long targetID,String [] Parameters){
@@ -10493,7 +10493,7 @@ public class ZoneClientThread implements Runnable {
 
 		}catch(Exception e){
 			System.err.println("Exception caught in ZoneClientThread.handlePayMaintenance " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -10627,7 +10627,7 @@ public class ZoneClientThread implements Runnable {
 				//DOH!
 			}
 			System.out.println("Exception caught in ZoneClientThread.handleDestroyStructure " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -10808,7 +10808,7 @@ public class ZoneClientThread implements Runnable {
 		}
 		catch(Exception e){
 			System.out.println("Exception caught in ZoneClientThread.handleTip " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 
 		}
 	}
@@ -11532,7 +11532,7 @@ public class ZoneClientThread implements Runnable {
 
 		}catch(Exception e){
 			System.out.println("Exception caught in ZoneClientThread.handleGroupInvite " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -11575,7 +11575,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		}catch(Exception e){
 			System.out.println("Exception caught in ZoneClientThread.handleAcceptGroupInvite " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -11592,7 +11592,7 @@ public class ZoneClientThread implements Runnable {
 			client.insertPacket(PacketFactory.buildDeltasMessageGroupInvite(Constants.BASELINES_CREO, (byte)6,(short)1,(short)7, player,groupHost));                    
 		}catch(Exception e){
 			System.out.println("Exception caught in ZoneClientThread.handleDeclineGroupInvite " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -11607,7 +11607,7 @@ public class ZoneClientThread implements Runnable {
 			g.removeMemberFromGroup(player,Constants.GROUP_REMOVE_REASON_LEAVE);
 		}catch(Exception e){
 			System.out.println("Exception caught in ZoneClientThread.handleLeaveGroup() " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -11629,7 +11629,7 @@ public class ZoneClientThread implements Runnable {
 			}
 		}catch(Exception e){
 			System.out.println("Exception Caught in ZoneClientThread.handleDisbandGroup() " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -11713,7 +11713,7 @@ public class ZoneClientThread implements Runnable {
 			player.getPlayData().setCurrentLanguageID(client, spokenLanguage);
 		} catch (Exception e) {
 			System.out.println("Error setting spoken language: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 

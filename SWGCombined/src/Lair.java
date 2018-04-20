@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
@@ -556,9 +557,9 @@ public final class Lair extends NPC{
                         }
                     }
                 }
-         }catch(Exception e){
+         }catch(IOException e){
 	         System.out.println("Exception Caught in Lair.spawn() " + e);
-	         e.printStackTrace();
+	         e.printStackTrace(System.out);
          }
     }
     
@@ -933,7 +934,7 @@ public final class Lair extends NPC{
                 iWaveID++;
         }catch(Exception e){
             System.out.println("Exception Caught in Lair.sapawnWave() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -960,7 +961,7 @@ public final class Lair extends NPC{
                 }
             }catch(Exception e){
                 System.out.println("Exception in Lair.Update() " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
           //  System.out.println("Lair updated.");
     }
@@ -988,7 +989,7 @@ public final class Lair extends NPC{
             server.removeObjectFromAllObjects(this.getID());
         }catch(Exception e){
             System.out.println("Exception caught in Lair.killLair() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     

@@ -13,6 +13,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.font.FontRenderContext;
 import java.awt.font.TextLayout;
 import java.awt.geom.AffineTransform;
+import java.awt.geom.NoninvertibleTransformException;
 import java.awt.geom.Point2D;
 import java.awt.geom.Rectangle2D;
 import java.util.ArrayList;
@@ -448,9 +449,9 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 				//g.setTransform(theTransform);
 				//g.setTransform(identity);
 				//Image drawImage = buffImg.getScaledInstance(600, -1, Image.SCALE_REPLICATE);
-			} catch (Exception e) {
+			} catch (InterruptedException e) {
 				System.out.println("Exploded running ZoneServerScreen: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}
@@ -544,14 +545,14 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 					try {
 						inverseBufferedTransform = theBufferedTransform.createInverse();
 
-					} catch (Exception e) {
+					} catch (NoninvertibleTransformException e) {
 						inverseBufferedTransform = new AffineTransform();
 						inverseBufferedTransform.setToScale(-16.0, 16.0);
 						inverseBufferedTransform.translate(-8192.0f, 8192.0f);
 					}
 					try {
 						inverseTransform = theTransform.createInverse();
-					} catch (Exception e) {
+					} catch (NoninvertibleTransformException e) {
 						inverseTransform = new AffineTransform();
 						inverseTransform.setToScale(scaleX, scaleY);
 					}
@@ -707,7 +708,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 			theBufferedTransform.translate(8192.0f, -8192.0f);
 			try {
 				inverseBufferedTransform = theBufferedTransform.createInverse();
-			} catch (Exception e) {
+			} catch (NoninvertibleTransformException e) {
 				inverseBufferedTransform = new AffineTransform();
 				inverseBufferedTransform.setToScale(-16.0, 16.0);
 				inverseBufferedTransform.translate(-8192.0f, 8192.0f);
@@ -829,7 +830,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 			}
 		} catch (Exception e) {
 			System.out.println("Error drawing " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	
@@ -876,7 +877,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 			}
 		} catch (Exception e) {
 			System.out.println("Error drawing unscaled place dynamic spawns: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	private void changeState(int iState) {
@@ -981,7 +982,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 					
 				}
 				System.out.println("Exploded in preMenu: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}
@@ -1028,7 +1029,7 @@ public class ZoneServerScreen implements KeyListener, MouseListener, MouseMotion
 			}
 		} catch (Exception e) {
 			System.out.println("Error drawing resource spawns " + e.toString() );
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 

@@ -49,9 +49,9 @@ public class ChatServer implements Runnable{
 					Thread.yield();
 					wait(100);
 				}
-			} catch (Exception e) {
+			} catch (InterruptedException e) {
 				System.out.println("Error in ChatRoom thread: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}

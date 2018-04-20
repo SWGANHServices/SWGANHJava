@@ -134,10 +134,10 @@ public class ZoneLoginTransciever implements Runnable{
 			dOut.writeByte(Constants.ZONE_SERVER_REQUEST_ACCOUNT_DATA);
 			dOut.writeInt(accountID);
 			dOut.flush();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			//System.out.println("ZoneLoginTransciever exploded reading account data from remote Login Server: " + e.toString());
             DataLog.logException("ZoneLoginTransciever exploded reading account data from remote Login Server", "ZoneLoginTransciever",true, true, e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	
@@ -157,7 +157,7 @@ public class ZoneLoginTransciever implements Runnable{
 			dIn = null;
 			communicationSocket.close();
 			communicationSocket = null;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// Must already be closed.
 		} finally {
 			myThread = null;
@@ -170,9 +170,9 @@ public class ZoneLoginTransciever implements Runnable{
 			dOut.writeByte(Constants.SERVER_VOLUNTEER_UPDATE_STATUS);
 			dOut.writeInt(server.getStatus());
 			dOut.flush();
-		} catch (Exception e) { 
+		} catch (IOException e) { 
 			System.out.println("Error volunteering status change: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	
@@ -189,7 +189,7 @@ public class ZoneLoginTransciever implements Runnable{
 					long lNanoDifference = lNanoTimeAfterPing - lNanoTimeBeforePing;
 					//System.out.println("Pong byte = " + response);
 					pingTimes[i] = lNanoDifference;
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// Oh well.
 					DataLog.logException("Error in estimatePing.", "ZoneLoginTransciever",true, true, e);
                     //System.out.println("Error in estimatePing: " + e.toString());
@@ -217,7 +217,7 @@ public class ZoneLoginTransciever implements Runnable{
 			dOut.writeByte(Constants.SERVER_SEND_ESTIMATED_PING);
 			dOut.writeInt((int)lEstimatedPingMS);
 			dOut.flush();
-		} catch (Exception e) {
+		} catch (IOException e) {
             DataLog.logException("Error sending average ping", "ZoneLoginTransciever", true, true, e);
 			//System.out.println("Error sending average ping: " + e.toString());
 			//e.printStackTrace();
@@ -243,7 +243,7 @@ public class ZoneLoginTransciever implements Runnable{
 						communicationSocket.close();
 						communicationSocket= null;
 					}
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// Couldn't connect.
 				}
 			} else {
@@ -284,7 +284,7 @@ public class ZoneLoginTransciever implements Runnable{
 							}
 						}
 					}				
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// D'oh!
 				}
 			}

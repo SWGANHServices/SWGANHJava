@@ -2,6 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
+import java.io.IOException;
 import java.util.ArrayList;
 /**
  *
@@ -133,9 +134,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
             System.out.println("TradeObject.notifyTradeBegin()");
             this.recipient.getClient().insertPacket(PacketFactory.buildBeginTradeMessage(originator));
             this.originator.getClient().insertPacket(PacketFactory.buildBeginTradeMessage(recipient));
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Eception Caught in TradeObject.notifyTradeBegin() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             notifyAbortTrade(recipient);
             notifyAbortTrade(originator);
         }
@@ -156,9 +157,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
                 originator.getClient().insertPacket(PacketFactory.buildUpdateTradeWindowCredits(iCashAmount));
                 this.cashToOriginator = iCashAmount;
             }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Eception Caught in TradeObject.notifyCashOfferedUpdate() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             notifyAbortTrade(player);
         }
     }
@@ -240,9 +241,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
             }
             
             
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Eception Caught in TradeObject.notifyItemAddedToWindow() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             notifyAbortTrade(player);
         }
     }
@@ -268,9 +269,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
             DataLogObject L = new DataLogObject("TradeObject.notifyAbortTrade()",sTradeLog,Constants.LOG_SEVERITY_INFO);
             DataLog.qServerLog.add(L);
             System.out.println(sTradeLog);
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Eception Caught in TradeObject.notifyAbortTrade() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -289,9 +290,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
                this.recipientTradeAcceptChecked = true;
                originator.getClient().insertPacket(PacketFactory.buildCheckAcceptTrade());
             }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception Caught in TradeObject.notifyTradeAcceptedChecked() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             notifyAbortTrade(player);
         }
     }
@@ -311,9 +312,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
                 this.recipientTradeAcceptChecked = false;
                originator.getClient().insertPacket(PacketFactory.buildUnCheckAcceptTrade());
             }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception Caught in TradeObject.notifyTradeAcceptedUnChecked() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             notifyAbortTrade(player);
         }
     }
@@ -335,9 +336,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
             }
             
             
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception Caught in TradeObject.notifyVerifyTrade() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
             notifyAbortTrade(player);
         }
     }
@@ -479,9 +480,9 @@ public class TradeObject extends SOEObject{ // This shouldn't extend SOEObject i
             originator.removeTradeRequest(this);
             recipient.removeCurrentTradeObject();
             recipient.removeTradeRequest(this);
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception Caught in tradeObject.completeTrade " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
             

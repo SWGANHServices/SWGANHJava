@@ -11,19 +11,19 @@ import java.util.concurrent.ConcurrentHashMap;
  * @author Darryl
  */
 public class NPC extends Player {
-	public final static long serialVersionUID = 1;
-	private final static long VEHICLE_TOTAL_SPAWN_TIME_MS = 4 * 60 * 60 * 1000;
-	private final static int MIN_DAMAGE_TO_REPORT = 20;
-	private int iVehicleDamage = 0;
-	private int iVehicleMaxHealth;
-	private long lLinkID = 0;
-	private String sVehicleEffect = null;
+    public final static long serialVersionUID = 1;
+    private final static long VEHICLE_TOTAL_SPAWN_TIME_MS = 4 * 60 * 60 * 1000;
+    private final static int MIN_DAMAGE_TO_REPORT = 20;
+    private int iVehicleDamage = 0;
+    private int iVehicleMaxHealth;
+    private long lLinkID = 0;
+    private String sVehicleEffect = null;
     private boolean bIsTerminal = false;
-	private IntangibleObject myParent;
-	private long lVehicleMaxHealthKK = 0;
-	private long lVehicleDamageKK = 0;
-	private long lVehicleHealthDecreaseKKperMS = 0;
-	private boolean bIsSkillTrainer = false;
+    private IntangibleObject myParent;
+    private long lVehicleMaxHealthKK = 0;
+    private long lVehicleDamageKK = 0;
+    private long lVehicleHealthDecreaseKKperMS = 0;
+    private boolean bIsSkillTrainer = false;
     private long myLairID;
     private Lair myLair;
     private boolean bDeathblows;
@@ -39,9 +39,9 @@ public class NPC extends Player {
     private int iMaxRoamDistance;
     private long lNextRoamTime;
     private int iArtificialIntelligenceType;
-	private transient boolean bIsSpawned = false;
-	private transient ConcurrentHashMap<SOEObject, Integer> vCreatureHateList;
-	private transient ConcurrentHashMap<SOEObject, Integer> vPlayerPeacedHateList;
+    private transient boolean bIsSpawned = false;
+    private transient ConcurrentHashMap<SOEObject, Integer> vCreatureHateList;
+    private transient ConcurrentHashMap<SOEObject, Integer> vPlayerPeacedHateList;
 	// The faction CRC, in the case of NPCs, refers to what "species" the faction belongs to.
 	// For example, if the creature is a Piket, then iFactionCRC = PacketUtils.SWGCrc("piket");
 	// If the creature is an Imperial Surface Marshall, then iFactionCRC = Constants.FACTIONS[Constants.FACTION_IMPERIAL];
@@ -95,7 +95,7 @@ public class NPC extends Player {
 	        updateIntelligence(lElapsedTimeMS);
         } catch (Exception e) {
         	System.out.println("Error in NPC update: " + e.toString());
-        	e.printStackTrace();
+        	e.printStackTrace(System.out);
         }
 	}
 	
@@ -228,9 +228,9 @@ public class NPC extends Player {
                 Player T = currentPlayers.get(i);                    
                 T.getClient().insertPacket(A);                              
             }
-        }catch(Exception e){
+        }catch(IOException e){
                 System.out.println("Exception Caught while sending NPC Animation " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }  
     }
     
@@ -243,9 +243,9 @@ public class NPC extends Player {
                 Player T = currentPlayers.get(i);                    
                 T.getClient().insertPacket(PacketFactory.buildObjectControllerMessageSpatial(this, T, T, sSpeech, (short)0, (short)0));                              
             }
-        }catch(Exception e){
+        }catch(IOException e){
                 System.out.println("Exception Caught while sending NPC Speech " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }  
     }
     
@@ -389,7 +389,7 @@ public class NPC extends Player {
     		try {
 		    	byte[] packet = PacketFactory.buildDeltasMessage(Constants.BASELINES_CREO, (byte)3, (short)1, (short)0x0B, this, getStance());
 		    	return packet;
-    		} catch (Exception e) {
+    		} catch (IOException e) {
     			return null;
     		}
     	} else return null;
@@ -400,7 +400,7 @@ public class NPC extends Player {
     	if (updateZone) {
     		try {
     			return PacketFactory.buildDeltasMessage(Constants.BASELINES_CREO, (byte)3, (short)1, (short)0x10, this, getStateBitmask());
-    		} catch (Exception e) {
+    		} catch (IOException e) {
     			return null;
     		}
     	} else {
@@ -413,7 +413,7 @@ public class NPC extends Player {
     	if (updateZone) {
     		try {
     			return PacketFactory.buildDeltasMessage(Constants.BASELINES_CREO, (byte)3, (short)1, (short)0x10, this, getStateBitmask());
-    		} catch (Exception e) {
+    		} catch (IOException e) {
     			return null;
     		}
     	} else {
@@ -549,7 +549,7 @@ public class NPC extends Player {
 				    				ZoneClient client = player.getClient();
 				    				try {
 				    					client.insertPacket(PacketFactory.buildNPCSpeak(player, this, null, "I hate you!", (short)0, (short)0));
-				    				} catch (Exception e) {
+				    				} catch (IOException e) {
 				    					// Oh well.  We tried, anyway.
 				    				}
 				    			}
@@ -721,7 +721,7 @@ public class NPC extends Player {
 					    				ZoneClient client = player.getClient();
 					    				try {
 					    					client.insertPacket(PacketFactory.buildNPCSpeak(player, this, null, "I hate you!", (short)0, (short)0));
-					    				} catch (Exception e) {
+					    				} catch (IOException e) {
 					    					// Oh well.  We tried, anyway.
 					    				}
 					    			}
@@ -852,9 +852,9 @@ public class NPC extends Player {
     		if (client != null) {
     			try {
     				client.insertPacket(PacketFactory.buildUpdatePvPStatusMessage(this, getAttackedPVPStatus()));
-    			} catch (Exception e) {
+    			} catch (IOException e) {
     				System.out.println("Error sending updated attacked PVP status to hated Player " + p.getFirstName() + ": " + e.toString());
-    				e.printStackTrace();
+    				e.printStackTrace(System.out);
     			}
     		}
     	}
@@ -996,7 +996,7 @@ public class NPC extends Player {
     		unarmedWeapon.setConditionDamage(0, false); 
     		unarmedWeapon.setMaxCondition(100, false);
     		unarmedWeapon.setName(null);
-		} catch (Exception e ) {
+		} catch (IOException e ) {
 			// Cannot actually happen -- not updating Zone.
 		}
 		unarmedWeapon.setOwner(this);

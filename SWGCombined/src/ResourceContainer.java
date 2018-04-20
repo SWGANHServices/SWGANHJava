@@ -37,7 +37,7 @@ public class ResourceContainer extends TangibleItem {
 		setIFFFileName(resourceToCopy.getIFFFileName());
 		try {
 			setName(resourceToCopy.getName(), false);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			
 		}
 		setResourceSpawnID(resourceToCopy.getResourceSpawnID());
@@ -61,10 +61,10 @@ public class ResourceContainer extends TangibleItem {
 		}
 		try {
 			p.spawnItem(this);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error spawning new Resource Container for player " + p.getFirstName());
 			System.out.println(e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -85,7 +85,7 @@ public class ResourceContainer extends TangibleItem {
 		try {
 			setName(resourceToCopy.getName(), false);
 			setStackQuantity(iStackSize, false); // Don't want to generate the baseline update this time, as this is a "new" resource container.
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// D'oph!
 		}
 		resourceType = resourceToCopy.getResourceType();
@@ -103,10 +103,10 @@ public class ResourceContainer extends TangibleItem {
 		}
 		try {
 			p.spawnItem(this);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error spawning new Resource Container for player " + p.getFirstName());
 			System.out.println(e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 

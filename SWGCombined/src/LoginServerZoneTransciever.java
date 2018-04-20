@@ -37,7 +37,7 @@ public class LoginServerZoneTransciever implements Runnable{
 	public void kill() {
 		try {
 			serverSocket.close();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// D'oh!
 		}
 		myThread = null;

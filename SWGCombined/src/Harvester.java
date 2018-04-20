@@ -360,9 +360,9 @@ public class Harvester extends Structure {
 	            }
 	        }
 		    iLastHarvestedResourceAmount = iCurrentHarvestedResourceAmount;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error updating harvester: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	

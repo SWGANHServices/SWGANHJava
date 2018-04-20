@@ -37,7 +37,7 @@ public class StructureUpdateThread implements Runnable {
 				lDeltaUpdateTimeMS = lCurrentUpdateTimeMS - lLastUpdateTimeMS;
 				update(lDeltaUpdateTimeMS);
 				lLastUpdateTimeMS = lCurrentUpdateTimeMS;
-			} catch (Exception e) {
+			} catch (InterruptedException e) {
 				// Ruh roh.
 			}
 		}

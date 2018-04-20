@@ -6,6 +6,7 @@
 import java.util.Date;
 import java.io.BufferedWriter;
 import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.text.SimpleDateFormat;
@@ -86,7 +87,7 @@ public class DataLog implements Runnable {
            
            
                    
-       } catch (Exception e) {
+       } catch (IOException e) {
            System.out.println("Exception while opening Log Files: " + e.toString());
            e.printStackTrace(System.out);
        }

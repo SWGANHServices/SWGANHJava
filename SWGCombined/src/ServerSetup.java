@@ -85,14 +85,14 @@ public class ServerSetup extends WindowAdapter implements Runnable, ActionListen
 
 			//Nothing we can do.
 			System.out.println("An unrecoverable error has occured in ServerSetup::ServerSetup(). Please report this to the developers as soon as possible.");
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			System.exit(0);
 
 		} catch (InvocationTargetException e) {
 
 			//Nothing we can do.
 			System.out.println("An unrecoverable error has occured in ServerSetup::ServerSetup(). Please report this to the developers as soon as possible.");
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			System.exit(0);
 		}
 	}

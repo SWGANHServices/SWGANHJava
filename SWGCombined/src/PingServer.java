@@ -26,7 +26,7 @@ public class PingServer implements Runnable {
 			socket.setSoTimeout(10);
 		} catch (IOException e) {
 			System.out.println("Error binding to port " + port + ": " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			socket = null;
 		}
 		iPort = port;
@@ -46,7 +46,7 @@ public class PingServer implements Runnable {
 					try {
 						Thread.yield();
 						wait(100);
-					} catch (Exception e) {
+					} catch (InterruptedException e) {
 						// Who cares.
 					}
 				}
@@ -60,7 +60,7 @@ public class PingServer implements Runnable {
 				// Who cares
 			} catch (IOException e) {
 				System.out.println("Error in ping handler: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}

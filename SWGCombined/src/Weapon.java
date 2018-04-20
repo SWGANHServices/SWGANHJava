@@ -383,7 +383,7 @@ public class Weapon extends TangibleItem{
 			return successRating;
 		} catch (ClassCastException e ) {
 			System.out.println("Error -- Weapon experiment not experimenting on a weapon. " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			return Constants.CRAFTING_ASSEMBLY_INTERNAL_FAILURE;
 		}
 	}
@@ -543,7 +543,7 @@ public class Weapon extends TangibleItem{
 
 		} else {
 			System.out.println("Unknown experimental attribute to calculate: " + sAttributeName);
-			return;
+		//	return; //maybe unneeded
 		}
 	}
 	

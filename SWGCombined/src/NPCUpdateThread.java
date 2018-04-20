@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -58,9 +59,9 @@ public class NPCUpdateThread implements Runnable {
 			Player player = vPlayersAroundNPC.get(i);
 			try {
 				player.despawnItem(npc);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out.println("Unable to despawn NPC with ID " + npc.getID() + " to player " + player.getFullName() + ": " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}
@@ -80,9 +81,9 @@ public class NPCUpdateThread implements Runnable {
 						Thread.yield();
 						wait(100);
 					}
-				} catch (Exception e) {
+				} catch (InterruptedException e) {
 					System.out.println("NPCUpdateThread: Error waiting -- " + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 				/*if (iClusterID == Constants.TATOOINE) {
 					System.out.println("NPC Update thread for Tatooine Loop time: " + lDeltaUpdateTimeMS);
@@ -140,7 +141,7 @@ public class NPCUpdateThread implements Runnable {
 						}*/
 					} catch (Exception e) {
 						System.out.println("Error updating NPCs: " + e.toString());
-						e.printStackTrace();
+						e.printStackTrace(System.out);
 					}
 				}
 			} catch (OutOfMemoryError ee) {
@@ -150,13 +151,13 @@ public class NPCUpdateThread implements Runnable {
 					try {
 						Thread.yield();
 						wait(5000);
-					} catch (Exception e) {
+					} catch (InterruptedException e) {
 						// D'oh!
 					}
 				}
 			} catch (Exception e) {
 				System.out.println("Error in NPC Update Thread: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}

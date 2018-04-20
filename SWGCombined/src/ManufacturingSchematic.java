@@ -967,7 +967,7 @@ public class ManufacturingSchematic extends IntangibleObject {
 				vID9CurrentExperimentationValueFloatArray[i] = vID12MaxExperimentationValue[i] * multiplier; // Current one is based on assembly success rating.  
 			}
 			return successRating;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			return Constants.CRAFTING_ASSEMBLY_INTERNAL_FAILURE;
 		}
 	}

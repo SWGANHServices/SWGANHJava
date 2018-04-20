@@ -384,9 +384,9 @@ public class IntangibleObject extends SOEObject {
                         }
                     }
 
-                }catch(Exception e){
+                }catch(IOException e){
                     System.out.println("Exception Caught at IntangibleObject.useItem " + e);
-                    e.printStackTrace();
+                    e.printStackTrace(System.out);
                 }
 	}
 	
@@ -445,9 +445,9 @@ public class IntangibleObject extends SOEObject {
                 
                 
                 
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception caught in Intangible.update " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
         }
 	/*private void callPet(ZoneClient client){
@@ -508,13 +508,13 @@ public class IntangibleObject extends SOEObject {
                                         vPlayersInRange.get(i).spawnItem(theVehicle);
                                 }
                         }
-                } catch (Exception e) {
+                } catch (IOException e) {
                         System.out.println("Error spawning swoop: " + e.toString());
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
 
                         // D'oh!
                 }
                 
-                return;
+             //   return; unnessisary 
         }
 }

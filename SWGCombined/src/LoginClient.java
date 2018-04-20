@@ -129,11 +129,11 @@ public class LoginClient implements Runnable {
 				return packetQueue.remove(0);
 			} catch (NoSuchElementException e) {
 				System.out.println("getQueuedPacket -- NoSuchElementException: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				return null;
 			} catch (ArrayIndexOutOfBoundsException ee) {
 				System.out.println("getQueuedPacket() -- How are you happening? " + ee.toString());
-				ee.printStackTrace();
+				ee.printStackTrace(System.out);
 			}
 		}
 		return null;
@@ -341,7 +341,7 @@ public class LoginClient implements Runnable {
 	                                                          //  L = new DataLogObject("ZoneClient().DequeuePacket 3: " + serverSequence,"SourceIP",buffer,this.getIpnPort(),Constants.LOG_PACKET_DIRECTION_OUT);
 	                                                           // this.getServer().logServer.logPacket(L);
 							}
-							return;
+							//return; unneeded
 							
 						} else {
 							// We CAN still multipacket.
@@ -436,7 +436,7 @@ public class LoginClient implements Runnable {
 			} 
 		} catch (Exception e) {
 			System.out.println("Exploded in Client dequeuePacket: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -618,9 +618,9 @@ public class LoginClient implements Runnable {
 						incPacket.readInt();
 						ClientPacketsSent = incPacket.readReversedLong();
 						ClientPacketsReceived =  incPacket.readReversedLong();
-					} catch (Exception e) {
+					} catch (IOException e) {
 						System.out.println("Exploded reading data: " + e.toString());
-						e.printStackTrace();
+						e.printStackTrace(System.out);
 						//Who cares
 					} finally {
 						send_netstatusresponse();	
@@ -629,11 +629,11 @@ public class LoginClient implements Runnable {
 			}
 		} catch (IOException ee) {
 			System.out.println("Error reading data: " + ee.toString());
-			ee.printStackTrace();
+			ee.printStackTrace(System.out);
 		} catch (Exception e) {
 			System.out.println("Unknown exception: " + e.toString());
 			PacketUtils.printPacketData(incPacket.getBuffer());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	
@@ -659,9 +659,9 @@ public class LoginClient implements Runnable {
 			byte[] endPacket = PacketUtils.AppendCRC(encoded, encoded.length, CrCSeed);
 			myServer.queue(new DatagramPacket(endPacket, endPacket.length, myAddress));
 			//queuePacket(buf.toByteArray(), PACKET_ENCODE_COMPRESS_CRC_PACKET);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Exception writing data to packet: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	
@@ -747,9 +747,9 @@ public class LoginClient implements Runnable {
     		}
 	    	dOut = new DatagramPacket(buf.toByteArray(), buf.size(), myAddress);
 	    	return dOut;
-    	} catch (Exception e) {
+    	} catch (IOException e) {
     		System.out.println("Error in SendSWG: " + e.toString());
-    		e.printStackTrace();
+    		e.printStackTrace(System.out);
     	}
     	return null;
     }
@@ -770,7 +770,7 @@ public class LoginClient implements Runnable {
 			dOut.writeReversedInt(LoginServer.MAX_PACKET_SIZE);
 			byte[] buffer = buf.toByteArray();
 			queueOutgoingPacket(buffer);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// Who cares
 		}
     }
@@ -802,10 +802,10 @@ public class LoginClient implements Runnable {
 			queueOutgoingPacket(buffer);
 		} catch (IOException ee) {
 			System.out.println("Error writing data to the data stream: " + ee.toString());
-			ee.printStackTrace();
+			ee.printStackTrace(System.out);
 		} catch (Exception e) {
 			System.out.println("Unknown error: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			
 		}
     }
@@ -848,9 +848,9 @@ public class LoginClient implements Runnable {
 			dOut.writeBoolean(false);
 			dOut.writeShort(0);
 			bOut = PacketUtils.AppendCRC(bOut, bOut.size(), CrCSeed);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error writing data to the output stream in SendAck: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		queueOutgoingPacket(bOut.toByteArray());
 	}
@@ -900,7 +900,7 @@ public class LoginClient implements Runnable {
 		
 		} catch (Exception e) {
 			System.out.println("Error reading packet update type: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		
 	}
@@ -1049,9 +1049,9 @@ public class LoginClient implements Runnable {
 			sUserPasswordLC = sUserPassword;//.toLowerCase(); cant lc the passwords!!!!
 			sClientVersion = incPacket.readUTF();
 			//System.out.println("Received client version " + sClientVersion);
-		} catch (Exception ee) {
+		} catch (IOException ee) {
 			System.out.println("Error reading the packet: " + ee.toString());
-			ee.printStackTrace();
+			ee.printStackTrace(System.out);
 		}
 		boolean bValidClientVersion = true;
 		//System.out.println("/t/tLoginClient:  Handling incoming connection.");
@@ -1116,7 +1116,7 @@ public class LoginClient implements Runnable {
 					
 				} catch (IOException e) {
 					System.out.println("Error building ClientUIErrorMessage: " + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else {
 				//System.out.println("Valid client -- sending cluster / character info.");
@@ -1138,7 +1138,7 @@ public class LoginClient implements Runnable {
 				queueOutgoingPacket(PacketFactory.buildClientUIErrorMessage("Error", "Invalid client version " + sClientVersion));
 			} catch (IOException e) {
 				System.out.println("Error building ClientUIErrorMessage: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				// Meh.
 			}
 
@@ -1162,9 +1162,9 @@ public class LoginClient implements Runnable {
 			dOut.writeInt((int)iAccountID);
 			dOut.writeInt((int)iAccountID);
 			dOut.writeUTF(sUserName);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error putting information into the output stream: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		byte[] buffer = bOut.toByteArray();
 		queueOutgoingPacket(buffer);
@@ -1190,9 +1190,9 @@ public class LoginClient implements Runnable {
 				dOut.writeInt(server.iTimeOffset * 3600);
 			}
 			dOut.writeInt(8); //Default max characters per account. 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error in Build Login Cluster Enumeration: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		byte[] buffer = bOut.toByteArray();
 		//PacketUtils.printPacketToScreen(buffer, "LoginEnumCluster");
@@ -1239,8 +1239,8 @@ public class LoginClient implements Runnable {
 					dOut.writeByte(-1);
 				}
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace(System.out);
 		}
 		byte[] buffer = bOut.toByteArray();
 		//PacketUtils.printPacketToScreen(buffer, "LoginClusterStatus");
@@ -1267,9 +1267,9 @@ public class LoginClient implements Runnable {
 					dOut.writeInt(1); // Logically, this would be the planet id?
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error building Enumerate Cluster: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		byte[] buffer = bOut.toByteArray();
 		queueOutgoingPacket(buffer);
@@ -1292,7 +1292,7 @@ public class LoginClient implements Runnable {
 			dOut.writeBoolean(false);
 			dOut.writeShort(0);
 			queueOutgoingPacket(bOut.toByteArray());
-		} catch (Exception e) {
+		} catch (IOException e) {
 			
 		}
 				

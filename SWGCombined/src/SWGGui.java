@@ -2,6 +2,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics2D;
+import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.KeyEvent;
@@ -17,6 +18,7 @@ import java.io.IOException;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketAddress;
+import java.net.UnknownHostException;
 import java.util.Enumeration;
 import java.util.Random;
 import java.util.concurrent.ConcurrentHashMap;
@@ -154,7 +156,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 		} catch(FatalConfigException e) {
 
 			//Fatal condition occurred, exit.
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			System.exit(0);
 		}
 
@@ -208,7 +210,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 						System.out.println("Unknown connnection response " + connectionResponse);
 					}
 
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// Unable to connect.
 				}
 			}
@@ -311,9 +313,9 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			//System.out.println("Using " + lUsedMemory + " bytes of " + lTotalMemory + " VM available.  Free: " + lFreeMemory + " bytes.");
 			DataLog.logEntry("Using " + lUsedMemory + " bytes of " + lTotalMemory + " VM available.  Free: " + lFreeMemory + " bytes.", "SWGGui", Constants.LOG_SEVERITY_INFO, true,true);
 
-		} catch (Exception e) {
+		} catch (HeadlessException e) {
 			System.out.println("Error caught: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 	}
@@ -433,7 +435,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			try {
 				InetAddress serverAddress = InetAddress.getByName(zoneServer.getHostName());
 				g.drawString("Zone Server raw address: " + serverAddress.getHostAddress(), currentX, currentY);
-			} catch (Exception e) {
+			} catch (UnknownHostException e) {
 				// D'oh!
 			}
 			if(zoneServerID!=0)
@@ -589,9 +591,9 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 				ZoneClient client = vClientItr.nextElement();
 				try {
 					client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_ABORT));
-				} catch (Exception e) {
+				} catch (IOException e) {
 					System.out.println("Error sending shutdown abort packet to client." + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			}
 		} else if (isKeyPressed(KeyEvent.VK_S)) {
@@ -603,7 +605,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 			} catch(FatalConfigException e) {
 
 				//Fatal condition occurred, exit.
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				System.exit(0);
 			}
 		}
@@ -617,9 +619,9 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 						try {
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_WARNING));
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_TIME + "5 minutes."));
-						} catch (Exception e) {
+						} catch (IOException e) {
 							System.out.println("Error inserting shutdown packets into client: " + e.toString());
-							e.printStackTrace();
+							e.printStackTrace(System.out);
 						}
 					}
 				}
@@ -632,9 +634,9 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 						try {
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_WARNING));
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_TIME + "4 minutes."));
-						} catch (Exception e) {
+						} catch (IOException e) {
 							System.out.println("Error inserting shutdown packets into client: " + e.toString());
-							e.printStackTrace();
+							e.printStackTrace(System.out);
 						}
 					}
 				}
@@ -647,9 +649,9 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 						try {
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_WARNING));
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_TIME + "3 minutes."));
-						} catch (Exception e) {
+						} catch (IOException e) {
 							System.out.println("Error inserting shutdown packets into client: " + e.toString());
-							e.printStackTrace();
+							e.printStackTrace(System.out);
 						}
 					}
 				}
@@ -662,9 +664,9 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 						try {
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_WARNING));
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_TIME + "2 minutes."));
-						} catch (Exception e) {
+						} catch (IOException e) {
 							System.out.println("Error inserting shutdown packets into client: " + e.toString());
-							e.printStackTrace();
+							e.printStackTrace(System.out);
 						}
 					}
 				}
@@ -677,9 +679,9 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 						try {
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_WARNING));
 							client.insertPacket(PacketFactory.buildChatSystemMessage(SHUTDOWN_TIME + "1 minutes."));
-						} catch (Exception e) {
+						} catch (IOException e) {
 							System.out.println("Error inserting shutdown packets into client: " + e.toString());
-							e.printStackTrace();
+							e.printStackTrace(System.out);
 						}
 					}
 				}
@@ -701,7 +703,7 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 					remoteDataOut.close();
 					remoteDataIn.close();
 					remoteAuthSocket.close();
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// Oh well, we're closing anyway.
 				}
 				System.exit(0);
@@ -769,10 +771,10 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
 					}
 				}
 
-			}catch(Exception e){
+			}catch(InterruptedException e){
 				//who cares
 				System.out.println("We exploded while running the thread: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}

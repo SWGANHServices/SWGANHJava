@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
@@ -89,7 +90,7 @@ public final class CreatureAnimal extends NPC {
             }            
         }catch(Exception e){
             System.out.println("Exception caught in CreatureAnimal.update " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -112,7 +113,7 @@ public final class CreatureAnimal extends NPC {
             
         }catch(Exception e){
             System.out.println("Exception caught in CreatureAnimal.randomMove " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -126,7 +127,7 @@ public final class CreatureAnimal extends NPC {
 	        }
         }catch(Exception e){
                 System.out.println("Exception caught in CreatureAnimal.sendPositionUpdate " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
         }
     }
 
@@ -152,7 +153,7 @@ public final class CreatureAnimal extends NPC {
             }
         }catch(Exception e){
             System.out.println("Exception Caught while CreatureAnimal.vocalize " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -179,7 +180,7 @@ public final class CreatureAnimal extends NPC {
             }
         }catch(Exception e){
             System.out.println("Exception Caught while CreatureAnimal.animate " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 
@@ -445,9 +446,9 @@ public final class CreatureAnimal extends NPC {
 			} else {
 				client.insertPacket(PacketFactory.buildChatSystemMessage("You were unable to extract resources from the corpse."));
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error spawning new resource container: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 	

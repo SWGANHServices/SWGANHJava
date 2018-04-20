@@ -142,11 +142,11 @@ public class SUIWindow {
 			} else {
 				return null;
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught while Building SUIScriptMessageBox Window: "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return null;
 	}
@@ -234,11 +234,11 @@ public class SUIWindow {
 			} else {
 				return null;
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught while Building SUIScriptListBox Window: "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return null;
 	}
@@ -294,11 +294,11 @@ public class SUIWindow {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught while Building SUIScriptTransferBox Window: "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return null;
 	}
@@ -380,11 +380,11 @@ public class SUIWindow {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught while Building SUIScriptTransferBox Window: "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return null;
 	}
@@ -407,11 +407,11 @@ public class SUIWindow {
 				ComponentWindowHeader.flush();
 				bWindowHeaderSet = true;
 				this.PacketComponents.add(ComponentWindowHeader.getBuffer());// 0
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow() BuildHeader "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowHeaderSet = false;
 			}
 		}
@@ -436,11 +436,11 @@ public class SUIWindow {
 				ComponentWindowID.writeInt(iWindowID);
 				ComponentWindowID.flush();
 				this.PacketComponents.add(ComponentWindowID.getBuffer());// 1
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().setSUIWindowID() while writing the Window ID to the packet "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				iWindowID = -1;
 				bWindowIDSet = false;
 			}
@@ -540,11 +540,11 @@ public class SUIWindow {
 				}
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught in SUIWindow().setWindowType().SUI_WINDOW_TYPE_ScriptlistBox "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			bWindowTypeSet = false;
 		}
 		return bWindowTypeSet;
@@ -601,11 +601,11 @@ public class SUIWindow {
 				this.PacketComponents.add(ComponentWindowTypeData.getBuffer());
 				this.iNumberOfUpdates++;
 				bWindowTypeStringSet = true;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().setWindowTypeData() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 		return bWindowTypeStringSet;
@@ -696,11 +696,11 @@ public class SUIWindow {
 				this.iNumberOfUpdates++;
 				bWindowPromptSet = true;
 
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().setWindowPrompt() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowPromptSet = false;
 			}
 		}
@@ -751,11 +751,11 @@ public class SUIWindow {
 			this.iNumberOfUpdates++;
 			bWindowHasCancelButton = true;
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught in SUIWindow().addCancelButton() "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			bWindowHasCancelButton = false;
 		}
 		return bWindowHasCancelButton;
@@ -786,11 +786,11 @@ public class SUIWindow {
 			this.iNumberOfUpdates++;
 			bWindowHasCancelButton = true;
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught in SUIWindow().adddataListCancelButton() "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			bWindowHasCancelButton = false;
 		}
 		return bWindowHasCancelButton;
@@ -817,11 +817,11 @@ public class SUIWindow {
 			this.iNumberOfUpdates++;
 			bWindowHasOkButton = true;
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught in SUIWindow().adddataListCancelButton() "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			bWindowHasOkButton = false;
 		}
 		return bWindowHasOkButton;
@@ -845,11 +845,11 @@ public class SUIWindow {
 			this.iNumberOfUpdates++;
 			bWindowHasDataList = true;
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught in SUIWindow().addDataListlst() "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			bWindowHasDataList = false;
 		}
 		return bWindowHasDataList;
@@ -924,11 +924,11 @@ public class SUIWindow {
 
 			bWindowHasDataListItems = true;
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught in SUIWindow().addDataListlst() "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			bWindowHasDataListItems = false;
 		}
 		return bWindowHasDataListItems;
@@ -978,11 +978,11 @@ public class SUIWindow {
 			this.iNumberOfUpdates++;
 			bWindowHasRevertButton = true;
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught in SUIWindow().addRevertButton() "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			bWindowHasRevertButton = false;
 		}
 		return bWindowHasRevertButton;
@@ -1017,11 +1017,11 @@ public class SUIWindow {
 
 				this.iNumberOfUpdates++;
 				bWindowHasFooter = true;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().addWindowFooter() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowHasFooter = false;
 			}
 		}
@@ -1147,11 +1147,11 @@ public class SUIWindow {
 				this.PacketComponents
 						.add(ComponentWindowListHeader.getBuffer());
 				bWindowHasDataListHeader = true;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().addWindowFooter() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowHasDataListHeader = false;
 			}
 		}
@@ -1329,11 +1329,11 @@ public class SUIWindow {
 				this.PacketComponents.add(ComponentWindowDataListPrompt
 						.getBuffer());
 				bWindowHasDataListPrompt = true;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().addWindowFooter() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowHasDataListPrompt = false;
 			}
 		}
@@ -1390,11 +1390,11 @@ public class SUIWindow {
 				this.PacketComponents.add(ComponentTransferBoxHeader
 						.getBuffer());
 				bTransferBoxHasHeader = true;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().setTransferBoxHeader() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bTransferBoxHasHeader = false;
 			}
 		}
@@ -1814,10 +1814,10 @@ public class SUIWindow {
 				this.PacketComponents.add(ComponentTransferBoxContent
 						.getBuffer());
 				bTransferBoxHasContent = true;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out.println("Exception caught in setTransferBoxContent "
 						+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bTransferBoxHasContent = false;
 			}
 		}
@@ -1981,11 +1981,11 @@ public class SUIWindow {
 				this.PacketComponents.add(ComponentWindowInputHeader
 						.getBuffer());
 				bWindowHasInputBoxHeader = true;
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().setWindowInputBoxHeader() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowHasInputBoxHeader = false;
 			}
 		}
@@ -2060,11 +2060,11 @@ public class SUIWindow {
 				this.PacketComponents.add(ComponentWindowPrompt.getBuffer());
 				bWindowPromptSet = true;
 
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().setInputWindowPrompt() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowPromptSet = false;
 			}
 		}
@@ -2239,11 +2239,11 @@ public class SUIWindow {
 
 				bWindowHasInputFields = true;
 
-			} catch (Exception e) {
+			} catch (IOException e) {
 				System.out
 						.println("Exception Caught in SUIWindow().setInputWindowPrompt() "
 								+ e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				bWindowHasInputFields = false;
 			}
 		}

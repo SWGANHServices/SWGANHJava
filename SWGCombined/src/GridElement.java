@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.HashMap;
 import java.util.ArrayList;
@@ -92,7 +93,7 @@ public class GridElement {
 							} else {
 								client.insertPacket(PacketFactory.buildNPCUpdateCellTransformMessage(o, client.getServer().getObjectFromAllObjects(o.getCellID())));
 							}
-						} catch (Exception e) {
+						} catch (IOException e) {
 							// D'oh!
 						}
 					} 
@@ -126,7 +127,7 @@ public class GridElement {
 						if (!ZoneServer.isInRange(o, player)) {
 							player.despawnItem(o);
 						}
-					} catch (Exception e) {
+					} catch (IOException e) {
 						// D'oh!
 					}
 				} 

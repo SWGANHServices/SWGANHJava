@@ -88,9 +88,9 @@ public class Shuttle extends NPC{
                         	//System.out.println("Send flyout to player with first name " + player.getFirstName());
                         	try{
                                 this.flyShuttle(player.getClient());
-                            }catch(Exception e){
+                            }catch(IOException e){
                                 System.out.println("Exception Caught while updating Shuttle Takeoff " + e);
-                                e.printStackTrace();
+                                e.printStackTrace(System.out);
                             }
 
                         }
@@ -111,7 +111,7 @@ public class Shuttle extends NPC{
 	                    //this.spawnItem(this);
 	                }catch(Exception e){
 	                    System.out.println("Shuttle Spawn Error in Shuttle.Java " + e);
-	                    e.printStackTrace();
+	                    e.printStackTrace(System.out);
 	                }                    
 	            }
 	        }
@@ -134,9 +134,9 @@ public class Shuttle extends NPC{
 	                        {
 	                            try{                           
 	                                this.flyShuttle(PlayerList.get(i).getClient());
-	                            }catch(Exception e){
+	                            }catch(IOException e){
 	                                System.out.println("Exception Caught while updating Shuttle Landing " + e);
-	                                e.printStackTrace();
+	                                e.printStackTrace(System.out);
 	                            }
 	
 	                        }
@@ -155,7 +155,7 @@ public class Shuttle extends NPC{
 	        }
     	} catch (Exception e) {
     		System.out.println("Error updating shuttle: " + e.toString());
-    		e.printStackTrace();
+    		e.printStackTrace(System.out);
     	}
     }
      

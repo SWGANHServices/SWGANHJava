@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.SocketAddress;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -252,7 +253,7 @@ public class EmailServer implements Runnable {
 							// receive messages. Request Returned to Queue.");
 						}
 					}
-				} catch (Exception e) {
+				} catch (IOException e) {
 					DataLogObject E = new DataLogObject(
 							"EmailServer::EmailRequestQueue",
 							"Exception Ocurred while processing a Client Request for emails. "
@@ -296,7 +297,7 @@ public class EmailServer implements Runnable {
 						}
 
 					}
-				} catch (Exception e) {
+				} catch (IOException e) {
 					DataLogObject E = new DataLogObject(
 							"EmailServer::EmailContentRequestQueue",
 							"Exception Ocurred while processing a Client Request for email content. "
@@ -518,11 +519,11 @@ public class EmailServer implements Runnable {
 				}
 
 			}// end try section
-			catch (Exception e) {
+			catch (InterruptedException e) {
 				// work exceptions here
 				System.out.println("Error in Email Server Thread: "
 						+ e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				DataLogObject E = new DataLogObject("EmailServer::EmailThread",
 						"Exception Ocurred in the EmailServer.java File run() thread. "
 								+ e.toString(),

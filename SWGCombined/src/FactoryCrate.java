@@ -42,7 +42,7 @@ public class FactoryCrate extends TangibleItem{
 	 * Factory crates are not, in fact, experimentable.
 	 */
 	public void experiment() {
-		return;
+		//return; //unnessisary? Obi
 	}
 	
 	public byte getQuantity() {

@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 /**
@@ -117,7 +118,7 @@ public class Group extends SOEObject{
                 }
             }catch(Exception e){
                 System.out.println("Exception caught in Group.update() " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
         }
         
@@ -178,9 +179,9 @@ public class Group extends SOEObject{
                 		0f, false));                        
 			}
             return false;
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception Caught in Group.addMemberToGroup " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
         return false;
 	}
@@ -307,9 +308,9 @@ public class Group extends SOEObject{
                 {
                     this.groupLeader.getServer().removeObjectFromAllObjects(this.getID());
                 }
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception Caught in Group.removeMemberFromGroup " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }		
 	}
 	
@@ -374,9 +375,9 @@ public class Group extends SOEObject{
                         }
                     }                  
 		}
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception Caught in Group.setGroupLeader() " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
 	}
         
@@ -410,9 +411,9 @@ public class Group extends SOEObject{
                         		0f, false));                        
                     }
                 }
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception Caught in Grou.disbandGroup() + e");
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
         }
         
@@ -455,7 +456,7 @@ public class Group extends SOEObject{
                 }
             }catch(Exception e){
                 System.out.println("Exception caught in Group.sendPacketToGroup() " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
         }
         
@@ -488,7 +489,7 @@ public class Group extends SOEObject{
                
             }catch(Exception e){
                 System.out.println("Exception caught in Group.electNewLeader() " + e);
-                e.printStackTrace();                
+                e.printStackTrace(System.out);                
             }
         }
         
@@ -522,9 +523,9 @@ public class Group extends SOEObject{
                     }                    
                 }
 
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Excption Caught in Group.reArrangeGroup " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }            
         }
 }

@@ -510,10 +510,10 @@ public class PacketUtils {
 			for (int i = pData.length - 2; i < pData.length; i++) {
 				dOut.writeByte(pData[i]);
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// System.out.println("Error encrypting packet contents: " +
 			// e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			return null;
 		}
 		byte[] toReturn = bOut.toByteArray();
@@ -595,9 +595,9 @@ public class PacketUtils {
 			byte[] toReturn = bOut.toByteArray();
 			// printPacketData(toReturn);
 			return toReturn;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error decrypting packet: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			return pData;
 		}
 	}
@@ -651,9 +651,9 @@ public class PacketUtils {
 				dOut.flush();
 				return bOut.toByteArray();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error deflating byte array: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return null;
 	}
@@ -719,7 +719,7 @@ public class PacketUtils {
 			// System.out.println("Decompress:  Array Index Out of Bounds!");
 			// printPacketData(compressed);
 			System.out.println(e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			return compressed;
 		}
 		short nLength = (short) compressed.length;
@@ -738,9 +738,9 @@ public class PacketUtils {
 			bOut.write(realInflated);
 			bOut.write(compressed, (compressed.length - offset), offset);
 			return bOut.toByteArray();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error reading inflated data: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 
 		}
 		return null;

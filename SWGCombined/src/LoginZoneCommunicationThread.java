@@ -54,7 +54,7 @@ public class LoginZoneCommunicationThread implements Runnable {
 					DataLog.logException(ee.toString() + " -- Opcode = " + ee.getOpcode(), "LoginZoneCommunicationThread " + zoneServerID, true, true, ee);
 					sendTCPError();
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 			}
 		}

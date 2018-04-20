@@ -51,23 +51,23 @@ public class DraftSchematicAttributeData implements Serializable{
 	}
 	
 	public String toString() {
-		StringBuffer toReturn = new StringBuffer();
+		StringBuilder toReturn = new StringBuilder();
 			
-		toReturn.append("Filename: " + sFilename);
-		toReturn.append("\nNumber of slots: " + numSlots);
+		toReturn.append("Filename: ").append(sFilename);
+		toReturn.append("\nNumber of slots: ").append(numSlots);
 		for (int i = 0; i < numSlots; i++) {
-			toReturn.append("\nSlot["+i+"] STF Filename: " + slotSTFFileName[i] + ", Identifier: " + slotSTFFileIdentifier[i]);
+			toReturn.append("\nSlot[").append(i).append("] STF Filename: ").append(slotSTFFileName[i]).append(", Identifier: ").append(slotSTFFileIdentifier[i]);
 		}
-		toReturn.append("\nNumber of experimental attributes: " + numExperimentalAttributes);
+		toReturn.append("\nNumber of experimental attributes: ").append(numExperimentalAttributes);
 		for (int i=0; i < numExperimentalAttributes; i++) {
 			if (attributeSTFFileName[i] == null) {
-				toReturn.append("\nNo experimental attribute at index " + i);
+				toReturn.append("\nNo experimental attribute at index ").append(i);
 			} else {
-				toReturn.append("\nAttribute["+i+"] STF Filename: " + attributeSTFFileName[i] + ", Identifier: " + attributeSTFFileIdentifier[i]);
+				toReturn.append("\nAttribute[").append(i).append("] STF Filename: ").append(attributeSTFFileName[i]).append(", Identifier: ").append(attributeSTFFileIdentifier[i]);
 			}
 			
 		}
-		toReturn.append("\nCrafted item IFF: " + sCraftedItemIFFFilename);
+		toReturn.append("\nCrafted item IFF: ").append(sCraftedItemIFFFilename);
 		return toReturn.toString();
 	}
 

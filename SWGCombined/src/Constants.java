@@ -14,7 +14,7 @@ public final class Constants {
 	// | | Development Revision
 	// | | | Repository Revision
 	// | | | |
-private static String sSoftwareVersion = "Version 0.0.0.9";
+private static String sSoftwareVersion = "Version 0.0.0.10";
 
 	public static String getCurrentSoftwareVersion() {
 		return sSoftwareVersion;

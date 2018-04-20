@@ -1,6 +1,7 @@
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.awt.geom.Point2D;
+import java.io.IOException;
 import java.util.concurrent.ConcurrentHashMap;
 
 /**
@@ -454,7 +455,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Instrument Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof Weapon) // Tangible Items and their
 												// children begin here
@@ -549,7 +550,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Weapon Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 
 			} else if (this instanceof Armor) {
@@ -691,7 +692,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Armor Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof TravelTicket) {
 				try {
@@ -721,7 +722,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending TravelTicket Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof ResourceContainer) {
 				try {
@@ -789,7 +790,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending ResourceContainer Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof Deed) {
 				Deed T = (Deed) this;
@@ -939,7 +940,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Deed Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof CreaturePet) {
 				CreaturePet pet = (CreaturePet) this;
@@ -1196,7 +1197,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending TangibleItem Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 
 			} else if (this instanceof Waypoint)// Intangible Items and their
@@ -1208,7 +1209,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Waypoint Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof IntangibleObject) {
 				try {
@@ -1382,7 +1383,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending IntangibleObject Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 
 			} else if (this instanceof Terminal) // NPC's and their Children
@@ -1403,7 +1404,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Terminal Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof Vehicle) {
 				try {
@@ -1412,7 +1413,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Vehicle Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof Structure) {
 				try {
@@ -1421,7 +1422,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Structure Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof Shuttle) {
 				try {
@@ -1430,7 +1431,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Shuttle Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof NPC) {
 				try {
@@ -1439,7 +1440,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending NPC Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			} else if (this instanceof Player) {
 				try {
@@ -1457,7 +1458,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending Player Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 
 			} else if (this instanceof SOEObject)
@@ -1479,7 +1480,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					System.out
 							.println("Exception Caught while sending SOEObject Attributes "
 									+ e);
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 
 			}
@@ -1961,9 +1962,9 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 
 			}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Exception caught in useItemByCommandID " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -1973,7 +1974,7 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 					.insertPacket(PacketFactory
 							.buildChatSystemMessage("Received use item request on object with ID "
 									+ getID()));
-		} catch (Exception e) {
+		} catch (IOException e) {
 
 		}
 	}
@@ -2263,11 +2264,11 @@ public class SOEObject implements Serializable, Comparable<SOEObject> {
 											.buildNPCUpdateTransformMessage((NPC) this));
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Exception Caught while updating Angle of Object "
 							+ e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 

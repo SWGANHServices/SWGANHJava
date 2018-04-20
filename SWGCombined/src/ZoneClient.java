@@ -1079,9 +1079,9 @@ public class ZoneClient implements Serializable{
 							}
 						}
 					} 
-				} catch (Exception e) {
+				} catch (IOException e) {
 					System.out.println("Exploded in Client dequeuePacket: " + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			}
 		}
@@ -1152,9 +1152,9 @@ public class ZoneClient implements Serializable{
 	    	
 	    	dOut = new DatagramPacket(buf2.toByteArray(), buf2.size(), fullAddress);
 	    	return dOut;
-    	} catch (Exception e) {
+    	} catch (IOException e) {
     		System.out.println("Error in SendSWG: " + e.toString());
-    		e.printStackTrace();
+    		e.printStackTrace(System.out);
     	}
     	System.out.println("PrepareForSendSWG:  This should never happen -- returning null");
     	return null;
@@ -1169,7 +1169,7 @@ public class ZoneClient implements Serializable{
 			packetQueue.add(0, packet);
 		} catch (Exception e) {
 			System.out.println("Error returning a packet to queue -- it is lost: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -1293,9 +1293,9 @@ public class ZoneClient implements Serializable{
 	        			myServer.queue(PrepareForSendSWG(dOut, packetToResend.length));
 	        			System.out.println("Resent packet with sequence 0x" + Integer.toHexString(i).toUpperCase());
 		        		//serverSequence = sequence;
-		        	} catch (Exception e) {
+		        	} catch (IOException e) {
 		        		System.out.println("Error processing out of order packet: " + e.toString());
-		        		e.printStackTrace();
+		        		e.printStackTrace(System.out);
 		        	}
         		} else {
         			System.out.println("Null packet to resend with sequence 0x"+Integer.toHexString(i));

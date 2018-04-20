@@ -79,11 +79,11 @@ public class Factory extends Structure {
 			getServer().addObjectToAllObjects(tOutputHopper, false, false);
 			tOutputHopper.addBitToPVPStatus(Constants.PVP_STATUS_IS_ITEM);
 			vHopperAccessList = new ArrayList<Long>();
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out
 					.println("Error initializing input / output hoppers for factory: "
 							+ e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 	}
@@ -551,10 +551,10 @@ public class Factory extends Structure {
 				break;
 			}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error handling radial menu action in Factory: "
 					+ e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 

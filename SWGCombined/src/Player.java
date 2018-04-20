@@ -501,7 +501,7 @@ public class Player extends SOEObject {
 								(byte) 6, (short) 13, index,
 								iCurrentHam[index], true),
 								Constants.PACKET_RANGE_CHAT_RANGE);
-					} catch (Exception e) {
+					} catch (IOException e) {
 						// D'oh!
 						DataLog.logEntry("Error building ham deltas message: "
 								+ e.toString(), "Player",
@@ -509,7 +509,7 @@ public class Player extends SOEObject {
 								ZoneServer.ZoneRunOptions.bLogToConsole, false);
 						// System.out.println("Error building ham deltas message: "
 						// + e.toString());
-						e.printStackTrace();
+						e.printStackTrace(System.out);
 					}
 				}
 			}
@@ -588,7 +588,7 @@ public class Player extends SOEObject {
 				client.insertPacket(PacketFactory.buildDeltasMessage(
 						Constants.BASELINES_CREO, (byte) 3, (short) 1,
 						(short) 7, this, iIncapTimer));
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 			}
 		}
@@ -632,7 +632,7 @@ public class Player extends SOEObject {
 				if (bUpdateCurrentHam) {
 					updateCurrentHam(index, newHam);
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 				DataLog.logEntry("Error building ham deltas message: "
 						+ e.toString(), "Player",
@@ -640,7 +640,7 @@ public class Player extends SOEObject {
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Error building ham deltas message: " +
 				// e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 
@@ -672,7 +672,7 @@ public class Player extends SOEObject {
 							(byte) 3, (short) 0x11, index, iHamWounds[index],
 							bFlyText), Constants.PACKET_RANGE_CHAT_RANGE);
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 				DataLog.logEntry("Error building ham deltas message: "
 						+ e.toString(), "Player",
@@ -680,7 +680,7 @@ public class Player extends SOEObject {
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Error building ham deltas message: " +
 				// e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 			if (iCurrentHam[index] > ((iMaxHam[index] + iHamModifiers[index]) - iHamWounds[index])) {
 				int difference = ((iMaxHam[index] + iHamModifiers[index]) - iHamWounds[index])
@@ -731,7 +731,7 @@ public class Player extends SOEObject {
 				if (bUpdateCurrentHam) {
 					updateCurrentHam(index, iCurrentHam[index] + newHam);
 				}
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 				DataLog.logEntry("Error building ham deltas message: "
 						+ e.toString(), "Player",
@@ -739,7 +739,7 @@ public class Player extends SOEObject {
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Error building ham deltas message: " +
 				// e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 
@@ -885,11 +885,11 @@ public class Player extends SOEObject {
 							"healing_response", "healing_response_58", 0l, "",
 							"", "", 0l, "", "", "", 0l, "", "", "", 0, 0f,
 							false));
-				} catch (Exception e) {
+				} catch (IOException e) {
 					System.out
 							.println("Error inserting chat system message for healing response: "
 									+ e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			}
 		}
@@ -1756,13 +1756,13 @@ public class Player extends SOEObject {
 					 */
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logEntry("Exception caught while checking POI Badges "
 					+ e.toString(), "Player", Constants.LOG_SEVERITY_CRITICAL,
 					ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 			// System.out.println("Exception caught while checking POI Badges "
 			// + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -1817,7 +1817,7 @@ public class Player extends SOEObject {
 								null, null, null, 0, 0.0f, false));
 			}
 			return false;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logException("Exception while granting flourish bonus",
 					"Player", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
 		}
@@ -1910,10 +1910,10 @@ public class Player extends SOEObject {
 						getCellID(), tempplanetid);
 			}
 			bHeightMapCollect = true;
-		} catch (Exception e) {
+		} catch (IOException e) {
 
 			System.out.println("Height Map Tool Exception Caught " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -2678,7 +2678,7 @@ public class Player extends SOEObject {
 							ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 					// System.out.println("Exception in player.deleteWaypoint "
 					// + e );
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 
 			}
@@ -2965,7 +2965,7 @@ public class Player extends SOEObject {
 					}
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// D'oh!
 		}
 	}
@@ -3017,7 +3017,7 @@ public class Player extends SOEObject {
 					client.insertPacket(PacketFactory.buildChatSystemMessage(
 							"survey", "sample_cancel", 0l, "", "", "", 0l, "",
 							"", "", 0l, "", "", "", 0, 0f, false));
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// D'oh!
 				}
 			}
@@ -3100,7 +3100,7 @@ public class Player extends SOEObject {
 							}
 						}
 					}
-				} catch (Exception e) {
+				} catch (IOException e) {
 					// Oh well.
 				}
 
@@ -3330,7 +3330,7 @@ public class Player extends SOEObject {
 				client.insertPacket(PacketFactory.buildDeltasMessage(
 						Constants.BASELINES_CREO, (byte) 3, (short) 1,
 						(short) 15, this, iBattleFatigue));
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 			}
 		}
@@ -3448,12 +3448,12 @@ public class Player extends SOEObject {
 			mod.setName(sModName);
 			mod.setSkillModModdedValue(iDeltaValue);
 			addSkillMod(mod, bUpdateZone);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logEntry("Error updating skill mod: " + e.toString(),
 					"Player", Constants.LOG_SEVERITY_CRITICAL,
 					ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 			// System.out.println("Error updating skill mod: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -3472,13 +3472,13 @@ public class Player extends SOEObject {
 						Constants.PACKET_RANGE_CHAT_RANGE);
 				// client.insertPacket(PacketFactory.buildSkillModsDelta(this,
 				// mod, Constants.DELTA_CREATING_ITEM));
-			} catch (Exception e) {
+			} catch (IOException e) {
 				DataLog.logEntry("Error adding skill mod: " + e.toString(),
 						"Player", Constants.LOG_SEVERITY_CRITICAL,
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Error adding skill mod: " +
 				// e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}
@@ -3571,7 +3571,7 @@ public class Player extends SOEObject {
 						(short) 7, this, fMaxVelocity);
 				client.insertPacket(velocityDelta,
 						Constants.PACKET_RANGE_CHAT_RANGE);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 			}
 		}
@@ -3595,7 +3595,7 @@ public class Player extends SOEObject {
 						Constants.BASELINES_CREO, (byte) 4, (short) 1,
 						(short) 0x0B, this, fCurrentAcceleration),
 						Constants.PACKET_RANGE_CHAT_RANGE);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 			}
 		}
@@ -3642,7 +3642,7 @@ public class Player extends SOEObject {
 						(short) Constants.DELTAS_CREO6.TARGET_ID.ordinal(),
 						this, objID), Constants.PACKET_RANGE_CHAT_RANGE);
 
-			} catch (Exception e) {
+			} catch (IOException e) {
 				DataLog.logEntry(
 						"Exception Caught while sending target update to players "
 								+ e.toString(), "Player",
@@ -3650,7 +3650,7 @@ public class Player extends SOEObject {
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Exception Caught while sending target update to players "
 				// + e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}
@@ -3755,7 +3755,7 @@ public class Player extends SOEObject {
 						Constants.BASELINES_CREO, (byte) 6, (short) 1,
 						(short) 2, this, (short) 1),
 						Constants.PACKET_RANGE_CHAT_RANGE_EXCLUDE_SENDER);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 			}
 		}
@@ -4892,9 +4892,9 @@ public class Player extends SOEObject {
 				client.insertPacket(PacketFactory.buildBaselineGRUP3(g));
 				client.insertPacket(PacketFactory.buildBaselineGRUP6(g, this));
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Error spawning item with ID " + i.getID() + ": " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			
 		}
 		if (!sceneEndBaseLinesSent) {
@@ -5322,7 +5322,7 @@ public class Player extends SOEObject {
 			// client.insertPacket(PacketFactory.buildChatSystemMessage("You can't use another player!"));
 		} catch (Exception e) {
 			System.out.println("Error building packet: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -5440,7 +5440,7 @@ public class Player extends SOEObject {
 				return (PacketFactory.buildDeltasMessage(
 						Constants.BASELINES_CREO, (byte) 3, (short) 1,
 						(short) 0x10, this, lState));
-			} catch (Exception e) {
+			} catch (IOException e) {
 				// D'oh!
 				return null;
 			}
@@ -5575,13 +5575,13 @@ public class Player extends SOEObject {
 						(short) 1, this, iInventoryCredits));
 			}
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logEntry("Eception Caught in Player.updateCredits() " + e,
 					"Player", Constants.LOG_SEVERITY_CRITICAL,
 					ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 			// System.out.println("Eception Caught in Player.updateCredits() " +
 			// e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 	}
@@ -5708,7 +5708,7 @@ public class Player extends SOEObject {
 					Constants.LOG_SEVERITY_CRITICAL, ZoneServer.ZoneRunOptions
 							.isBLogToConsole(), true);
 			// System.out.println("Eception Caught in playerTravel " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -5753,12 +5753,12 @@ public class Player extends SOEObject {
 				bIsTraveling = true;
 				this.spawnPlayer();
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logEntry("Eception Caught in playerTravel " + e, "Player",
 					Constants.LOG_SEVERITY_CRITICAL, ZoneServer.ZoneRunOptions
 							.isBLogToConsole(), true);
 			// System.out.println("Eception Caught in playerTravel " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -5801,7 +5801,7 @@ public class Player extends SOEObject {
 					Constants.LOG_SEVERITY_CRITICAL, ZoneServer.ZoneRunOptions
 							.isBLogToConsole(), true);
 			// System.out.println("Eception Caught in playerTravel " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -5843,7 +5843,7 @@ public class Player extends SOEObject {
 					Constants.LOG_SEVERITY_CRITICAL, ZoneServer.ZoneRunOptions
 							.isBLogToConsole(), true);
 			// System.out.println("Eception Caught in playerTravel " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -5916,12 +5916,12 @@ public class Player extends SOEObject {
 
 			}
 			// this.isWarping = false;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logEntry("Eception Caught in playerWarp " + e, "Player",
 					Constants.LOG_SEVERITY_CRITICAL, ZoneServer.ZoneRunOptions
 							.isBLogToConsole(), true);
 			// System.out.println("Eception Caught in playerWarp " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 	}
@@ -6037,13 +6037,13 @@ public class Player extends SOEObject {
 				client.insertPacket(PacketFactory.buildChatSystemMessage(
 						"cbt_spam", "burstrun_start_single", 0l, "", "", "",
 						0l, "", "", "", 0l, "", "", "", 0, 0f, false));
-			} catch (Exception e) {
+			} catch (IOException e) {
 				DataLog.logEntry("Exception while trying to Burst Run " + e,
 						"Player", Constants.LOG_SEVERITY_CRITICAL,
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Exception while trying to Burst Run " +
 				// e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		} else if (lBurstRunexpiryTimer > 0) {
 			action
@@ -6083,7 +6083,7 @@ public class Player extends SOEObject {
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Exception while trying to Burst Run " +
 				// e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		} else if (isMounted()) {
 			action
@@ -6117,13 +6117,13 @@ public class Player extends SOEObject {
 						"", "", "", 0l, "", "", "", 0, 0f, false));
 				client.insertPacket(PacketFactory
 						.buildChatSystemMessage("You are tired"));
-			} catch (Exception e) {
+			} catch (IOException e) {
 				DataLog.logEntry("Exception while trying to Burst Run " + e,
 						"Player", Constants.LOG_SEVERITY_CRITICAL,
 						ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 				// System.out.println("Exception while trying to Burst Run " +
 				// e);
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}
@@ -6263,13 +6263,13 @@ public class Player extends SOEObject {
 			client.insertPacket(PacketFactory.buildChatSystemMessage("logout",
 					"time_left", 0l, "", "", "", 0l, "", "", "", 0l, "", "",
 					"", (int) (lLogoutTimer / 1000), 0f, false));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logEntry("Exception caught in player.playerlogout " + e,
 					"Player", Constants.LOG_SEVERITY_CRITICAL,
 					ZoneServer.ZoneRunOptions.isBLogToConsole(), true);
 			// System.out.println("Exception caught in Player.playerLogout " +
 			// e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -6482,7 +6482,7 @@ public class Player extends SOEObject {
 			client.insertPacket(PacketFactory.buildDeltasMessage(
 					Constants.BASELINES_CREO, (byte) 4, (short) 1, (short) 6,
 					this, lListeningToID));
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logException("Exception while updating listening to ID",
 					"Player.setListeningToID",
 					ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
@@ -6894,7 +6894,7 @@ public class Player extends SOEObject {
 				}
 			}
 
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logException("Exception in forage", "Player",
 					ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
 		}
@@ -6929,7 +6929,7 @@ public class Player extends SOEObject {
 				this.setListeningToID(0);
 			}
 			this.playerBeingListened = playerBeingListened;
-		} catch (Exception e) {
+		} catch (IOException e) {
 			DataLog.logException("Exception while setting listening target",
 					"Player", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
 		}
@@ -6962,7 +6962,7 @@ public class Player extends SOEObject {
 				 * @todo send player listening to ID delta
 				 */
 				// client.insertPacket(PacketFactory);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				DataLog.logException(
 						"Exception while setting listening target", "Player",
 						ZoneServer.ZoneRunOptions.bLogToConsole, true, e);

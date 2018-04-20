@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.Enumeration;
@@ -184,7 +185,7 @@ public class Terminal extends NPC {
 	                                p.getClient().insertPacket(PacketFactory.buildDeltasMessage(Constants.BASELINES_CREO, (byte)6, (short)1, (short)0x03, this, "", false));
 	                            }
 	
-	                        }catch(Exception e){
+	                        }catch(IOException e){
 	                            DataLog.logException("Exception in Terminal Update", "Terminal", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
 	                        }
 	                    }
@@ -414,17 +415,17 @@ public class Terminal extends NPC {
                      		0f, false));
 
                         return;
-                    }catch(Exception e){
+                    }catch(IOException e){
                         System.out.println("Exception Caught in Terminal Range Check " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                // System.out.println("Entering Ticket Purchase Mode");
                 try{
                     client.getPlayer().setLastUsedTravelTerminal(this);
                     client.insertPacket(PacketFactory.buildEnterTicketPurchaseMode(client.getPlayer(), this));
-                }catch(Exception e){
-                    e.printStackTrace();
+                }catch(IOException e){
+                    e.printStackTrace(System.out);
                     System.out.println("Exception " + e.toString());
                 }
                 break;
@@ -454,9 +455,9 @@ public class Terminal extends NPC {
                      		0f, false));
 
                         return;
-                    }catch(Exception e){
+                    }catch(IOException e){
                         System.out.println("Exception Caught in Terminal Range Check " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                 try{      
@@ -575,9 +576,9 @@ public class Terminal extends NPC {
                         }    
                     }
                     System.out.println("Error While using travel droid. Check fo Null Shuttle at Droid " + this.iTicketID);
-                }catch(Exception e){
+                }catch(IOException e){
                     System.out.println("Exception Caught in Use Ticket Droid " + e);
-                    e.printStackTrace();
+                    e.printStackTrace(System.out);
                 }  
                 break;
             }    
@@ -588,9 +589,9 @@ public class Terminal extends NPC {
                  try{
                         client.insertPacket(PacketFactory.buildChatSystemMessage("@"+this.getSTFFileName()+":"+this.getSTFFileIdentifier() + " is too far away to Converse"));
                         return;
-                    }catch(Exception e){
+                    }catch(IOException e){
                         System.out.println("Exception Caught in Terminal Range Check " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                 System.out.println("Character Builder Terminal Selected");
@@ -614,9 +615,9 @@ public class Terminal extends NPC {
                         String DataListTitle = "Character Builder";
                         String DataListPrompt = "This is the Character Builder Terminal. Select One of the following to Build Your Character.";                                               
                         client.insertPacket(W.SUIScriptListBox(client, WindowTypeString, DataListTitle,DataListPrompt, sList, null, 0, 0));
-                }catch(Exception e){
+                }catch(IOException e){
                     System.out.println("Exception Caught in Use Character Builder Terminal " + e);
-                    e.printStackTrace();
+                    e.printStackTrace(System.out);
                 }
                 break;
             }
@@ -637,9 +638,9 @@ public class Terminal extends NPC {
                  try{
                         client.insertPacket(PacketFactory.buildChatSystemMessage(this.getFullName() + " is too far away to Converse"));
                         return;
-                    }catch(Exception e){
+                    }catch(IOException e){
                         System.out.println("Exception Caught in Terminal Range Check " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                 if(!ZoneServer.isInRange(client.getPlayer(), this, 6f))
@@ -647,9 +648,9 @@ public class Terminal extends NPC {
                  try{
                         client.insertPacket(PacketFactory.buildChatSystemMessage("@"+this.getSTFFileName()+":"+this.getSTFFileIdentifier() + " is too far away to Converse"));
                         return;
-                    }catch(Exception e){
+                    }catch(IOException e){
                         System.out.println("Exception Caught in Terminal Range Check " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                 try{
@@ -746,9 +747,9 @@ public class Terminal extends NPC {
                             client.insertPacket(PacketFactory.buildChatSystemMessage("Bank Terminal Use Clicked unhandled commandID " + (int)commandID));
                         }
                     }
-                }catch(Exception e){
+                }catch(IOException e){
                     System.out.println("Exception Caught in Bank Terminal Use Item:" + e);
-                    e.printStackTrace();
+                    e.printStackTrace(System.out);
                 }
                 break;
             }  
@@ -759,9 +760,9 @@ public class Terminal extends NPC {
                  try{
                         client.insertPacket(PacketFactory.buildChatSystemMessage("@"+this.getSTFFileName()+":"+this.getSTFFileIdentifier() + " is too far away to Converse"));
                         return;
-                    }catch(Exception e){
+                    }catch(IOException e){
                         System.out.println("Exception Caught in Terminal Range Check " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                 this.handleStructureMaintenanceTerminal(client, commandID);
@@ -774,9 +775,9 @@ public class Terminal extends NPC {
                  try{
                         client.insertPacket(PacketFactory.buildChatSystemMessage("@"+this.getSTFFileName()+":"+this.getSTFFileIdentifier() + " is too far away to read"));
                         return;
-                    }catch(Exception e){
+                    }catch(IOException e){
                         System.out.println("Exception Caught in Terminal Range Check " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
                 if(this.getParentID() != 0)
@@ -822,7 +823,7 @@ public class Terminal extends NPC {
             {
                 try{
                     client.insertPacket(PacketFactory.buildObjectControllerStartingLocationsWindow(client.getPlayer(), DatabaseInterface.getStartingLocations()));
-                }catch(Exception e){
+                }catch(IOException e){
                     DataLog.logException("Error Sending Starting Locations Window", "Terminal",true, false, e);
                 }
                 break;
@@ -906,9 +907,9 @@ public class Terminal extends NPC {
             {
                 client.insertPacket(PacketFactory.buildChatSystemMessage("You must be in the elevator to use the controls."));
             }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception Caught in Terminal.handleElevatorAction " + e );
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -1618,7 +1619,7 @@ public class Terminal extends NPC {
                       
                     }catch(Exception e){
                         System.out.println("Exception Caught in Skill Trainer " + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
                     }
                 }
     }
@@ -1848,7 +1849,7 @@ public class Terminal extends NPC {
             c.insertPacket(PacketFactory.buildNPCConversationOptions(c.getPlayer(), DO));
         }catch(Exception e){
             System.out.println("Error While Sending Dialog to SkillTrainer " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -2220,9 +2221,9 @@ public class Terminal extends NPC {
                             		true
                             ));
 
-                        }catch(Exception e){
+                        }catch(IOException e){
                             System.out.println("Exception caught while sending fly text message skill success " + e);
-                            e.printStackTrace();
+                            e.printStackTrace(System.out);
                         }
                 	} else {
                 		ConversationSTFString = "prose_nsf";
@@ -2285,9 +2286,9 @@ public class Terminal extends NPC {
                 		true
                 ));
 
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception caught while sending fly text message skill success " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }            
         }
         else if(PreviousConversationMenu[1].equals("msg_no"))
@@ -3154,9 +3155,9 @@ public class Terminal extends NPC {
                     System.out.println("Terminal Type not recognized refreshMissionList(). Code needs to be written to handle use request. Type ID: " + this.iTerminalType + " " + this.getFullName() + " dbID " + this.getDBID());
                 }
             }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("exception in Terminal.refreshMissionList() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -3947,9 +3948,9 @@ public class Terminal extends NPC {
                 System.out.println("Unhandled command ID in Terminal.handleStructureMaintenanceTerminal commandID:" + (int)commandID);
             }
         }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception caught in Terminal.handleStructureMaintenanceTerminal() " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
         
        
@@ -4081,9 +4082,9 @@ public class Terminal extends NPC {
             		0f, false));
 
         }
-         }catch(Exception e){
+         }catch(IOException e){
              System.out.println("Exception Caught in Terminal.renameTerminal() " + e);
-             e.printStackTrace();
+             e.printStackTrace(System.out);
          }
      }
 
@@ -4182,7 +4183,7 @@ public class Terminal extends NPC {
                             0, null, null, null,
                             0, 0.0f, true
                             ));*/
-                        }catch(Exception e){
+                        }catch(IOException e){
                             DataLog.logException("Error While Sending Flytext for Tutorial Supplies Drum", "Terminal", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
                         }
                         break;

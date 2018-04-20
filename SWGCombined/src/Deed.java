@@ -43,7 +43,7 @@ public class Deed extends TangibleItem {
             this.setID(getServer().getNextObjectID());
             try {
             	this.setMaxCondition(1000, false);
-            } catch (Exception e) {
+            } catch (IOException e) {
             	// Can't happen -- not building the packet.
             }
             this.setPVPStatus(Constants.PVP_STATUS_IS_ITEM);
@@ -346,7 +346,7 @@ public class Deed extends TangibleItem {
                 
         }catch(Exception e){
             System.out.println("Exception caught in Deed.useItemByCommandID() " + e );
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -395,9 +395,9 @@ public class Deed extends TangibleItem {
             client.getPlayer().despawnItem(this);
             client.insertPacket(PacketFactory.buildChatSystemMessage("A Control Device has been added to your Datapad."));
 
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception caught in Deed.generateVehicleFromDeed() " + e );
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -547,9 +547,9 @@ public class Deed extends TangibleItem {
                     		0f, false));
 
                 }
-            }catch(Exception e){
+            }catch(IOException e){
             System.out.println("Exception caught in Deed.enterStructurePlacementMode() " + e );
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -651,9 +651,9 @@ public class Deed extends TangibleItem {
                sO.removeItemFromInventory(this);
                server.removeObjectFromAllObjects(this, false);
             }
-    	} catch (Exception e) {
+    	} catch (IOException e) {
     		System.out.println("Error destroying structure/deed: " + e.toString());
-    		e.printStackTrace();
+    		e.printStackTrace(System.out);
     	}
     }
     
@@ -700,9 +700,9 @@ public class Deed extends TangibleItem {
                 	sO.deleteWaypoint(theStructure.getStructureWaypoint(),true);                                                             
                 	return PacketFactory.buildChatSystemMessage("player_structure", "deed_reclaimed");
                 }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception caught in Deed.redeedStructure " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }     
         return null;
     	
@@ -903,7 +903,7 @@ public class Deed extends TangibleItem {
                 client.getServer().removeObjectFromAllObjects(this, true);
             }
 
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception in generatePetFromDeed", "CreaturePet", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }

@@ -147,7 +147,7 @@ public class ZoneServer implements Runnable {
 			System.out
 			.println("System Exception While Starting the Log Server: "
 					+ e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		theGui = gui;
 		this.port = port;
@@ -193,12 +193,12 @@ public class ZoneServer implements Runnable {
 		} catch (IOException e) {
 			DataLog.logEntry("SHUTDOWN: Error Binding Zone Server Socket: " + e ,"ZoneServer()", Constants.LOG_SEVERITY_MAJOR, ZoneRunOptions.bLogToConsole, true);
 			//System.out.println("Error binding Zone Server socket: "	+ e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 			while(DataLog.logWritePending())
 			{
 				try{
 					wait(10000);
-				}catch(Exception logwait){
+				}catch(InterruptedException logwait){
 					//doh!
 				}
 			}
@@ -1050,7 +1050,7 @@ public class ZoneServer implements Runnable {
 						//wait(100);
 					} catch (Exception e) {
 						System.out.println("Error waiting: " + e.toString());
-						e.printStackTrace();
+						e.printStackTrace(System.out);
 					}
 				}
 				//System.out.println("Zone Server loop time: " + lDeltaNanoTime + " nanoseconds.");
@@ -1131,10 +1131,10 @@ public class ZoneServer implements Runnable {
 				//if (!vAllClients.isEmpty()) {
 				//	System.out.println("Socket timeout.");
 				//}
-			} catch (Exception e) {
+			} catch (IOException e) {
 				DataLog.logEntry("Exception in ZoneServer thread: " + e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 				//System.out.println("Exception in ZoneServer thread: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 
 			/**
@@ -1205,7 +1205,7 @@ public class ZoneServer implements Runnable {
 					} catch (IOException e) {
 						DataLog.logEntry("Error building weather packet for planet " + Constants.PlanetNames[i] + ": " + e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_INFO, ZoneRunOptions.bLogToConsole, true);
 						//System.out.println("Error building weather packet for planet " + Constants.PlanetNames[i] + ": " + e.toString());
-						e.printStackTrace();
+						e.printStackTrace(System.out);
 					}
 					Enumeration<ZoneClient> vAllClientsEnum = getAllClients()
 					.elements();
@@ -1241,7 +1241,7 @@ public class ZoneServer implements Runnable {
 					} catch (IOException e) {
 						DataLog.logEntry("Error building weather packet for planet " + Constants.PlanetNames[i] + ": " + e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_INFO, ZoneRunOptions.bLogToConsole, true);
 						//System.out.println("Error building weather packet for planet " + Constants.PlanetNames[i] + ": " + e.toString());
-						e.printStackTrace();
+						e.printStackTrace(System.out);
 					}
 					Enumeration<ZoneClient> vAllClientsEnum = getAllClients()
 					.elements();
@@ -1259,7 +1259,7 @@ public class ZoneServer implements Runnable {
 		} catch (Exception e) {
 			DataLog.logEntry("Caught weather exception: " + e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			System.out.println("Caught weather exception: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -1943,7 +1943,7 @@ public class ZoneServer implements Runnable {
 		}catch(Exception e){
 			DataLog.logEntry("Exception caught in addObjectToAllObjects " + e ,"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			//System.out.println("Exception caught in addObjectToAllObjects " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 
@@ -1965,10 +1965,10 @@ public class ZoneServer implements Runnable {
 				Player p = vInRangePlayers.get(i);
 				try {
 					p.despawnItem(o);
-				} catch (Exception e) {
+				} catch (IOException e) {
 					DataLog.logEntry("ZoneServer::removeObjectFromAllObjects:  Error building destroy object packet: "+ e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 					//System.out.println("ZoneServer::removeObjectFromAllObjects:  Error building destroy object packet: "+ e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			}
 		}
@@ -2396,7 +2396,7 @@ public class ZoneServer implements Runnable {
 		catch(Exception e){
 			DataLog.logEntry("Exception in getTravelDestinationsForPlanet "+ e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			//System.out.println("Exception " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 		return retval;
@@ -2455,8 +2455,8 @@ public class ZoneServer implements Runnable {
 	protected String[] generateRandomName(String newCharacterRace){
 
 		//System.out.println("Generate Random Name.");
-		StringBuffer randomFirstName = new StringBuffer();
-		StringBuffer randomLastName = new StringBuffer();
+		StringBuilder randomFirstName = new StringBuilder();
+		StringBuilder randomLastName = new StringBuilder();
 		boolean proceed = false;
 		if(vUsedRandomNames==null)
 		{
@@ -2800,10 +2800,10 @@ public class ZoneServer implements Runnable {
 				Terminal T = V.get(i);
 				c.getPlayer().spawnItem(T);
 			}
-		}catch(Exception e){
+		}catch(IOException e){
 			DataLog.logEntry("Exception Caught while spawning a new terminal/Trainer "+ e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			//System.out.println("Exception Caught while spawning a new terminal/Trainer " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 		return retval;
@@ -2825,10 +2825,10 @@ public class ZoneServer implements Runnable {
 				Terminal T = V.get(i);
 				c.getPlayer().spawnItem(T);
 			}
-		}catch(Exception e){
+		}catch(IOException e){
 			DataLog.logEntry("Exception Caught while spawning a new terminal/Terminal "+ e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			//System.out.println("Exception Caught while spawning a new terminal/Terminal " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 		return retval;
@@ -3081,10 +3081,10 @@ public class ZoneServer implements Runnable {
 			W.close();
 			SSCR.write(StatusScript);
 			SSCR.close();
-		}catch(Exception e){
+		}catch(IOException e){
 			DataLog.logEntry("Exception while Writing Web GalaxyStatus file "+ e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			//System.out.println("Exception while Writing Web GalaxyStatus file " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 
@@ -3392,7 +3392,7 @@ public class ZoneServer implements Runnable {
 		}catch(Exception e){
 			DataLog.logEntry("Exception Caught in ZoneServer.setObjectHeightAndCoordinatesWithParent "+ e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			//System.out.println("Exception Caught in ZoneServer.setObjectHeightAndCoordinatesWithParent " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return retval;
 	}
@@ -3449,7 +3449,7 @@ public class ZoneServer implements Runnable {
 		}catch(Exception e){
 			DataLog.logEntry("Exception Caught in ZoneServer.setObjectHeightAndCoordinates " + e,"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			System.out.println("Exception Caught in ZoneServer.setObjectHeightAndCoordinates " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return retval;
 	}
@@ -3730,7 +3730,7 @@ public class ZoneServer implements Runnable {
 		}catch(Exception e){
 			DataLog.logEntry("Exception caught in ZoneServer.getHeightAtCoodinates " + e,"ZoneServer()", Constants.LOG_SEVERITY_CRITICAL, ZoneRunOptions.bLogToConsole, true);
 			System.out.println("Exception caught in ZoneServer.getHeightAtCoodinates " + e);
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 		return retval;
 	}
@@ -3828,10 +3828,10 @@ public class ZoneServer implements Runnable {
 		if(!bUsingLoginServer) {
 			try {
 				loginTransciever.sendLoadNewPlayerTrigger(playerID);
-			} catch (Exception e) {
+			} catch (IOException e) {
 				DataLog.logEntry("Error sending load new player trigger to remote Login Server: " + e.toString(),"ZoneServer()", Constants.LOG_SEVERITY_INFO, ZoneRunOptions.bLogToConsole, true);
 				//System.out.println("Error sending load new player trigger to remote Login Server: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		} /*else { 
 			  //Do nothing -- the DatabaseInterface has already loaded the new player into the Login Server. 
@@ -3885,7 +3885,7 @@ public class ZoneServer implements Runnable {
 			packet1 = PacketFactory.buildChatSystemMessage("Attention:  The Login Server has shut down.");
 			packet2 = PacketFactory.buildChatSystemMessage("You will not be able to re-enter the Galaxy if you log out.");
 			packet3 = PacketFactory.buildChatSystemMessage("We apologize for any inconvenience.");
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// D'oh!
 		}
 		while (clients.hasMoreElements()) {
@@ -3907,7 +3907,7 @@ public class ZoneServer implements Runnable {
 			packet1 = PacketFactory.buildChatSystemMessage("Attention:  The Login Service has been restored.");
 			packet2 = PacketFactory.buildChatSystemMessage("All players will now be able to log in normally once again.");
 			packet3 = PacketFactory.buildChatSystemMessage("We apologize for any inconvenience.");
-		} catch (Exception e) {
+		} catch (IOException e) {
 			// D'oh!
 		}
 		while (clients.hasMoreElements()) {
@@ -3984,7 +3984,7 @@ public class ZoneServer implements Runnable {
 			}
 		} catch(IOException e) {
 			//Let it cause problems, if this throws an exception something is internally wrong.
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 

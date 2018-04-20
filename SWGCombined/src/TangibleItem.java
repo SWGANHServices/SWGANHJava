@@ -152,9 +152,9 @@ public class TangibleItem extends SOEObject implements Experimentable {
             		try {
             			client.insertPacket(PacketFactory.buildSurveyMessage(iToolSurveyRange, resourceToSurvey, player));
             			//client.insertPacket(PacketFactory.buildSurveyMessage(5, resourceToSurvey, player));
-            		} catch (Exception e) {
+            		} catch (IOException e) {
             			System.out.println("Error building survey message: " + e.toString());
-            			e.printStackTrace();
+            			e.printStackTrace(System.out);
             		}
             	}
             } else if (bIsSampling) {
@@ -308,9 +308,9 @@ public class TangibleItem extends SOEObject implements Experimentable {
 		            					client.insertPacket(container.setStackQuantity(previousQuantity + stackSize, true));
 		            					
 		            					client.insertPacket(PacketFactory.buildAttributeListMessage(player.getClient(), container));
-		            				} catch (Exception e) {
+		            				} catch (IOException e) {
 		            					System.out.println("Error spawning new resource container: " + e.toString());
-		            					e.printStackTrace();
+		            					e.printStackTrace(System.out);
 		            				}
 		            			}
 		    					player.updateExperience(null, DatabaseInterface.getExperienceIDFromName("resource_harvesting_inorganic"),(int)(stackSize * 2.5f));
@@ -340,7 +340,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
     protected void playSampleEffect(ZoneClient client){
         try{
             client.insertPacket(PacketFactory.buildClientEffectAtLocation(SpawnedResourceData.SURVEY_SAMPLE_CLIENT_EFFECTS[iSurveyToolType], client.getPlayer()), Constants.PACKET_RANGE_CHAT_RANGE);
-        }catch(Exception e){
+        }catch(IOException e){
             
         }
     }
@@ -853,9 +853,9 @@ public class TangibleItem extends SOEObject implements Experimentable {
                     }
                 }
             }
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception caught in useItemByCommandID " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 	protected void useItem(ZoneClient client) {
@@ -911,9 +911,9 @@ public class TangibleItem extends SOEObject implements Experimentable {
 				}
 				
 			}*/
-		} catch(Exception e) {
+		} catch(IOException e) {
 			System.out.println("Unable to send system message from TangibleItem::useItem()." + e);
-                        e.printStackTrace();
+                        e.printStackTrace(System.out);
 		}
 	}
 	
@@ -1000,7 +1000,7 @@ public class TangibleItem extends SOEObject implements Experimentable {
         		lSampleTimeMS = 20000;
             	try {
             		player.getClient().insertPacket(PacketFactory.buildClientEffectAtLocation(SpawnedResourceData.SURVEY_SAMPLE_CLIENT_EFFECTS[iSurveyToolType], player), Constants.PACKET_RANGE_CHAT_RANGE);
-            	} catch (Exception e) {
+            	} catch (IOException e) {
             		// Oh well.
             	}
         	}
@@ -1225,9 +1225,9 @@ public class TangibleItem extends SOEObject implements Experimentable {
                         		0f, false
                         ));
                     }
-             }catch(Exception e){
+             }catch(IOException e){
                  System.out.println("Exception Caught in Item.renameItem() " + e);
-                 e.printStackTrace();
+                 e.printStackTrace(System.out);
              }
         }
 

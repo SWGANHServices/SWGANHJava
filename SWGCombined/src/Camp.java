@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -53,7 +54,7 @@ public final class Camp extends TangibleItem {
         try {
 	        this.setConditionDamage(0, false);
 	        this.setMaxCondition(1000, false);
-        } catch (Exception e) {
+        } catch (IOException e) {
         	// Can't happen -- not building the packets.
         }
         //iRequiredSkill = DatabaseInterface.getTemplateDataByID(iTemplateID).getRequiredSkillID();
@@ -152,7 +153,7 @@ public final class Camp extends TangibleItem {
                     lProbBuildTimer-=lElapsedTime;
                 }
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception in Update", "Camp", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }
@@ -195,7 +196,7 @@ public final class Camp extends TangibleItem {
                     //System.out.println("Unhandled Command id in Camp Terminal. ID: " + commandID);
                 }
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Error in useItem", "Camp",ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }
@@ -309,7 +310,7 @@ public final class Camp extends TangibleItem {
                 p.getClient().insertPacket(PacketFactory.buildObjectControllerDataTransformObjectToClient(adminTerminal,0x21));
             }
             bPropsMade = true;
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Error in makeProps", "Camp", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }
@@ -350,7 +351,7 @@ public final class Camp extends TangibleItem {
                 int iDeltaTimeToLive = (int)(iXPTimeToLive - lTime);
                 campOwner.updateExperience(null, DatabaseInterface.getExperienceIDFromName("camp"),(int)(iDeltaTimeToLive / iCampXPMultiplier) + visitorXPBonus);
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Error While Disbanding Camp", "Camp", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }

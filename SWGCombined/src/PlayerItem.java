@@ -211,9 +211,9 @@ public class PlayerItem extends SOEObject implements Serializable {
 							}
 						}
 					}
-				} catch (Exception e) {
+				} catch (IOException e) {
 					System.out.println("Error building deltas messages: " + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			}
 		} else {
@@ -264,9 +264,9 @@ public class PlayerItem extends SOEObject implements Serializable {
 							}
 						} 
 					} 
-				} catch (Exception e) {
+				} catch (IOException e) {
 					System.out.println("Error building deltas messages: " + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 			}
 		}
@@ -348,7 +348,7 @@ public class PlayerItem extends SOEObject implements Serializable {
             {
                 return PacketFactory.buildDeltasMessage(Constants.BASELINES_PLAY, (byte)3, (short)1, (short)7, this, sTitle, false);
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Error While Setting Player Title", "PlayerItem", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
         return new byte [0];
@@ -474,9 +474,9 @@ public class PlayerItem extends SOEObject implements Serializable {
                               ));
 
                           }
-                    } catch (Exception e) {
+                    } catch (IOException e) {
                             System.out.println("Exception Caught in PlayerItem.updateExperience " + e);
-                            e.printStackTrace();
+                            e.printStackTrace(System.out);
                     }					
 				}
 			} else { 
@@ -517,7 +517,7 @@ public class PlayerItem extends SOEObject implements Serializable {
 						0f, false));
 			} catch (IOException e) {
 				System.out.println("Caught IOException building experience Chat System Message: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				
 			}
 		}
@@ -828,7 +828,7 @@ public class PlayerItem extends SOEObject implements Serializable {
     		try {
     			//return PacketFactory.buildDeltasMessage(Constants.BASELINES_PLAY, (byte)9, (short)1, (short)1, this, craftingStage);
     			return PacketFactory.buildDeltasMessage(Constants.BASELINES_PLAY, (byte)9, (short)1, (short)2, this, craftingStage);
-    		} catch (Exception e) {
+    		} catch (IOException e) {
     			return null;
     		}
     	} else {

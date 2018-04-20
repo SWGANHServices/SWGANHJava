@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.Enumeration;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -104,9 +105,9 @@ public class Cell extends SOEObject {
 
 				}
 			}
-		} catch (Exception e) {
+		} catch (IOException e) {
 
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 	}
 

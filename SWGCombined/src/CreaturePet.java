@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.concurrent.ConcurrentHashMap;
 
@@ -255,7 +256,7 @@ public final class CreaturePet extends NPC{
                     }
                 }
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception in Update","CreaturePet", ZoneServer.ZoneRunOptions.bLogToConsole,true, e);
         }
     }
@@ -407,7 +408,7 @@ public final class CreaturePet extends NPC{
                 }
                 //System.out.println("Same Count: " + sameCount);
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception while trainCommand", "CreaturePet", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }
@@ -932,7 +933,7 @@ public final class CreaturePet extends NPC{
                 }
             }
 
-        }catch(Exception e){
+        }catch(IOException e){
                 DataLog.logException("Exception in Pet Command", "CreaturePet", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
             }
     }
@@ -979,7 +980,7 @@ public final class CreaturePet extends NPC{
                 client.insertPacket(PacketFactory.buildChatSystemMessage("pet/pet_menu","patrol_added"));
             }
 
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception in setPatrolPoint", "CreaturePet", ZoneServer.ZoneRunOptions.bLogToConsole,true, e);
         }
     }
@@ -992,7 +993,7 @@ public final class CreaturePet extends NPC{
             }
             vPatrolPoints.clear();
             client.insertPacket(PacketFactory.buildChatSystemMessage("pet/pet_menu","patrol_removed"));
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception in clearPatrolPoints", "CreaturePet", ZoneServer.ZoneRunOptions.bLogToConsole,true, e);
         }
     }
@@ -1018,7 +1019,7 @@ public final class CreaturePet extends NPC{
                 Player p = vPL.get(i);
                 p.getClient().insertPacket(PacketFactory.buildNPCSpeak(p, this, null, spoken, (short)0, (short)0));
             }
-        }catch(Exception e){
+        }catch(IOException e){
             DataLog.logException("Exception while sendingPacketToRange", "CreaturePet", ZoneServer.ZoneRunOptions.bLogToConsole, true, e);
         }
     }

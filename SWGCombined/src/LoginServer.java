@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -49,7 +50,7 @@ public class LoginServer implements Runnable{
         lServerStartupTime = System.currentTimeMillis();
 		try {
 			zoneTransciever = new LoginServerZoneTransciever(this, transcieverPort);
-		} catch (Exception e) {
+		} catch (IOException e) {
 			System.out.println("Login server unable to listen for zone connections...");
 		}
 		zoneCommunicationThreads = new ConcurrentHashMap<Integer, LoginZoneCommunicationThread>();
@@ -72,7 +73,7 @@ public class LoginServer implements Runnable{
 	        outgoingPackets = new ArrayList<byte[]>();
 		} catch (Exception e) {
 			System.out.println("Unable to create database connection: " + e.toString());
-			e.printStackTrace();
+			e.printStackTrace(System.out);
 		}
 
 	}
@@ -127,7 +128,7 @@ public class LoginServer implements Runnable{
 						Thread.yield();
 						wait(100);
 					}
-				} catch (Exception e) {
+				} catch (InterruptedException e) {
 					// D'oh!
 				}
 				lCurrentUpdateTimeMS = System.currentTimeMillis();
@@ -212,15 +213,15 @@ public class LoginServer implements Runnable{
 					// If it's compressed, decompress it.
 				} catch (SocketTimeoutException ee) {
 				
-				}catch (Exception e) {
+				}catch (IOException e) {
 					System.out.println("We exploded while receiving, inflating, decrypting or splitting the incoming packet: " + e.toString());
-					e.printStackTrace();
+					e.printStackTrace(System.out);
 				}
 				Thread.yield();
 
 			} catch (Exception e) {
 				System.out.println("Exception in LoginServer thread:  " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 				// D'oh!
 			}
 		}
@@ -638,7 +639,7 @@ public class LoginServer implements Runnable{
 	    		thread.sendPlayerUpdatedStatus(sServerName, sFriendName, status);	    	
 	    	}
 	    	
-    	} catch (Exception e) {
+    	} catch (IOException e) {
     		
     	}
     	zoneCommunicationThreads.put(serverID, tempThreadHolder);

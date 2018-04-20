@@ -51,7 +51,7 @@ public class ZoneServerPacketSender implements Runnable {
 				}
 			} catch (Exception e) {
 				System.out.println("ServerPacketSender thread exception: " + e.toString());
-				e.printStackTrace();
+				e.printStackTrace(System.out);
 			}
 		}
 	}

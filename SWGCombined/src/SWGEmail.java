@@ -66,7 +66,7 @@ public class SWGEmail implements Serializable{
             }
         catch (Exception e){
             System.out.println("Exception in SWGEmail: " + e.toString());
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
         bDeleteEmail = false;
         bSent = false;

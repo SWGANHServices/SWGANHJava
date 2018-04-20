@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 
 
@@ -143,9 +144,9 @@ public final class Vehicle extends NPC{
         {
             this.useItem(myMaster.getClient(), (byte)61);
         }
-      }catch(Exception e){
+      }catch(IOException e){
           System.out.println("Exception Caught in Vehicle.update " +e);
-          e.printStackTrace();
+          e.printStackTrace(System.out);
       }
     }
     
@@ -366,9 +367,9 @@ public final class Vehicle extends NPC{
                     }
                 }
             }        
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception Caight in Vehicle.useItem " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
     
@@ -386,9 +387,9 @@ public final class Vehicle extends NPC{
                     client.insertPacket(clearAllStates(true), Constants.PACKET_RANGE_CHAT_RANGE);
                     mountPlayer.setMaxVelocity(5.375f);
                     mountPlayer.setAcceleration(2.5f);
-                }catch(Exception e){
+                }catch(IOException e){
                     System.out.println("Exception Caught while Attempting to DisMount a Vehicle " + e);
-                    e.printStackTrace();
+                    e.printStackTrace(System.out);
                 }
             }
         }
@@ -418,9 +419,9 @@ public final class Vehicle extends NPC{
                     mountPlayer.setAcceleration(10.95f);
                     mountPlayer.addState(Constants.STATE_MOUNTED_VEHICLE, -1l);
                     
-                }catch(Exception e){
+                }catch(IOException e){
                     System.out.println("Exception Caught while Attempting to Mount a Vehicle " + e);
-                    e.printStackTrace();
+                    e.printStackTrace(System.out);
                 }
             }
         }

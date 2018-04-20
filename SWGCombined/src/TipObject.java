@@ -25,6 +25,7 @@
      */
 
  
+import java.io.IOException;
 import java.util.ArrayList;
 /**
  * Tip Object is used for making bank tips.
@@ -59,9 +60,9 @@ public class TipObject extends SOEObject{ // This shouldn't extend SOEObject as 
             SWGEmail ee = new SWGEmail(server.getNextEmailID(),EmailServer.BM.getID(),player.getID(),sHeader,sBody,attachments,false);
             server.queueEmailNewClientMessage(ee);
             player.getClient().insertPacket(PacketFactory.buildChatSystemMessage("You have successfully sent " + iTipAmount + " bank credits to " + recipient.getFirstName()));
-        }catch(Exception e){
+        }catch(IOException e){
             System.out.println("Exception caught in TipObject.sendTipEmails " + e);
-            e.printStackTrace();
+            e.printStackTrace(System.out);
         }
     }
 

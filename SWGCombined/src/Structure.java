@@ -670,7 +670,7 @@ public class Structure extends TangibleItem {
                     }
                 }
                 //--------------HARVESTER RELATED HERE
-            }catch(Exception e){
+            }catch(IOException e){
                 DataLog.logException("Exception Caught in update() ","Structure",ZoneServer.ZoneRunOptions.bLogToConsole,true,e);
             }
         }
@@ -802,9 +802,9 @@ public class Structure extends TangibleItem {
             this.adminTerminal.setOrientationW(oW);
             try{
                 client.getPlayer().spawnItem(this.adminTerminal);
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception Caught while correctTerminalCoordinates " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
             
             System.out.println("Terminal Coordinates corrected.");
@@ -819,9 +819,9 @@ public class Structure extends TangibleItem {
             this.structureSign.setOrientationW(oW);
             try{
                 client.getPlayer().spawnItem(this.structureSign);
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception Caught while correctSignCoordinates " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
             System.out.println("Sign Coordinates corrected.");
         }
@@ -962,9 +962,9 @@ public class Structure extends TangibleItem {
                 }  
                 return this.vBanList.contains(playerID);
                 
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception in Structure.addtoBanList() " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
             return false;
         }
@@ -1003,9 +1003,9 @@ public class Structure extends TangibleItem {
                     vHopperAdminList.remove(playerID);
                 }
                 return true;
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception caught in Structure.removeFromAdminList() " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
             return false;
         }
@@ -1044,9 +1044,9 @@ public class Structure extends TangibleItem {
                     vAdminList.remove(playerID);                        
                 }  
                 return true;
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception caught in Structure.removeFromAdminList() " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
             return false;
         }
@@ -1776,9 +1776,9 @@ public class Structure extends TangibleItem {
                     vHopperAdminList.remove(playerID);
                 }
                 return vHopperAdminList.contains(playerID);
-            }catch(Exception e){
+            }catch(IOException e){
                 System.out.println("Exception Caught in Structure.removeFromHopperAdminList " + e);
-                e.printStackTrace();
+                e.printStackTrace(System.out);
             }
             return false;
         }
@@ -1863,7 +1863,7 @@ public class Structure extends TangibleItem {
 	                    	client.getPlayer().spawnItem(o);
 	                    } catch (IOException e) {
 	                    	System.out.println("Error in spawnObjectsInBuildingCells: " + e.toString());
-	                    	e.printStackTrace();
+	                    	e.printStackTrace(System.out);
 	                    }
 	                    objectCount++;
 	                }
@@ -1873,7 +1873,7 @@ public class Structure extends TangibleItem {
 	            System.out.println("Done spawning structure objects -- spawned " + objectCount + " total objects");
         	} catch (Exception e) {
         		System.out.println("Exception in spawnObjectsInBuildingCells: " + e.toString());
-        		e.printStackTrace();
+        		e.printStackTrace(System.out);
         	}
         }
         

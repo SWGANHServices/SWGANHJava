@@ -205,6 +205,7 @@ ResourceManager
 [LCraftingSchematicComponent;
 ||:ResourceTemplateData
 java.lang.Object
+Constants
 [[S
 ResourceTemplateData
 ||:EnqueueCommand
@@ -287,8 +288,8 @@ ZoneServer
 java.util.concurrent.ConcurrentHashMap
 java.io.PrintStream
 DataLogObject
-java.net.DatagramPacket
 java.io.IOException
+java.net.DatagramPacket
 [B
 Player
 Group
@@ -375,7 +376,6 @@ java.io.FileWriter
 PacketUtils
 Player
 [I
-java.lang.StringBuffer
 PacketFactory
 [F
 [B
@@ -387,6 +387,7 @@ java.net.SocketAddress
 GridElement
 java.util.Iterator
 Skills
+java.lang.InterruptedException
 java.util.List
 java.io.PrintStream
 ||:ScriptManager
@@ -707,7 +708,6 @@ CraftingSchematic
 java.io.IOException
 PlayerItem
 Player
-java.lang.Exception
 ZoneClient
 Skills
 Waypoint
@@ -729,8 +729,8 @@ java.io.PrintStream
 java.lang.System
 SOEObject
 TipObject
+java.io.IOException
 EmailServer
-java.lang.Exception
 ||:DataLogObject
 java.util.Date
 java.lang.Object
@@ -749,6 +749,7 @@ java.lang.Object
 [[Z
 java.util.ArrayList
 java.lang.ArrayIndexOutOfBoundsException
+Constants
 ItemTemplate
 ||:SOEObject
 ItemTemplate
@@ -757,6 +758,7 @@ java.io.Serializable
 CreaturePet
 Instrument
 java.lang.Comparable
+java.io.IOException
 java.util.ArrayList
 java.lang.String
 Constants
@@ -870,6 +872,7 @@ java.awt.FontMetrics
 ZoneServerScreen
 java.util.ArrayList
 ColorManager
+java.awt.geom.NoninvertibleTransformException
 java.lang.String
 javax.swing.JFrame
 Constants
@@ -897,8 +900,8 @@ java.lang.Object
 ResourceSpawnCoordinateData
 Grid
 java.awt.event.MouseListener
-java.util.concurrent.ConcurrentHashMap
 java.lang.Thread
+java.util.concurrent.ConcurrentHashMap
 java.lang.Throwable
 SWGGui
 java.lang.Math
@@ -909,6 +912,7 @@ java.lang.System
 java.awt.Color
 DynamicLairSpawn
 java.util.Enumeration
+java.lang.InterruptedException
 java.io.PrintStream
 Structure
 java.awt.geom.AffineTransform
@@ -951,6 +955,7 @@ java.lang.String
 java.lang.Object
 java.io.Serializable
 java.lang.Math
+Constants
 SkillMods
 ||:DraftSchematicAttributeData
 java.lang.String
@@ -996,7 +1001,6 @@ java.io.IOException
 java.util.Enumeration
 java.lang.Integer
 java.lang.String
-java.lang.Exception
 ||:DynamicLairSpawn
 java.awt.geom.Rectangle2D
 java.awt.geom.Rectangle2D$Float
@@ -1025,9 +1029,9 @@ ZoneServer
 SOEObject
 DataLog
 TangibleItem
+java.io.IOException
 IntangibleObject
 DataLogObject
-java.lang.Exception
 ||:ZoneServerPacketSender
 java.lang.Runnable
 java.lang.StringBuilder
@@ -1131,6 +1135,7 @@ DialogOption
 ||:Terminal
 ItemTemplate
 ZoneServer
+java.io.IOException
 java.util.ArrayList
 java.lang.String
 Constants
@@ -1219,9 +1224,10 @@ java.io.PrintStream
 Cell
 java.lang.Long
 [I
+java.io.IOException
 [Ljava.lang.String;
-TutorialObject
 Player
+TutorialObject
 java.util.Enumeration
 java.lang.Exception
 ZoneClient
@@ -1240,7 +1246,6 @@ SUIWindow
 java.io.IOException
 [B
 Player
-java.lang.Exception
 SOEOutputStream
 ZoneClient
 java.lang.Integer
@@ -1260,10 +1265,10 @@ ZoneServer
 java.io.PrintStream
 SUIWindow
 Vehicle
+java.io.IOException
 ItemTemplate
 Player
 Constants$RADIAL_CONDITION
-java.lang.Exception
 ZoneClient
 SOEObject
 NPC
@@ -1747,6 +1752,7 @@ java.lang.Exception
 DataLog
 java.net.Socket
 java.awt.font.TextLayout
+java.awt.HeadlessException
 java.io.DataOutputStream
 TrigAngleUtils
 PacketFactory
@@ -1759,10 +1765,11 @@ java.util.Random
 java.awt.Container
 java.awt.geom.Rectangle2D
 java.awt.event.KeyEvent
+java.net.UnknownHostException
 java.lang.Object
 java.awt.event.MouseListener
-java.util.concurrent.ConcurrentHashMap
 java.lang.Thread
+java.util.concurrent.ConcurrentHashMap
 java.lang.Throwable
 SWGGui
 java.awt.Insets
@@ -1770,11 +1777,12 @@ java.lang.Math
 java.lang.Runnable
 java.io.DataInputStream
 java.awt.Toolkit
-java.lang.System
 java.awt.Font
+java.lang.System
 java.awt.Color
 LoginServer
 java.util.Enumeration
+java.lang.InterruptedException
 java.io.PrintStream
 DatabaseInterface
 java.lang.Character
@@ -1789,16 +1797,16 @@ ManufacturingSchematicAttribute
 java.lang.Runnable
 java.lang.Thread
 Constants
+java.lang.InterruptedException
 java.util.concurrent.ConcurrentHashMap
 Structure
-ZoneServer
 java.lang.System
+ZoneServer
 java.lang.Throwable
 DataLog
 StructureUpdateThread
 java.lang.Object
 java.util.Enumeration
-java.lang.Exception
 ||:LoginServerZoneTransciever
 java.lang.Runnable
 java.lang.StringBuilder
@@ -1817,6 +1825,7 @@ java.lang.Exception
 java.lang.Runnable
 java.lang.StringBuilder
 java.lang.Thread
+java.lang.InterruptedException
 java.io.PrintStream
 java.lang.System
 java.net.DatagramSocket
@@ -1827,7 +1836,6 @@ java.io.IOException
 java.net.DatagramPacket
 java.util.Arrays
 PingServer
-java.lang.Exception
 ||:Deed
 TangibleItem
 java.lang.StringBuilder

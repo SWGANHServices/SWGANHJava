@@ -448,13 +448,25 @@ public class SWGGui implements Runnable, KeyListener, MouseListener{
                         currentY += fontHeight;
 			g.drawString("", currentX, currentY); //created space between info pannel
                         currentY += fontHeight;
+			g.drawString("", currentX, currentY); //created space between info pannel
+                        currentY += fontHeight;
 			g.drawString("Press Arrow keys (up & down) to scroll logged in Client ID's.", currentX, currentY);
+                        currentY += fontHeight;
+			g.drawString("", currentX, currentY); //created space between info pannel
 			currentY += fontHeight;
 			g.drawString("Press C to view zone data.", currentX, currentY);
+                        currentY += fontHeight;
+			g.drawString("Use Arrow keys to navigate, use tilder key to retuen to main menu.", currentX, currentY);
+                        currentY += fontHeight;
+			g.drawString("", currentX, currentY); //created space between info pannel
 			currentY += fontHeight;
 			g.drawString("Press S to open server setup.", currentX, currentY);
                         currentY += fontHeight;
+			g.drawString("", currentX, currentY); //created space between info pannel
+                        currentY += fontHeight;
 			g.drawString("Press Q to Shutdown server.", currentX, currentY);
+                        currentY += fontHeight;
+			g.drawString("", currentX, currentY); //created space between info pannel
 			currentX = 10;
 			//currentY += (fontHeight);
 
